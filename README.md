@@ -29,3 +29,7 @@ Travis CI should take care of it.
 * Jasper de Weger
 * Minh-Triet Diep
 
+## Other related projects
+[Fontys' previous entry](https://github.com/Youbotfontysatwork/youbot_fontys)
+[Fontys' previous entry: Waypoints](https://github.com/BasB1/youbot_interface)
+[Competitor's entry](https://github.com/mas-group/robocup-at-work)
