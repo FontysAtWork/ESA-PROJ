@@ -59,4 +59,5 @@ srv_gen
 
 build/
 devel/
+.catkin_workspace
 
