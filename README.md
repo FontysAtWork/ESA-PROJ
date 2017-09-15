@@ -32,7 +32,7 @@ To fix them:
    1. Clone [pr2_common](https://github.com/pr2/pr2_common) into `src/` if it doesn't exist there already.
    2. Clone into `src/pr2_common`: [convex decomposition](https://github.com/ros/convex_decomposition)
    3. Clone into `src/pr2_common`: [ivcon](https://github.com/ros/ivcon)
-   4. Install the following packages `sudo apt install ros-indigo-ivcon && ros-indigo-convex-decomposition`
+   4. Install the following packages `sudo apt install ros-indigo-ivcon ros-indigo-convex-decomposition`
 4. To install the protobuf library we need te execute the following tasks:
    1. Install the following packages `sudo apt-get install autoconf automake libtool curl make g++ unzip`
    2. Clone [protobuf](https://github.com/google/protobuf) in a folder of your own choice.
