@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package>
+  <name>atwork_refbox_ros_client</name>
+  <version>0.1.0</version>
+  <description>
+    atwork_refbox_ros_client contains example code for a ROS based robot to
+    communicate with the RoboCup@Work Refbox.
+  </description>
+  <maintainer email="shehzad.ahmed@smail.inf.h-brs.de">Shehzad Ahmed</maintainer>
+  <maintainer email="alexander.moriarty@brsu.de">Alexander Moriarty</maintainer>
+  <license>GPLv3</license>
+
+  <url>http://robocupatwork.org</url>
+  <author>Alexander Moriarty</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>atwork_ros_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>atwork_pb_msgs</build_depend>
+  <build_depend>protobuf_comm</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <run_depend>atwork_ros_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>atwork_pb_msgs</run_depend>
+  <run_depend>protobuf_comm</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+</package>
