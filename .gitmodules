@@ -1,3 +1,15 @@
 [submodule "src/youbot_fontys/brics_actuator"]
 	path = src/youbot_fontys/brics_actuator
 	url = https://github.com/wnowak/brics_actuator
+[submodule "src/atwork_refbox_comm"]
+	path = src/atwork_refbox_comm
+	url = https://github.com/industrial-robotics/atwork_refbox_comm
+[submodule "src/pr2_common"]
+	path = src/pr2_common
+	url = https://github.com/PR2/pr2_common
+[submodule "src/convex_decomposition"]
+	path = src/convex_decomposition
+	url = https://github.com/ros/convex_decomposition
+[submodule "src/ivcon"]
+	path = src/ivcon
+	url = https://github.com/ros/ivcon
