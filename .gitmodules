@@ -1,0 +1,3 @@
+[submodule "src/youbot_fontys/brics_actuator"]
+	path = src/youbot_fontys/brics_actuator
+	url = https://github.com/wnowak/brics_actuator
