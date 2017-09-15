@@ -23,6 +23,7 @@ After you've cloned this repository, you might notice things will not build stra
 2. brics_actuator
 3. convex_decomposition & ivcon
 4. protobuf compile errors
+5. gksudo missing
 
 To fix them:
 
@@ -45,6 +46,7 @@ To fix them:
    sudo make install  
    sudo ldconfig # refresh shared library cache.  
    ```
+5. Install the following package `sudo apt-get install gksu`
 
 ## Building
 
