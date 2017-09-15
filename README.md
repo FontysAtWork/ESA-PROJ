@@ -30,7 +30,7 @@ To fix them:
 2. Clone [brics_actuator](https://github.com/wnowak/brics_actuator) into `src/youbot_fontys` if it doesn't exist there already.
 3. Convex decomposition needs more things:
    1. Clone [pr2_common](https://github.com/pr2/pr2_common) into `src/` if it doesn't exist there already.
-   2. Clone into `src/pr2_common`: [convex decomposition](https://github.com/ros/convex decomposition)
+   2. Clone into `src/pr2_common`: [convex decomposition](https://github.com/ros/convex_decomposition)
    3. Clone into `src/pr2_common`: [ivcon](https://github.com/ros/ivcon)
    4. Install the following packages `sudo apt install ros-indigo-ivcon && ros-indigo-convex-decomposition`
 4. To install the protobuf library we need te execute the following tasks:
