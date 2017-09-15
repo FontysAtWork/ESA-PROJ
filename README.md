@@ -17,25 +17,21 @@ This project will realize the architecture for the RoboCup@Work entry for the Fo
   * `./NODENAME_plugin.xml`
 
 ## Prerequisites
-After you've cloned this repository, you might notice things will not build straight away. You'll encounter the following errors:  
 
-1. protobuf_comm
-2. brics_actuator
-3. convex_decomposition & ivcon
-4. protobuf compile errors
-5. gksudo missing
+Perform a git clone recursively:  
+`git clone --recursive https://github.com/minhtrietdiep/ESA-PROJ`
+
+1. convex_decomposition & ivcon
+2. protobuf compile errors
+3. gksudo missing
 
 To fix them:
 
-1. Install [atwork_refbox_comm](https://github.com/industrial-robotics/atwork_refbox_comm) according to the instructions on the linked repo.
-2. Clone [brics_actuator](https://github.com/wnowak/brics_actuator) into `src/youbot_fontys` if it doesn't exist there already.
-3. Convex decomposition needs more things:
-   1. Clone [pr2_common](https://github.com/pr2/pr2_common) into `src/` if it doesn't exist there already.
-   2. Clone into `src/pr2_common`: [convex decomposition](https://github.com/ros/convex_decomposition)
-   3. Clone into `src/pr2_common`: [ivcon](https://github.com/ros/ivcon)
-   4. Install the following packages `sudo apt install ros-indigo-ivcon ros-indigo-convex-decomposition`
-4. To install the protobuf library we need te execute the following tasks:
-   1. Install the following packages `sudo apt-get install autoconf automake libtool curl make g++ unzip`
+1. Convex decomposition needs more things:
+   1. Install the following packages `sudo apt install ros-indigo-ivcon ros-indigo-convex-decomposition`
+
+2. To install the protobuf library we need te execute the following tasks:
+   1. Install the following packages `sudo apt install autoconf automake libtool curl make g++ unzip`
    2. Clone [protobuf](https://github.com/google/protobuf) in a folder of your own choice.
    3. Execute the following commands:  
    ```
@@ -46,11 +42,20 @@ To fix them:
    sudo make install  
    sudo ldconfig # refresh shared library cache.  
    ```
-5. Install the following package `sudo apt-get install gksu`
+2. Install the following package `sudo apt install gksu`
 
 ## Building
 
-Travis CI should take care of it.
+`catkin_make`
+
+## Running the simulator
+
+For every new terminal window, you need to do this:
+
+`source ./devel/setup.bash`  
+`roslaunch youbot_gazebo_robot youbot.launch`
+
+Alternatively you can just add `source ./devel/setup.bash` to your .bashrc.
 
 ## Project members
 
