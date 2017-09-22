@@ -19,7 +19,8 @@ This project will realize the architecture for the RoboCup@Work entry for the Fo
 ## Prerequisites
 
 Perform a git clone recursively:  
-`git clone --recursive https://github.com/minhtrietdiep/ESA-PROJ`
+`git clone --recursive https://github.com/minhtrietdiep/ESA-PROJ`  
+`cd ESA-PROJ`
 
 1. convex_decomposition & ivcon
 2. protobuf compile errors
@@ -30,10 +31,16 @@ To fix them:
 1. Convex decomposition needs more things:
    1. Install the following packages `sudo apt install ros-indigo-ivcon ros-indigo-convex-decomposition`
 
-2. To install the protobuf library we need te execute the following tasks:
+2. Set up `atwork_refbox_comm` since recursive git submodules might not have initialized properly
+   1. `cd src/atwork_refbox_comm/`
+   2. `git submodule init`
+   3. `git submodule update`
+
+3. To install the protobuf library we need te execute the following tasks:
    1. Install the following packages `sudo apt install autoconf automake libtool curl make g++ unzip`
    2. Clone [protobuf](https://github.com/google/protobuf) in a folder of your own choice.
-   3. Execute the following commands:  
+   3. `cd` into `protobuf`
+   4. Execute the following commands:  
    ```
    ./autogen.sh  
    ./configure  
@@ -42,10 +49,11 @@ To fix them:
    sudo make install  
    sudo ldconfig # refresh shared library cache.  
    ```
-2. Install the following package `sudo apt install gksu`
+4. Install the following package `sudo apt install gksu`
 
 ## Building
 
+`cd ~/git/ESA-PROJ`  
 `catkin_make`
 
 ## Running the simulator
