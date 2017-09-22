@@ -57,9 +57,12 @@ srv_gen
 *Result.py
 *.pyc
 
+# ros build files
 build/
 devel/
 .catkin_workspace
 src/CMakeLists.txt
-.git
+
+# editors
+.vscode/
 
