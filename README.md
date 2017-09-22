@@ -21,6 +21,7 @@ This project will realize the architecture for the RoboCup@Work entry for the Fo
 Perform a git clone recursively:  
 `git clone --recursive https://github.com/minhtrietdiep/ESA-PROJ`  
 `cd ESA-PROJ`
+`git submodule update --init --recursive`
 
 1. convex_decomposition & ivcon
 2. protobuf compile errors
