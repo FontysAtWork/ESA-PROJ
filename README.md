@@ -25,7 +25,7 @@ Perform a git clone recursively:
 
 Install some packages:
 ```sh
-sudo apt install ros-indigo-navigation ros-indigo-ivcon ros-indigo-convex-decomposition autoconf automake libtool curl make g++ unzip gksu
+sudo apt install ros-indigo-navigation ros-indigo-ivcon ros-indigo-convex-decomposition ros-indogo-object-recognition-msgs ros-indigo-moveit-commander autoconf automake libtool curl make g++ unzip gksu
 ```
 
 Errors:
