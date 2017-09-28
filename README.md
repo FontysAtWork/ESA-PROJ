@@ -23,6 +23,13 @@ Perform a git clone recursively:
 `cd ESA-PROJ`
 `git submodule update --init --recursive`
 
+Install some packages:
+```sh
+sudo apt install ros-indigo-navigation ros-indigo-ivcon ros-indigo-convex-decomposition autoconf automake libtool curl make g++ unzip gksu
+```
+
+Errors:
+
 1. convex_decomposition & ivcon
 2. protobuf compile errors
 3. gksudo missing
@@ -79,3 +86,7 @@ Alternatively you can just add `source ./devel/setup.bash` to your .bashrc.
 * [Fontys' previous entry](https://github.com/Youbotfontysatwork/youbot_fontys)
 * [Fontys' previous entry: Waypoints](https://github.com/BasB1/youbot_interface)
 * [Competitor's entry](https://github.com/mas-group/robocup-at-work)
+
+## Protip for VS Code
+
+Just open this repository itself (ESA-PROJ) in VS Code as folder, the ROS plugin for VS Code should figure out things after trying a (succesful) catkin_make in the folder.
