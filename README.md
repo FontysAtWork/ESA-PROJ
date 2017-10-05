@@ -18,33 +18,24 @@ This project will realize the architecture for the RoboCup@Work entry for the Fo
 
 ## Prerequisites
 
+You'll need to set up the repo and pull in dependencies.
+
+Install some packages:  
+```sh
+sudo apt install ros-indigo-navigation ros-indigo-ivcon ros-indigo-convex-decomposition ros-indigo-object-recognition-msgs ros-indigo-moveit-commander autoconf automake libtool curl make g++ unzip gksu
+```
+
 Perform a git clone recursively:  
 `git clone --recursive https://github.com/minhtrietdiep/ESA-PROJ`  
 `cd ESA-PROJ`
 `git submodule update --init --recursive`
 
-Install some packages:
-```sh
-sudo apt install ros-indigo-navigation ros-indigo-ivcon ros-indigo-convex-decomposition ros-indigo-object-recognition-msgs ros-indigo-moveit-commander autoconf automake libtool curl make g++ unzip gksu
-```
-
-Errors:
-
-1. convex_decomposition & ivcon
-2. protobuf compile errors
-3. gksudo missing
-
-To fix them:
-
-1. Convex decomposition needs more things:
-   1. Install the following packages `sudo apt install ros-indigo-ivcon ros-indigo-convex-decomposition`
-
-2. Set up `atwork_refbox_comm` since recursive git submodules might not have initialized properly
+Set up `atwork_refbox_comm` since recursive git submodules might not have initialized properly
    1. `cd src/atwork_refbox_comm/`
    2. `git submodule init`
    3. `git submodule update`
 
-3. To install the protobuf library we need te execute the following tasks:
+Install the protobuf library. To install the protobuf library we need te execute the following tasks:
    1. Install the following packages `sudo apt install autoconf automake libtool curl make g++ unzip`
    2. Clone [protobuf](https://github.com/google/protobuf) in a folder of your own choice.
    3. `cd` into `protobuf`
@@ -57,21 +48,44 @@ To fix them:
    sudo make install  
    sudo ldconfig # refresh shared library cache.  
    ```
-4. Install the following package `sudo apt install gksu`
+
+This can take a while, so sit back and make yourself another cup of coffee.
 
 ## Building
 
 `cd ~/git/ESA-PROJ`  
 `catkin_make`
 
-## Running the simulator
+Depending on how the gods are feeling, the build may succeed or fail. The most common problems and known fixes that shouldn't work but do work:
+
+* Missing header: Remove `build` and `devel` folders, and try again.
+* Some linker error or other vague error near the end: Restart the `catkin_make`.
+
+## Running things
 
 For every new terminal window, you need to do this:
 
 `source ./devel/setup.bash`  
+
+Alternatively you can just add `source ~/git/ESA-PROJ/devel/setup.bash` to your .bashrc, but it's not recommended if you have multiple ROS projects going on.
+
+Simulator:  
 `roslaunch youbot_gazebo_robot youbot.launch`
 
-Alternatively you can just add `source ./devel/setup.bash` to your .bashrc.
+Mapping:
+`tba`
+
+Teleop:
+`tba`
+
+Navigation:
+`tba`
+
+Vision:
+`tba`
+
+Arm:
+`tba`
 
 ## Project members
 
