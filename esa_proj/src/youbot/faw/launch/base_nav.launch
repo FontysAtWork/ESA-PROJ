@@ -1,0 +1,28 @@
+<!--Generate from source base_nav.template-->
+<?xml version="1.0"?>
+<launch>
+
+	<!-- laser scanners -->
+	<include file="$(find youbot_launch)/launch/lasers.launch" />
+
+	<!-- include original youbot driver launch file -->
+	<include file="$(param koek)/launch/youbot_driver.launch"/>
+
+	<!-- loads the map to the server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find youbot_launch)/map/test2.yaml" />
+
+	<!-- Upload youbot model to parameter server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py $(find youbot_description)/robots/youbot.urdf.xacro" />
+
+	<arg name="visual" default="false"/>
+
+	<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+	<include file="$(find youbot_moveit_config)/launch/planning_context.launch">
+	<arg name="load_robot_description" value="true"/>
+	</include>
+
+	<!-- loads the nav_stack of the youbot -->
+	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
+
+
+</launch>
