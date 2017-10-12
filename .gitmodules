@@ -13,3 +13,7 @@
 [submodule "src/ivcon"]
 	path = src/ivcon
 	url = https://github.com/ros/ivcon
+[submodule "src/youbot_fontys/youbot_interface"]
+	path = src/youbot_fontys/youbot_interface
+	url = https://github.com/BasB1/youbot_interface
+	ignore = dirty
