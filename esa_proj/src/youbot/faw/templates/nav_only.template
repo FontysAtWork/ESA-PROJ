@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!-- laser scanners (lidar) -->
+	<include file="$(find faw)/launch/youbot_hardware/lasers.launch" />
+	
+	<!-- include original youbot driver launch file -->
+	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.launch"/>
+	
+	<!-- loads the map to the server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/map/test2.yaml" />
+	
+	<param name="robot_description" command="${ROBOT_DESC}" />
+	
+	<arg name="visual" default="false"/>
+	
+	<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+	<include file="$(find faw)/launch/youbot_hardware/planning_context.launch">
+		<arg name="load_robot_description" value="true"/>
+	</include>
+	
+	<!-- loads the nav_stack of the youbot -->
+	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
+	
+</launch>

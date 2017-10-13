@@ -37,7 +37,7 @@ do
 		echo -e "Processing file $filename"
 		
 		# A nice header to identify generated files
-		echo "<?xml version="1.0"?>" > ../launch/${filename}.launch
+		echo "<?xml version=\"1.0\"?>" > ../launch/${filename}.launch
 		printf "<!--Generate from source $f-->\n\n" >> ../launch/${filename}.launch
 		# Run template engine on file and place in correct directory
 		render "${filename}.template" >> ../launch/${filename}.launch

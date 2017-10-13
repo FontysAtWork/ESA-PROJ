@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!-- laser scanners (lidar) -->
+	<include file="$(find faw)/launch/youbot_hardware/lasers.launch" />
+	
+	<!-- include original youbot driver launch file -->
+	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.launch"/>
+	
+	<!--Mapping-->
+	<include file="$(find youbot_navigation_global)/launch/2dslam.launch"/>
+	
+</launch>
