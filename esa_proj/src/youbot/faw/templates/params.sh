@@ -3,6 +3,7 @@ TMP="Example variable" #Example comment
 
 # nav_only.template
 ROBOT_DESC="\$(find xacro)/xacro.py \$(find youbot_description)/robots/youbot.urdf.xacro"
+MAP_FILE="\$(find faw)/map/test2.yaml"
 
 #planning_context.template
 ROBOT_SEMANTIC="\$(find youbot_description)/moveit_config/youbot.srdf"
