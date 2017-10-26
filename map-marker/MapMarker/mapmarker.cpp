@@ -18,5 +18,5 @@ MapMarker::~MapMarker() {
 }
 
 QPoint MapMarker::GetCurrentMousePos() {
-    QPoint p = widget->mapFromGlobal(QCursor::pos());
+    //QPoint p = widget->mapFromGlobal(QCursor::pos());
 }
