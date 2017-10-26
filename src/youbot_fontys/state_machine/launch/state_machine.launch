@@ -1,8 +1,0 @@
-<launch>
-
-    <node pkg="state_machine" name="main_state" type="main_state.py" output="screen"/>
-    <node pkg="state_machine" name="arm_state" type="arm_state.py" output="screen"/>
-    <node pkg="state_machine" name="base_state" type="base_state.py" output="screen"/>
-    <node pkg="state_machine" name="vision_state" type="vision_state.py" output="screen"/>
-
-</launch>
