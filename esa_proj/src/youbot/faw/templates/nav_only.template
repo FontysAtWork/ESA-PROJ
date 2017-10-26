@@ -2,10 +2,10 @@
 <launch>
 	
 	<!-- laser scanners (lidar) -->
-	<include file="$(find faw)/launch/youbot_hardware/lasers.launch" />
+	<include file="$(find faw)/launch/youbot_hardware/lasers.include" />
 	
 	<!-- include original youbot driver launch file -->
-	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.launch"/>
+	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
 	
 	<!-- loads the map to the server -->
 	<node name="map_server" pkg="map_server" type="map_server" args="${MAP_FILE}" />
@@ -15,7 +15,7 @@
 	<arg name="visual" default="false"/>
 	
 	<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-	<include file="$(find faw)/launch/youbot_hardware/planning_context.launch">
+	<include file="$(find faw)/launch/youbot_hardware/planning_context.include">
 		<arg name="load_robot_description" value="true"/>
 	</include>
 	
@@ -23,6 +23,6 @@
 	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
 	
 	<!-- Control of youbot via PS4 controller -->
-	<include file="$(find faw)/launch/youbot_control/gamepad.launch"/>
+	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>
 	
 </launch>

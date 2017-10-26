@@ -2,15 +2,15 @@
 <launch>
 	
 	<!-- laser scanners (lidar) -->
-	<include file="$(find faw)/launch/youbot_hardware/lasers.launch" />
+	<include file="$(find faw)/launch/youbot_hardware/lasers.include" />
 	
 	<!-- include original youbot driver launch file -->
-	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.launch"/>
+	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
 	
 	<!--Mapping-->
 	<include file="$(find youbot_navigation_global)/launch/2dslam.launch"/>
 	
 	<!-- Control of youbot via PS4 controller -->
-	<include file="$(find faw)/launch/youbot_control/gamepad.launch"/>
+	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>
 	
 </launch>
