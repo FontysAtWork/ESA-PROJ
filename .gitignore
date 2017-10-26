@@ -66,3 +66,5 @@ src/CMakeLists.txt
 # editors
 .vscode/
 
+#buildstuff
+#map-marker/build*
