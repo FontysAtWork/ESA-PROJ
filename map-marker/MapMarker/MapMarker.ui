@@ -53,6 +53,19 @@
      <string>Schrijf yaml</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnLoadYaml">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>30</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load yaml</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

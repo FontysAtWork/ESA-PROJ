@@ -1,5 +1,5 @@
 
-#include "clickableLabel.h"
+#include "ClickableLabel.h"
 #include <QDebug>
 
 ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent)

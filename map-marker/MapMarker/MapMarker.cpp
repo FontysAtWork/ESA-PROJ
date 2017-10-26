@@ -1,6 +1,9 @@
-#include "mapmarker.h"
-#include "ui_mapmarker.h"
-#include "clickableLabel.h"
+#include "MapMarker.h"
+#include "ui_MapMarker.h"
+#include "ClickableLabel.h"
+//extern "C" {
+//#include "yaml.h"
+//}
 
 MapMarker::MapMarker(QWidget *parent) : QMainWindow(parent), ui(new Ui::MapMarker) {
     ui->setupUi(this);
@@ -18,6 +21,27 @@ MapMarker::~MapMarker() {
     delete ui;
 }
 
-QPoint MapMarker::GetCurrentMousePos() {
-    //QPoint p = widget->mapFromGlobal(QCursor::pos());
+void MapMarker::on_btnLoadYaml_clicked()
+{
+    /*FILE *fh = fopen("config/public.yaml", "r");
+    yaml_parser_t parser;
+
+    // Initialize parser
+    if(!yaml_parser_initialize(&parser))
+    {
+    fputs("Failed to initialize parser!\n", stderr);
+    }
+    if(fh == NULL)
+    {
+    fputs("Failed to open file!\n", stderr);
+    }
+
+    // Set input file
+    yaml_parser_set_input_file(&parser, fh);
+
+    // CODE HERE
+
+    // Cleanup
+    yaml_parser_delete(&parser);
+    fclose(fh);*/
 }
