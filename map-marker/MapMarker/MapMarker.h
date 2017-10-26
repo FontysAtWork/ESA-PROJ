@@ -2,7 +2,6 @@
 #define MAPMARKER_H
 
 #include <QMainWindow>
-#include <QPoint>
 
 namespace Ui {
 class MapMarker;
@@ -16,9 +15,11 @@ public:
     explicit MapMarker(QWidget *parent = 0);
     ~MapMarker();
 
+private slots:
+    void on_btnLoadYaml_clicked();
+
 private:
     Ui::MapMarker *ui;
-    QPoint GetCurrentMousePos();
 };
 
 #endif // MAPMARKER_H

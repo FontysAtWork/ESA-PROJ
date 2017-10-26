@@ -16,6 +16,7 @@ TEMPLATE = app
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+LIBS += -lyaml
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -24,8 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mapmarker.cpp
+    ClickableLabel.cpp \
+    MapMarker.cpp
 
-HEADERS  += mapmarker.h
+HEADERS  += \
+    ClickableLabel.h \
+    MapMarker.h
 
-FORMS    += mapmarker.ui
+FORMS    += \
+    MapMarker.ui

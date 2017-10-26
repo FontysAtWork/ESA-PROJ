@@ -1,4 +1,4 @@
-#include "mapmarker.h"
+#include "MapMarker.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
