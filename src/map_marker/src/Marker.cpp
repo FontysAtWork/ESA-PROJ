@@ -1,4 +1,4 @@
-#include "Marker.h"
+#include "../include/map_marker/Marker.hpp"
 
 Marker::Marker(double xPos, double yPos, double ang) :
     x(xPos), y(yPos), angle(ang) {
@@ -15,6 +15,10 @@ double Marker::GetY() {
 
 double Marker::GetAngle() {
     return this->angle;
+}
+
+MarkerType Marker::GetType() {
+    return this->type;
 }
 
 std::vector<double> Marker::GetQuaternation() {
