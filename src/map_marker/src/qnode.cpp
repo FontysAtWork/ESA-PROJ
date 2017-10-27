@@ -41,6 +41,7 @@ QNode::~QNode() {
 }
 
 bool QNode::init() {
+	ROS_INFO_STREAM("asdf");
 	ros::init(init_argc,init_argv,"map_marker");
 	if ( ! ros::master::check() ) {
 		return false;
