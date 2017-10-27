@@ -21,7 +21,7 @@ namespace map_marker {
 		QObject::connect(ui.btnAddCurrentPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCurrentPose_clicked()));
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
 
-		QString url = "/home/viki/git/ESA-PROJ/map-marker/maps/legomap3-cropped.pgm";
+		QString url = "/home/viki/git/ESA-PROJ/maps/legomap3-cropped.pgm";
 	    QPixmap img(url);
 	    ClickableLabel *label = new ClickableLabel(this);
 	    QPoint p(0,0);
