@@ -22,6 +22,9 @@
 	<!-- loads the nav_stack of the youbot -->
 	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
 	
+	<!-- the kill node -->
+	<include file="$(find faw)/launch/youbot_hardware/cancel_goal.include" />
+
 	<!-- Control of youbot via PS4 controller -->
 	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>
 	
