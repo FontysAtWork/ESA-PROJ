@@ -1,36 +1,13 @@
-/**
- * @file /include/map_marker/qnode.hpp
- *
- * @brief Communications central!
- *
- * @date February 2011
- **/
-/*****************************************************************************
-** Ifdefs
-*****************************************************************************/
-
 #ifndef map_marker_QNODE_HPP_
 #define map_marker_QNODE_HPP_
-
-/*****************************************************************************
-** Includes
-*****************************************************************************/
 
 #include <ros/ros.h>
 #include <string>
 #include <QThread>
 #include <QStringListModel>
-
-
-/*****************************************************************************
-** Namespaces
-*****************************************************************************/
+#include "geometry_msgs/Pose.h"
 
 namespace map_marker {
-
-/*****************************************************************************
-** Class
-*****************************************************************************/
 
 class QNode : public QThread {
     Q_OBJECT
@@ -40,6 +17,8 @@ public:
 	bool init();
 	bool init(const std::string &master_url, const std::string &host_url);
 	void run();
+	geometry_msgs::Pose GetRobotPosition();
+	void MoveRobotToPose(geometry_msgs::Pose pos);
 
 	/*********************
 	** Logging
@@ -66,6 +45,6 @@ private:
     QStringListModel logging_model;
 };
 
-}  // namespace map_marker
+}
 
-#endif /* map_marker_QNODE_HPP_ */
+#endif

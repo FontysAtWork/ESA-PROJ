@@ -4,6 +4,8 @@
 #include "../include/map_marker/main_window.hpp"
 #include "../include/map_marker/ClickableLabel.hpp"
 
+#include "geometry_msgs/Pose.h"
+
 //extern "C" {
 //#include "yaml.h"
 //}
@@ -15,20 +17,39 @@ namespace map_marker {
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
 		qnode.init();
+
+		/* HOEFT NIET
 		QObject::connect(ui.btnLoadYaml, SIGNAL(clicked(bool)), this, SLOT(on_btnLoadYaml_clicked()));
 		QObject::connect(ui.btnLoadMap, SIGNAL(clicked(bool)), this, SLOT(on_btnLoadMap_clicked()));
 		QObject::connect(ui.btnWriteYaml, SIGNAL(clicked(bool)), this, SLOT(on_btnWriteYaml_clicked()));
 		QObject::connect(ui.btnClearYaml, SIGNAL(clicked(bool)), this, SLOT(on_btnClearYaml_clicked()));
 		QObject::connect(ui.btnAddCurrentPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCurrentPose_clicked()));
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
+		*/
 
 		QString url = "/home/viki/git/ESA-PROJ/maps/legomap3-cropped.pgm";
-	    QPixmap img(url);
-	    ClickableLabel *label = new ClickableLabel(this);
-	    QPoint p(0,0);
-	    label->setAlignment(Qt::AlignBottom | Qt::AlignRight);
-	    label->setGeometry(QRect(0,0,992,992));
-	    label->setPixmap(img);
+	    QPixmap mapImg(url);
+
+	    // Ttable editing
+	    ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	    ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+	    ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+	    
+	    // Create map image
+	    ClickableLabel *lblMapImage = new ClickableLabel(this);
+	    lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
+	    lblMapImage->setGeometry(QRect(0,0,992,992));
+	    lblMapImage->setPixmap(mapImg);
+
+	    // Set validator for input fields
+	    ui.inpCustomX->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomX));
+	    ui.inpCustomY->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomY));
+	    ui.inpCustomAngle->setValidator(new QDoubleValidator(0, 360, 5, ui.inpCustomAngle));
+
+	    Marker m(1.0, 2.0, 40.0, Navigation);
+		AddMarker(m);
+
+	    UpdateTable();
 	}
 
 	MainWindow::~MainWindow() {
@@ -52,11 +73,70 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
+		geometry_msgs::Pose pos = qnode.GetRobotPosition();
 
+		MarkerType type;
+		if(ui.radioNav->isChecked()) {
+			type = Navigation;
+		} else if (ui.radioWorkspace->isChecked()) {
+			type = Workspace;
+		}
+
+	    AddMarker(Marker(pos, type));
+		UpdateTable();
 	}
 
 	void MainWindow::on_btnAddCustomPose_clicked() {
+		double x = ui.inpCustomX->text().toDouble();
+		double y = ui.inpCustomY->text().toDouble();
+		double angle = ui.inpCustomAngle->text().toDouble();
+		
+		MarkerType type;
+		if(ui.radioNav->isChecked()) {
+			type = Navigation;
+		} else if (ui.radioWorkspace->isChecked()) {
+			type = Workspace;
+		}
+		
+	    AddMarker(Marker(x, y, angle, type));
+		UpdateTable();
+	}
 
+	void MainWindow::on_btnMoveRobot_clicked() {
+		Marker * m = GetSelectedMarker();
+
+		if(m == NULL) return; // Nothing selected
+
+		qnode.MoveRobotToPose(m->GetPose());
+	}
+
+	Marker * MainWindow::GetSelectedMarker() {
+		int j = -1;
+	    QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
+
+	 	for (int i = 0; i < indexes.count(); ++i)
+	 	{    
+		 	j = indexes.at(i).row();
+		}
+
+		if(j == -1) return NULL; // Nothing selected
+
+		return &markers[j];
+	}
+
+	void MainWindow::AddMarker(Marker marker) {
+		markers.push_back(marker);
+	}
+
+	void MainWindow::UpdateTable() {
+		ui.tableWidget->setRowCount(0);
+		for(int i=0; i < markers.size(); i++) {
+			ui.tableWidget->insertRow ( ui.tableWidget->rowCount() );
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 1, new QTableWidgetItem(QString::number(markers[i].GetX())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetY())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
+		}
 	}
 
 

@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>420</y>
+      <y>520</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -70,7 +70,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>420</y>
+      <y>520</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -279,7 +279,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>460</y>
+      <y>580</y>
       <width>400</width>
       <height>3</height>
      </rect>
@@ -294,18 +294,18 @@
       <x>1010</x>
       <y>290</y>
       <width>382</width>
-      <height>121</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="rowCount">
      <number>0</number>
     </property>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>95</number>
+     <number>80</number>
     </attribute>
     <column>
      <property name="text">
-      <string>ID</string>
+      <string>Type</string>
      </property>
     </column>
     <column>
@@ -323,6 +323,19 @@
       <string>Angle</string>
      </property>
     </column>
+   </widget>
+   <widget class="QPushButton" name="btnMoveRobot">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>550</y>
+      <width>185</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move to selected marker</string>
+    </property>
    </widget>
   </widget>
  </widget>

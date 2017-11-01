@@ -1,15 +1,3 @@
-/**
- * @file /src/qnode.cpp
- *
- * @brief Ros communication central!
- *
- * @date February 2011
- **/
-
-/*****************************************************************************
-** Includes
-*****************************************************************************/
-
 #include <ros/ros.h>
 #include <ros/network.h>
 #include <string>
@@ -17,15 +5,7 @@
 #include <sstream>
 #include "../include/map_marker/qnode.hpp"
 
-/*****************************************************************************
-** Namespaces
-*****************************************************************************/
-
 namespace map_marker {
-
-/*****************************************************************************
-** Implementation
-*****************************************************************************/
 
 QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
@@ -75,7 +55,7 @@ void QNode::run() {
 	int count = 0;
 	while ( ros::ok() ) {
 
-		std_msgs::String msg;
+		/*std_msgs::String msg;
 		std::stringstream ss;
 		ss << "hello world " << count;
 		msg.data = ss.str();
@@ -83,7 +63,7 @@ void QNode::run() {
 		log(Info,std::string("I sent: ")+msg.data);
 		ros::spinOnce();
 		loop_rate.sleep();
-		++count;
+		++count;*/
 	}
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
@@ -123,6 +103,23 @@ void QNode::log( const LogLevel &level, const std::string &msg) {
 	QVariant new_row(QString(logging_model_msg.str().c_str()));
 	logging_model.setData(logging_model.index(logging_model.rowCount()-1),new_row);
 	Q_EMIT loggingUpdated(); // used to readjust the scrollbar
+}
+
+geometry_msgs::Pose QNode::GetRobotPosition() {
+	// TODO: IMPLEMENTATION
+
+	geometry_msgs::Pose p;
+	p.position.x = 5;
+	p.position.y = 8;
+	p.position.z = 0;
+	p.orientation.z = 1;
+	return p;
+}
+
+void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
+	// TODO: IMPLEMENTATION
+	
+	log(Debug,std::to_string(pos.position.x));
 }
 
 }  // namespace map_marker
