@@ -20,7 +20,8 @@ namespace map_marker {
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();
 		void on_btnMoveRobot_clicked();
-		Marker * GetSelectedMarker();
+		void on_btnRemoveMarker_clicked();
+		int GetSelectedMarker();
 		void AddMarker(Marker marker);
 		void UpdateTable();
 
