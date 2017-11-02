@@ -23,6 +23,9 @@
 # INSERT LICENSE
 #####################################################################################################
 
+# cd to containing path
+cd "${0%/*}"
+
 # Set shell param #2 to external parameter file
 # This is used by BASH_REMATCH.
 . ./params.sh
