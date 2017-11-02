@@ -1,17 +1,26 @@
 
-#ifndef CLICKABLELABEL_H_
-#define CLICKABLELABEL_H_
+#ifndef CLICKABLELABEL_H
+#define CLICKABLELABEL_H
+
 #include <QLabel>
+#include <QWidget>
+#include <Qt>
+#include <QObject>
 #include <QMouseEvent>
 
-using namespace Qt;
+class ClickableLabel : public QLabel { 
+    Q_OBJECT 
 
-class ClickableLabel : public QLabel
-{
-    Q_OBJECT
 public:
-    ClickableLabel(QWidget *parent = 0);
-    void mousePressEvent(QMouseEvent *eve );
+    explicit ClickableLabel(QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
+    ~ClickableLabel();
+
+Q_SIGNALS:
+	void clicked(QPoint);
+
+protected:
+    void mousePressEvent(QMouseEvent *ev);
+
 };
 
-#endif /*CLICKABLELABEL_H_*/
+#endif // CLICKABLELABEL_H

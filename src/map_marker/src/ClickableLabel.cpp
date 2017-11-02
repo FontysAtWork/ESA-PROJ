@@ -1,14 +1,15 @@
 #include "../include/map_marker/ClickableLabel.hpp"
-#include <QDebug>
 
-using namespace Qt;
-
-ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent)
-{
+ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f)
+    : QLabel(parent) {
+    
 }
 
-void ClickableLabel::mousePressEvent(QMouseEvent *eve )
-{
-    const QPoint p = eve->pos();
-    qDebug() << "The point: " << p;
+ClickableLabel::~ClickableLabel() {}
+
+void ClickableLabel::mousePressEvent(QMouseEvent* event) {
+
+	const QPoint p = event->pos();
+	//p = event->pos();
+    Q_EMIT ClickableLabel::clicked(p);
 }
