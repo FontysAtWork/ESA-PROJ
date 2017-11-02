@@ -6,6 +6,7 @@
 #include "qnode.hpp"
 #include <vector>
 #include "Marker.hpp"
+#include "ClickableLabel.hpp"
 
 
 namespace map_marker {
@@ -20,6 +21,7 @@ namespace map_marker {
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();
 		void on_btnMoveRobot_clicked();
+		void lblMapImage_clicked(QPoint);
 		Marker * GetSelectedMarker();
 		void AddMarker(Marker marker);
 		void UpdateTable();
@@ -34,6 +36,7 @@ namespace map_marker {
 		Ui::MapMarker ui;
 		QNode qnode;
 		std::vector<Marker> markers;
+		ClickableLabel *lblMapImage;
 	};
 }
 

@@ -2,7 +2,9 @@
 #include <QMessageBox>
 #include <iostream>
 #include "../include/map_marker/main_window.hpp"
-#include "../include/map_marker/ClickableLabel.hpp"
+
+#include <QDebug>
+
 
 #include "geometry_msgs/Pose.h"
 
@@ -27,6 +29,7 @@ namespace map_marker {
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
 		*/
 
+
 		QString url = "/home/viki/git/ESA-PROJ/maps/legomap3-cropped.pgm";
 	    QPixmap mapImg(url);
 
@@ -36,10 +39,12 @@ namespace map_marker {
 	    ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 	    
 	    // Create map image
-	    ClickableLabel *lblMapImage = new ClickableLabel(this);
+	    lblMapImage = new ClickableLabel(this);
 	    lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
 	    lblMapImage->setGeometry(QRect(0,0,992,992));
 	    lblMapImage->setPixmap(mapImg);
+
+	    QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
 	    // Set validator for input fields
 	    ui.inpCustomX->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomX));
@@ -56,8 +61,16 @@ namespace map_marker {
 
 	}
 
+	void MainWindow::lblMapImage_clicked(QPoint a) {
+
+		QString x = QString::number(a.x());
+		QString y = QString::number(a.y());
+		ui.inpCustomX->setText(x);
+		ui.inpCustomY->setText(y);
+	}
+
 	void MainWindow::on_btnLoadYaml_clicked() {
-		
+
 	}
 
 	void MainWindow::on_btnLoadMap_clicked() {
