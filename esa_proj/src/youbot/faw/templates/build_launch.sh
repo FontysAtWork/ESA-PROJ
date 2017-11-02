@@ -34,7 +34,7 @@ render()
 	File="$1"
 	while read -r line ; do
 		if [[ $line == *"<?xml version="* ]]; then
-			line = ""
+			line=""
 		else
 			while [[ "$line" =~ (\$\{[a-zA-Z_][a-zA-Z_0-9]*\}) ]] ; do
 				LHS=${BASH_REMATCH[1]}

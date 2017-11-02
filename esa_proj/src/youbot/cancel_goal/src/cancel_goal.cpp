@@ -44,8 +44,8 @@ void cbOdom(const nav_msgs::Odometry::ConstPtr &msg) {
     
 	double distance = getDistBetweenPoses2D(currentPose, goalPose);
 	
-	std::cout << "Distance: " << distance << std::endl;
-	std::cout << "angle: " << angle << std::endl;
+	//std::cout << "Distance: " << distance << std::endl;
+	//std::cout << "angle: " << angle << std::endl;
     
     if (distance < 0.2 && angle < deg2rad(5.0)) {
         actionlib_msgs::GoalID kill_msg;

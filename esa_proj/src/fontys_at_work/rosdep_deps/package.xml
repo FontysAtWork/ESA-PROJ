@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <name>rosdep_deps</name>
+  <version>0.0.0</version>
+  <description>The rosdep_deps package</description>
+
+  <maintainer email="youbot@todo.todo">youbot</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>ivcon</build_depend>
+  <build_depend>brics_actuator</build_depend>
+  <build_depend>joy</build_depend>
+  <build_depend>map-server</build_depend>
+  <build_depend>amcl</build_depend>
+  <build_depend>teleop-twist-joy</build_depend>
+  <build_depend>gmapping</build_depend>
+
+  <run_depend>ivcon</run_depend>
+  <run_depend>brics_actuator</run_depend>
+  <run_depend>joy</run_depend>
+  <run_depend>map-server</run_depend>
+  <run_depend>amcl</run_depend>
+  <run_depend>teleop-twist-joy</run_depend>
+  <run_depend>gmapping</run_depend>
+
+  <export>
+
+  </export>
+</package>
