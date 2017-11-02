@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!--Generate from source ./youbot_hardware/cancel_goal.template-->
+
+<launch>
+<node name="cancel_goal" pkg="cancel_goal" type="cancel_goal_node" output="screen" />
+</launch>
