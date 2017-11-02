@@ -21,8 +21,9 @@ namespace map_marker {
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();
 		void on_btnMoveRobot_clicked();
+		void on_btnRemoveMarker_clicked();
 		void lblMapImage_clicked(QPoint);
-		Marker * GetSelectedMarker();
+		int GetSelectedMarker();
 		void AddMarker(Marker marker);
 		void UpdateTable();
 

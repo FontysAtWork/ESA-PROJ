@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QStringListModel>
 #include "geometry_msgs/Pose.h"
+#include "geometry_msgs/Quaternion.h"
 
 namespace map_marker {
 
@@ -16,6 +17,7 @@ public:
 	virtual ~QNode();
 	bool init();
 	bool init(const std::string &master_url, const std::string &host_url);
+	void SetupSubscribers(ros::NodeHandle * n);
 	void run();
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
@@ -43,6 +45,7 @@ private:
 	char** init_argv;
 	ros::Publisher chatter_publisher;
     QStringListModel logging_model;
+    geometry_msgs::Pose pose;
 };
 
 }

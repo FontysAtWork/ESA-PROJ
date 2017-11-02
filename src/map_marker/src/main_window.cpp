@@ -1,6 +1,7 @@
 #include <QtGui>
 #include <QMessageBox>
 #include <iostream>
+#include <algorithm>
 #include "../include/map_marker/main_window.hpp"
 
 #include <QDebug>
@@ -116,14 +117,20 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnMoveRobot_clicked() {
-		Marker * m = GetSelectedMarker();
-
-		if(m == NULL) return; // Nothing selected
-
+		int index = GetSelectedMarker();
+		if(index == -1) return; // Nothing selected
+		Marker * m = &markers[index];
 		qnode.MoveRobotToPose(m->GetPose());
 	}
 
-	Marker * MainWindow::GetSelectedMarker() {
+	void MainWindow::on_btnRemoveMarker_clicked() {
+		int index = GetSelectedMarker();
+		if(index == -1) return; // Nothing selected
+		markers.erase(markers.begin()+index);
+		UpdateTable();
+	}
+
+	int MainWindow::GetSelectedMarker() {
 		int j = -1;
 	    QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
 
@@ -132,9 +139,7 @@ namespace map_marker {
 		 	j = indexes.at(i).row();
 		}
 
-		if(j == -1) return NULL; // Nothing selected
-
-		return &markers[j];
+		return j;
 	}
 
 	void MainWindow::AddMarker(Marker marker) {
