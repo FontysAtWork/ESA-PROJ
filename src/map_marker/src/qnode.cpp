@@ -71,7 +71,8 @@ void QNode::run() {
 			tf::quaternionTFToMsg(transform.getRotation(), q);
 			pose.orientation = q;
 
-			std::cout << "x: " << transform.getOrigin().x() << ", y:" << transform.getOrigin().y() << std::endl;
+			std::cout << "x: " << transform.getOrigin().x() << ", y:" << transform.getOrigin().y() << ", z: "<< transform.getOrigin().y() << std::endl;
+			std::cout << "x: " << q.x << ", y:" << q.y << ", z: " << q.z << ", w: " << q.w << std::endl << std::endl;
 
 		} catch (tf::TransformException &ex) {
 			ROS_ERROR("%s",ex.what());
