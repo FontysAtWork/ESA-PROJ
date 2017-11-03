@@ -9,3 +9,7 @@ MAP_FILE="\$(find faw)/map/test2.yaml"
 ROBOT_SEMANTIC="\$(find youbot_description)/moveit_config/youbot.srdf"
 JOINT_LIMITS="\$(find youbot_description)/moveit_config/joint_limits.yaml"
 ROBOT_KINEMATICS="\$(find youbot_description)/moveit_config/kinematics.yaml"
+
+#lasers.template
+FRONT_LASER_NAME="hokuyo_H1100477"
+BACK_LASER_NAME="hokuyo_H0904583"
