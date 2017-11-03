@@ -16,7 +16,7 @@
     <include file="$(find youbot_navigation_global)/launch/amcl.launch" />
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
-        <param name="" type="string" value="move_base_node/dwa_local_planner" />
+        <param name="base_local_planner" type="string" value="move_base_node/dwa_local_planner" />
 
         <!-- Load common configuration files -->
 	    <remap from="cmd_vel" to="move_base/cmd_vel"/> 
@@ -29,6 +29,7 @@
         <!--<rosparam file="$(find youbot_navigation)/navigation_local/config/move_base_params.yaml" command="load" />-->
         <rosparam file="$(find youbot_navigation_global)/config/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find youbot_navigation_global)/config/global_costmap_params.yaml" command="load" />
-        <rosparam file="$(find youbot_navigation_common)/config/base_local_planner_params.yaml" command="load" />
+        <!--<rosparam file="$(find youbot_navigation_common)/config/base_local_planner_params.yaml" command="load" />-->
+        <rosparam file="$(find faw)/config/dwa_local_planner_params.yaml" command="load" />
     </node>
 </launch>
