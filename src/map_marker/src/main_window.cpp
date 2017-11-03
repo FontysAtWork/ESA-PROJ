@@ -90,24 +90,41 @@ namespace map_marker {
 		// CODE HERE
 		do {
 			yaml_parser_scan(&parser, &token);
+
 			switch(token.type)
 			{
 				// Stream start/end 
-				case YAML_STREAM_START_TOKEN: puts("STREAM START"); break;
-				case YAML_STREAM_END_TOKEN:   puts("STREAM END");   break;
+				case YAML_STREAM_START_TOKEN: 
+				std::cout << "STREAM START" << std::endl; break;//puts("STREAM START"); break;
+				case YAML_STREAM_END_TOKEN:   
+				std::cout << "STREAM END" << std::endl; break;//puts("STREAM END");   break;
 				// Token types (read before actual token) 
-				case YAML_KEY_TOKEN:   printf("(Key token)   "); break;
-				case YAML_VALUE_TOKEN: printf("(Value token) "); break;
+				case YAML_KEY_TOKEN:   
+				std::cout << "(Key token)   "; break;//   printf("(Key token)   "); break;
+				case YAML_VALUE_TOKEN:   
+				std::cout << "(Data token)  "; break;// printf("(Value token) "); break;
 				// Block delimeters 
-				case YAML_BLOCK_SEQUENCE_START_TOKEN: puts("<b>Start Block (Sequence)</b>"); break;
-				case YAML_BLOCK_ENTRY_TOKEN:          puts("<b>Start Block (Entry)</b>");    break;
-				case YAML_BLOCK_END_TOKEN:            puts("<b>End block</b>");              break;
+				case YAML_BLOCK_SEQUENCE_START_TOKEN:   
+				std::cout << "<b>Start Block (Sequence)</b>" << std::endl; break;// puts("<b>Start Block (Sequence)</b>"); break;
+				case YAML_BLOCK_ENTRY_TOKEN:   
+				std::cout << "<b>Start Block (Entry)</b>" << std::endl; break;//          puts("<b>Start Block (Entry)</b>");    break;
+				case YAML_BLOCK_END_TOKEN:   
+				std::cout << "<b>End block</b>" << std::endl; break;//            puts("<b>End block</b>");              break;
 				// Data 
-				case YAML_BLOCK_MAPPING_START_TOKEN:  puts("[Block mapping]");            break;
-				case YAML_SCALAR_TOKEN:  printf("scalar %s \n", token.data.scalar.value); break;
+				case YAML_BLOCK_MAPPING_START_TOKEN:   
+				std::cout << "[Block mapping]" << std::endl; break;//  puts("[Block mapping]");            break;
+				case YAML_SCALAR_TOKEN:   
+				std::cout << "value   " << token.data.scalar.value << std::endl; break;//  printf("scalar %s \n", token.data.scalar.value); break;
+				// Array
+				case YAML_FLOW_SEQUENCE_START_TOKEN:   
+				std::cout << "Start array!" << std::endl; break;// puts("Start array!"); 	break;
+				case YAML_FLOW_SEQUENCE_END_TOKEN:   
+				std::cout << "End array!" << std::endl; break;// puts("End array!"); break;
+				case YAML_FLOW_ENTRY_TOKEN:   
+				std::cout << "New array item: " << std::endl; break;// puts("New array item: "); break;
 				// Others 
 				default:
-				printf("Got token of type %d\n", token.type);
+				std::cout << "Got token of type: " << token.type << std::endl; break;//printf("Got token of type %d\n", token.type);
 			}
 			if(token.type != YAML_STREAM_END_TOKEN)
 			yaml_token_delete(&token);
