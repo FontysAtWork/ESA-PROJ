@@ -3,7 +3,7 @@
 
 <launch>
 <arg name="joy_config" default="ps3" />
-<arg name="joy_dev" default="/dev/input/js1" />
+<arg name="joy_dev" default="/dev/input/js2" />
 <arg name="config_filepath" default="$(find faw)/config/$(arg joy_config).config.yaml" />
 
 <node pkg="joy" type="joy_node" name="youbot_joy_node">

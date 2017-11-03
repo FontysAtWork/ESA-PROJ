@@ -1,0 +1,3 @@
+[submodule "src/fontys_at_work/dependencies/ira_laser_tools"]
+	path = src/fontys_at_work/dependencies/ira_laser_tools
+	url = https://github.com/iralabdisco/ira_laser_tools
