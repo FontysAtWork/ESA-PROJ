@@ -16,7 +16,7 @@
     <include file="$(find youbot_navigation_global)/launch/amcl.launch" />
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
-        <param name="base_local_planner" type="string" value="move_base_node/dwa_local_planner" />
+        <param name="base_local_planner" type="string" value="dwa_local_planner/DWAPlannerROS" />
 
         <!-- Load common configuration files -->
 	    <remap from="cmd_vel" to="move_base/cmd_vel"/> 
