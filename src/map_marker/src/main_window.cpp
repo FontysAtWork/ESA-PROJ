@@ -43,13 +43,15 @@ namespace map_marker {
 	    lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
 	    lblMapImage->setGeometry(QRect(0,0,992,992));
 	    lblMapImage->setPixmap(mapImg);
-
 	    QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
 	    // Set validator for input fields
 	    ui.inpCustomX->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomX));
 	    ui.inpCustomY->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomY));
 	    ui.inpCustomAngle->setValidator(new QDoubleValidator(0, 360, 5, ui.inpCustomAngle));
+
+	    // Panic button color
+	    ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
 
 	    Marker m(1.0, 2.0, 40.0, Navigation);
 		AddMarker(m);
@@ -138,7 +140,7 @@ namespace map_marker {
 	void MainWindow::on_btnLoadMap_clicked() {
 		QFileDialog dialog(this);
 		dialog.setFileMode(QFileDialog::AnyFile);
-		dialog.setNameFilter(tr("Map image (*.pbm *.pgm *.ppm)"));
+		dialog.setNameFilter(tr("Map image file (*.pbm *.pgm *.ppm)"));
 
 		QStringList fileNames;
 		if (dialog.exec())
@@ -146,7 +148,6 @@ namespace map_marker {
 
     	QPixmap mapImg(fileNames[0]);
     	lblMapImage->setPixmap(mapImg);
-    	//std::cout << fileNames << std::endl;
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
