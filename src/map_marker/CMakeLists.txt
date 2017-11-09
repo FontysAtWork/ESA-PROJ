@@ -3,7 +3,7 @@
 ##############################################################################
 
 cmake_minimum_required(VERSION 2.8.0)
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++11 -lyaml)
 project(map_marker)
 
 ##############################################################################
@@ -49,6 +49,6 @@ file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINK
 ##############################################################################
 
 add_executable(map_marker ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
-target_link_libraries(map_marker ${QT_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(map_marker ${QT_LIBRARIES} ${catkin_LIBRARIES} yaml)
 install(TARGETS map_marker RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
