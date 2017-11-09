@@ -22,6 +22,7 @@ namespace map_marker {
 		void on_btnAddCustomPose_clicked();
 		void on_btnMoveRobot_clicked();
 		void on_btnRemoveMarker_clicked();
+		void on_btnPanic_clicked();
 		void lblMapImage_clicked(QPoint);
 		int GetSelectedMarker();
 		void AddMarker(Marker marker);

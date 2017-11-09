@@ -17,33 +17,20 @@ public:
 	virtual ~QNode();
 	bool init();
 	bool init(const std::string &master_url, const std::string &host_url);
-	void SetupSubscribers(ros::NodeHandle * n);
 	void run();
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
-
-	/*********************
-	** Logging
-	**********************/
-	enum LogLevel {
-	         Debug,
-	         Info,
-	         Warn,
-	         Error,
-	         Fatal
-	 };
-
-	QStringListModel* loggingModel() { return &logging_model; }
-	void log( const LogLevel &level, const std::string &msg);
+	void Panic();
 
 Q_SIGNALS:
-	void loggingUpdated();
     void rosShutdown();
 
 private:
 	int init_argc;
 	char** init_argv;
-	ros::Publisher chatter_publisher;
+	ros::Publisher pubPose;
+	ros::Publisher pubActionLibCancel;
+	ros::Publisher pubVelCmd;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
 };
