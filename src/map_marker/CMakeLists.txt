@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8.8)
 add_compile_options(-std=c++11)
 project(map_marker)
 
-set(ROS_DIST KINETIC)
-
 file(GLOB QT_FORMS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ui/*.ui)
 file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} resources/*.qrc)
 file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS include/map_marker/*.hpp)
