@@ -5,6 +5,7 @@
 #include <sstream>
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
+#include <actionlib_msgs/GoalID.h>
 #include "../include/map_marker/qnode.hpp"
 
 namespace map_marker {
@@ -29,7 +30,9 @@ bool QNode::init() {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	marker_publisher = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
+	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
+	pubVelCmd = n.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
+	pubActionLibCancel = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel", 100);
 	start();
 	return true;
 }
@@ -44,7 +47,9 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	marker_publisher = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
+	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
+	pubVelCmd = n.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
+	pubActionLibCancel = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel", 100);
 	start();
 	return true;
 }
@@ -59,86 +64,45 @@ void QNode::run() {
 		tf::StampedTransform transform;
 		try {
 			geometry_msgs::Quaternion q;
-			tflistener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
+			tflistener.lookupTransform("/map", "/base_link", ros::Time(0), transform);
 			pose.position.x = transform.getOrigin().x();
 			pose.position.y = transform.getOrigin().y();
 			pose.position.z = transform.getOrigin().z();
 			tf::quaternionTFToMsg(transform.getRotation(), q);
 			pose.orientation = q;
-
-			std::cout << "x: " << transform.getOrigin().x() << ", y:" << transform.getOrigin().y() << ", z: "<< transform.getOrigin().y() << std::endl;
-			std::cout << "x: " << q.x << ", y:" << q.y << ", z: " << q.z << ", w: " << q.w << std::endl << std::endl;
-
 		}
 		catch (tf::TransformException ex){
-		  //ROS_ERROR("%s",ex.what());
+		  ROS_ERROR("%s",ex.what());
 		  ros::Duration(1.0).sleep();
 		}
 		ros::spinOnce();
 		rate.sleep();
 	}
-	
-	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
+
+	ROS_INFO("Ros shutdown, proceeding to close the gui.");
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
 
 geometry_msgs::Pose QNode::GetRobotPosition() {
-	// TODO: IMPLEMENTATION
-
-	geometry_msgs::Pose p;
-	p.position.x = 5;
-	p.position.y = 8;
-	p.position.z = 0;
-	p.orientation.z = 1;
 	return pose;
 }
 
+void QNode::Panic() {
+	actionlib_msgs::GoalID kill_msg;
+    geometry_msgs::Twist vel_msg;        
+
+	pubActionLibCancel.publish(kill_msg);
+	pubVelCmd.publish(vel_msg);
+}
+
 void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
-	// TODO: IMPLEMENTATION
-
-	ROS_INFO("xpos: %f", pos.position.x);
-
+	ROS_INFO("Moving robot to x:%f, y: %f", pos.position.x, pos.position.y);
 	geometry_msgs::PoseStamped p;
 	p.header.stamp = ros::Time::now();
 	p.header.frame_id = "map";
 	p.pose = pos;
 
-	marker_publisher.publish(p);
-}
-
-void QNode::log( const LogLevel &level, const std::string &msg) {
-	logging_model.insertRows(logging_model.rowCount(),1);
-	std::stringstream logging_model_msg;
-	switch ( level ) {
-		case(Debug) : {
-				ROS_DEBUG_STREAM(msg);
-				logging_model_msg << "[DEBUG] [" << ros::Time::now() << "]: " << msg;
-				break;
-		}
-		case(Info) : {
-				ROS_INFO_STREAM(msg);
-				logging_model_msg << "[INFO] [" << ros::Time::now() << "]: " << msg;
-				break;
-		}
-		case(Warn) : {
-				ROS_WARN_STREAM(msg);
-				logging_model_msg << "[INFO] [" << ros::Time::now() << "]: " << msg;
-				break;
-		}
-		case(Error) : {
-				ROS_ERROR_STREAM(msg);
-				logging_model_msg << "[ERROR] [" << ros::Time::now() << "]: " << msg;
-				break;
-		}
-		case(Fatal) : {
-				ROS_FATAL_STREAM(msg);
-				logging_model_msg << "[FATAL] [" << ros::Time::now() << "]: " << msg;
-				break;
-		}
-	}
-	QVariant new_row(QString(logging_model_msg.str().c_str()));
-	logging_model.setData(logging_model.index(logging_model.rowCount()-1),new_row);
-	Q_EMIT loggingUpdated(); // used to readjust the scrollbar
+	pubPose.publish(p);
 }
 
 }  // namespace map_marker

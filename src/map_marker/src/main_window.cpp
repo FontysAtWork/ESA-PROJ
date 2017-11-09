@@ -30,6 +30,7 @@ namespace map_marker {
 		*/
 
 
+
 		QString url = "/home/viki/git/ESA-PROJ/maps/legomap3-cropped.pgm";
 	    QPixmap mapImg(url);
 
@@ -189,6 +190,10 @@ namespace map_marker {
 		if(index == -1) return; // Nothing selected
 		markers.erase(markers.begin()+index);
 		UpdateTable();
+	}
+
+	void MainWindow::on_btnPanic_clicked() {
+		qnode.Panic();
 	}
 
 	int MainWindow::GetSelectedMarker() {
