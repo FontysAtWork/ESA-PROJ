@@ -30,7 +30,7 @@ namespace map_marker {
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
 		*/
 
-		QString url = "/home/youbot/git/gui/Esa-proj/maps/legomap3-cropped.pgm";
+		QString url = "/home/youbot/git/gui/ESA-Proj/maps/legomap3-cropped.pgm";
 	    QPixmap mapImg(url);
 
 	    // Ttable editing
@@ -71,7 +71,7 @@ namespace map_marker {
 
 	void MainWindow::on_btnLoadYaml_clicked() {
 
-		FILE *fh = fopen("/home/youbot/git/gui/Esa-proj/maps/legomap-cropped.yaml", "r");
+		FILE *fh = fopen("/home/youbot/git/gui/ESA-Proj/maps/legomap-cropped.yaml", "r");
 		yaml_parser_t parser;
 		yaml_token_t  token;   // new variable 
 		// Initialize parser
