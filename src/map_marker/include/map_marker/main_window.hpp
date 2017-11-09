@@ -1,7 +1,6 @@
 #ifndef map_marker_MAIN_WINDOW_H
 #define map_marker_MAIN_WINDOW_H
 
-#include <QtGui/QMainWindow>
 #include "ui_main_window.h"
 #include "qnode.hpp"
 #include <vector>
