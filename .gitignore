@@ -61,6 +61,7 @@ srv_gen
 build/
 devel/
 .catkin_workspace
+src/CMakeLists.txt
 
 # editors
 .vscode/
