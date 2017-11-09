@@ -29,7 +29,7 @@ bool QNode::init() {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	SetupSubscribers(&n);
+	marker_publisher = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	start();
 	return true;
 }
@@ -44,27 +44,22 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	}
 	ros::start();
 	ros::NodeHandle n;
+	marker_publisher = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	start();
 	return true;
 }
 
-void QNode::SetupSubscribers(ros::NodeHandle * n) {
-	//n->subscribe("/tf", 1000, &QNode::PoseCallback, this);
-}
-
 void QNode::run() {
-	ros::Rate loop_rate(1);
+	ros::Rate rate(1);
 	int count = 0;
 
 	tf::TransformListener tflistener;
-	tf::StampedTransform transform;
 
-	while ( ros::ok() ) {
-		/// STUFF
-
+	while (ros::ok()) {
+		tf::StampedTransform transform;
 		try {
 			geometry_msgs::Quaternion q;
-			tflistener.lookupTransform("/tf", "/tf", ros::Time(0), transform);
+			tflistener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
 			pose.position.x = transform.getOrigin().x();
 			pose.position.y = transform.getOrigin().y();
 			pose.position.z = transform.getOrigin().z();
@@ -74,12 +69,15 @@ void QNode::run() {
 			std::cout << "x: " << transform.getOrigin().x() << ", y:" << transform.getOrigin().y() << ", z: "<< transform.getOrigin().y() << std::endl;
 			std::cout << "x: " << q.x << ", y:" << q.y << ", z: " << q.z << ", w: " << q.w << std::endl << std::endl;
 
-		} catch (tf::TransformException &ex) {
-			ROS_ERROR("%s",ex.what());
-  			ros::Duration(1.0).sleep();
-  			continue;
- 		}
+		}
+		catch (tf::TransformException ex){
+		  //ROS_ERROR("%s",ex.what());
+		  ros::Duration(1.0).sleep();
+		}
+		ros::spinOnce();
+		rate.sleep();
 	}
+	
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
@@ -97,8 +95,13 @@ geometry_msgs::Pose QNode::GetRobotPosition() {
 
 void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
 	// TODO: IMPLEMENTATION
-	
-	log(Debug,std::to_string(pos.position.x));
+
+	ROS_INFO("xpos: %f", pos.position.x);
+
+	geometry_msgs::PoseStamped p;
+	p.pose = pos;
+
+	marker_publisher.publish(p);
 }
 
 void QNode::log( const LogLevel &level, const std::string &msg) {

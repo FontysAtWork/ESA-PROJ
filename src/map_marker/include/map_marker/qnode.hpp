@@ -17,7 +17,6 @@ public:
 	virtual ~QNode();
 	bool init();
 	bool init(const std::string &master_url, const std::string &host_url);
-	void SetupSubscribers(ros::NodeHandle * n);
 	void run();
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
@@ -43,7 +42,7 @@ Q_SIGNALS:
 private:
 	int init_argc;
 	char** init_argv;
-	ros::Publisher chatter_publisher;
+	ros::Publisher marker_publisher;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
 };
