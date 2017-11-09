@@ -90,7 +90,7 @@ geometry_msgs::Pose QNode::GetRobotPosition() {
 	p.position.y = 8;
 	p.position.z = 0;
 	p.orientation.z = 1;
-	return p;
+	return pose;
 }
 
 void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
@@ -99,6 +99,8 @@ void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
 	ROS_INFO("xpos: %f", pos.position.x);
 
 	geometry_msgs::PoseStamped p;
+	p.header.stamp = ros::Time::now();
+	p.header.frame_id = "map";
 	p.pose = pos;
 
 	marker_publisher.publish(p);
