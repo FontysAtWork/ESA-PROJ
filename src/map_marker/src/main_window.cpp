@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <iostream>
 #include <algorithm>
 #include "../include/map_marker/main_window.hpp"
@@ -29,9 +30,7 @@ namespace map_marker {
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
 		*/
 
-
-
-		QString url = "/home/viki/git/ESA-PROJ/maps/legomap3-cropped.pgm";
+		QString url = "/home/youbot/git/gui/Esa-proj/maps/legomap3-cropped.pgm";
 	    QPixmap mapImg(url);
 
 	    // Ttable editing
@@ -72,7 +71,7 @@ namespace map_marker {
 
 	void MainWindow::on_btnLoadYaml_clicked() {
 
-		FILE *fh = fopen("/home/viki/git/ESA-PROJ/maps/legomap-cropped.yaml", "r");
+		FILE *fh = fopen("/home/youbot/git/gui/Esa-proj/maps/legomap-cropped.yaml", "r");
 		yaml_parser_t parser;
 		yaml_token_t  token;   // new variable 
 		// Initialize parser
@@ -137,7 +136,17 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnLoadMap_clicked() {
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setNameFilter(tr("Map image (*.pbm *.pgm *.ppm)"));
 
+		QStringList fileNames;
+		if (dialog.exec())
+    	fileNames = dialog.selectedFiles();
+
+    	QPixmap mapImg(fileNames[0]);
+    	lblMapImage->setPixmap(mapImg);
+    	//std::cout << fileNames << std::endl;
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
