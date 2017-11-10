@@ -56,3 +56,10 @@ srv_gen
 *Result.msg
 *Result.py
 *.pyc
+
+build/
+devel/
+.catkin_workspace
+src/CMakeLists.txt
+.git
+.vscode

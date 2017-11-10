@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Generate from source ./youbot_hardware/lasers.template-->
+
+<launch>
+
+<node name="hokuyo_front" pkg="hokuyo_node" type="hokuyo_node" respawn="true" output="screen">
+<!--remap from="/scan" to="/base_scan"/-->
+<!-- Starts up faster, but timestamps will be inaccurate. -->
+<param name="calibrate_time" type="bool" value="true"/>
+<!-- Set the port to connect to here -->
+<param name="port" type="string" value="/dev/sensors/hokuyo_H1100477"/>
+<param name="frame_id" type="string" value="base_laser_front_link"/>
+<param name="min_ang" type="double" value="-1.50"/>
+<param name="max_ang" type="double" value="1.50"/>
+<param name="intensity" type="bool" value="false"/>
+</node>
+<!--
+<node name="hokuyo_back" pkg="hokuyo_node" type="hokuyo_node" respawn="true" output="screen">
+<remap from="/scan" to="/scan_back"/>
+
+<param name="calibrate_time" type="bool" value="true"/>
+
+<param name="port" type="string" value="/dev/sensors/hokuyo_H1100477"/>
+
+<param name="frame_id" type="string" value="hokuyo_back_link"/>
+<param name="min_ang" type="double" value="-1.60"/>
+<param name="max_ang" type="double" value="1.60"/>
+<param name="intensity" type="bool" value="false"/>
+</node>
+-->
+<!-- front laser --><!--base is 8 cm of the floor>
+<node pkg="tf" type="static_transform_publisher" name="hokuyo_front_broadcaster" args="0.327 0 -0.025 0 0 0 base_link hokuyo_front_link 100" /-->
+
+<!-- back laser
+<node pkg="tf" type="static_transform_publisher" name="hokuyo_back_broadcaster" args="-0.353 0 -0.025 0 3.14 3.14 base_link hokuyo_back_link 100" /-->
+
+<!-- combine laserscan topics >
+<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+<param name="destination_frame" value="/base_footprint"/>
+<param name="cloud_destination_topic" value="/merged_cloud"/>
+<param name="scan_destination_topic" value="/scan_multi"/>
+<param name="laserscan_topics" value ="/scan_front" />
+</node-->
+
+
+
+</launch>
