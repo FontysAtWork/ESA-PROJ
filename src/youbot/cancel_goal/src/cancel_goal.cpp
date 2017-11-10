@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     ros::Subscriber subOdom = n.subscribe("/odom", 100, cbOdom);
     pubVelCmd = n.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
     pubActionLibCancel = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel", 100);
-    
+    goalPose.position.x = 20;
     goalPose.orientation.x = 0;
 	goalPose.orientation.y = 0;
 	goalPose.orientation.z = 0;
