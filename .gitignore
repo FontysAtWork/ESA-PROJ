@@ -63,3 +63,5 @@ devel/
 src/CMakeLists.txt
 .git
 .vscode
+src/youbot/faw/launch/*.launch
+*.include
