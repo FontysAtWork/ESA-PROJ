@@ -47,7 +47,7 @@ void cbOdom(const nav_msgs::Odometry::ConstPtr &msg) {
 	//std::cout << "Distance: " << distance << std::endl;
 	//std::cout << "angle: " << angle << std::endl;
     
-    if (distance < 0.2 && angle < deg2rad(5.0)) {
+    if (distance < 0.05 && angle < deg2rad(5.0)) {
         actionlib_msgs::GoalID kill_msg;
         geometry_msgs::Twist vel_msg;        
 
