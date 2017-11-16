@@ -11,7 +11,7 @@
     {
         return resolution;
     }
-    double YamlConfig::getImageName()
+    std::string YamlConfig::getImageName()
     {
         return imageName;
     }

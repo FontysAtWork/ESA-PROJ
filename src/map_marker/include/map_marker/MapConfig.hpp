@@ -8,7 +8,7 @@ class YamlConfig
 {
 private:
     std::string imageName;
-    double image_resolution;
+    double resolution;
     geometry_msgs::Pose origin;
     double negate;
     double occupiedThresh;
@@ -17,7 +17,7 @@ public:
     YamlConfig();
     geometry_msgs::Pose getOrigin();
     double getResolution();
-    double getImageName();
+    std::string getImageName();
     double getOccupiedThresh();
     double getFreeThresh();
     double getNegate();
