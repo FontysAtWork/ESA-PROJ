@@ -26,11 +26,16 @@ namespace map_marker {
 		void on_btnPanic_clicked();
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
+		void on_btnClearAllMarkers_clicked();
 		int GetSelectedMarker();
 		void AddMarker(Marker marker);
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
+		void DrawRobotOnImage();
+		void DrawMarkersOnImage();
+		int ConvertRobotToPixel(double a);
+		double ConvertPixelToRobot(int a);
 
 	public:
 		MainWindow(int argc, char** argv, QWidget *parent = 0);
@@ -44,6 +49,7 @@ namespace map_marker {
 		std::vector<Marker> markers;
 		ClickableLabel *lblMapImage;
 		Yaml yaml;
+		QPixmap *map;
 	};
 }
 

@@ -13,13 +13,15 @@ namespace map_marker {
 QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
 	init_argv(argv)
-	{}
+	{
+	}
 
 QNode::~QNode() {
     if(ros::isStarted()) {
       ros::shutdown(); // explicitly needed since we use ros::start();
       ros::waitForShutdown();
     }
+
 	wait();
 }
 
