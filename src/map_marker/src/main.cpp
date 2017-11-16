@@ -1,6 +1,6 @@
 #include <QtGui>
 #include <QApplication>
-#include "../include/map_marker/main_window.hpp"
+#include "main_window.hpp"
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);

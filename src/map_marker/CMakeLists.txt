@@ -11,6 +11,8 @@ if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
 
 	message(STATUS "Compiling on ROS indigo")
 
+	include_directories(include/map_marker/)
+
 	find_package(catkin REQUIRED COMPONENTS qt_build tf roscpp)
 	include_directories(${catkin_INCLUDE_DIRS}) 
 
@@ -38,6 +40,8 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+	include_directories(include/map_marker/)
 
 	find_package(catkin REQUIRED COMPONENTS tf roscpp)
 	include_directories(${catkin_INCLUDE_DIRS})

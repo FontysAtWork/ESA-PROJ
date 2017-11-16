@@ -6,7 +6,7 @@
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
 #include <actionlib_msgs/GoalID.h>
-#include "../include/map_marker/qnode.hpp"
+#include "qnode.hpp"
 
 namespace map_marker {
 

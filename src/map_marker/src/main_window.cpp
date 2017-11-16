@@ -1,9 +1,10 @@
 #include <QtGui>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QGraphicsScene>
 #include <iostream>
 #include <algorithm>
-#include "../include/map_marker/main_window.hpp"
+#include "main_window.hpp"
 
 #include <QDebug>
 
@@ -64,7 +65,6 @@ namespace map_marker {
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
-
 		QString x = QString::number(a.x());
 		QString y = QString::number(a.y());
 		ui.inpCustomX->setText(x);
@@ -151,11 +151,11 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
-
+		ROS_ERROR("Not implemented yet :(");
 	}
 
 	void MainWindow::on_btnClearYaml_clicked() {
-
+		ROS_ERROR("Not implemented yet :(");
 	}
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
@@ -190,20 +190,27 @@ namespace map_marker {
 
 	void MainWindow::on_btnMoveRobot_clicked() {
 		int index = GetSelectedMarker();
-		if(index == -1) return; // Nothing selected
+		if(index == -1) {
+			ROS_WARN("No marker selected");
+			return;
+		} 
 		Marker * m = &markers[index];
 		qnode.MoveRobotToPose(m->GetPose());
 	}
 
 	void MainWindow::on_btnRemoveMarker_clicked() {
 		int index = GetSelectedMarker();
-		if(index == -1) return; // Nothing selected
+		if(index == -1) {
+			ROS_WARN("No marker selected");
+			return;
+		} 
 		markers.erase(markers.begin()+index);
 		UpdateTable();
 	}
 
 	void MainWindow::on_btnPanic_clicked() {
 		qnode.Panic();
+		ROS_INFO("Panic button pressed, stopped robot...");
 	}
 
 	void MainWindow::on_btnMoveMarkerUp_clicked() {
@@ -237,12 +244,16 @@ namespace map_marker {
 	void MainWindow::MoveMarkerUp(int selectedMarker) {
 		if(selectedMarker + 1 < markers.size() && selectedMarker >= 0) {
 			std::swap(markers.at(selectedMarker), markers.at(selectedMarker + 1));
+		} else {
+			ROS_WARN("No marker selected");
 		}
 	}
 
 	void MainWindow::MoveMarkerDown(int selectedMarker) {
 		if(selectedMarker > 0) {
 			std::swap(markers.at(selectedMarker), markers.at(selectedMarker - 1));
+		} else {
+			ROS_WARN("No marker selected");
 		}
 	}
 
