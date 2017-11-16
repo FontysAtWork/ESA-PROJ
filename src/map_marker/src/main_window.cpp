@@ -18,6 +18,18 @@ using namespace Qt;
 
 namespace map_marker {
 
+	const double map_min = -5;
+	const double map_max = 5;
+	const double map_pix = 992;
+
+	const QColor red = QColor(180, 40, 0);
+	const QColor blue = QColor(30, 30, 140);
+	const QColor green = QColor(50, 140, 30);
+	const QColor orange = QColor(230, 120, 0);
+
+	
+
+
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
 		qnode.init();
@@ -31,42 +43,46 @@ namespace map_marker {
 		QObject::connect(ui.btnAddCustomPose, SIGNAL(clicked(bool)), this, SLOT(on_btnAddCustomPose_clicked()));
 		*/
 
-		QString url = "/home/youbot/git/gui/ESA-Proj/maps/legomap3-cropped.pgm";
-	    QPixmap mapImg(url);
+		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(DrawRobotOnImage()));
 
-	    // Ttable editing
-	    ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	    ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-	    ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-	    
-	    // Create map image
-	    lblMapImage = new ClickableLabel(this);
-	    lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
-	    lblMapImage->setGeometry(QRect(0,0,992,992));
-	    lblMapImage->setPixmap(mapImg);
-	    QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
+		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
+		map = new QPixmap(url);
 
-	    // Set validator for input fields
-	    ui.inpCustomX->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomX));
-	    ui.inpCustomY->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomY));
-	    ui.inpCustomAngle->setValidator(new QDoubleValidator(0, 360, 5, ui.inpCustomAngle));
+		// Ttable editing
+		ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+		ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 
-	    // Panic button color
-	    ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
+		// Create map image
+		lblMapImage = new ClickableLabel(this);
+		lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
+		lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
+		lblMapImage->setPixmap(*map);
+		QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
-	    Marker m(1.0, 2.0, 40.0, Navigation);
+		// Set validator for input fields
+		ui.inpCustomX->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomX));
+		ui.inpCustomY->setValidator(new QDoubleValidator(-100, 100, 5, ui.inpCustomY));
+		ui.inpCustomAngle->setValidator(new QDoubleValidator(0, 360, 5, ui.inpCustomAngle));
+
+		// Panic button color
+		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
+
+		Marker m(1.0, 2.0, 40.0, Navigation);
 		AddMarker(m);
 
-	    UpdateTable();
+		UpdateTable();
 	}
 
 	MainWindow::~MainWindow() {
+		delete map;
+		delete lblMapImage;
 
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
-		QString x = QString::number(a.x());
-		QString y = QString::number(a.y());
+		QString x = QString::number(ConvertPixelToRobot(a.x()));
+		QString y = QString::number(ConvertPixelToRobot(a.y()));
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
 	}
@@ -144,10 +160,10 @@ namespace map_marker {
 
 		QStringList fileNames;
 		if (dialog.exec())
-    	fileNames = dialog.selectedFiles();
+		fileNames = dialog.selectedFiles();
 
-    	QPixmap mapImg(fileNames[0]);
-    	lblMapImage->setPixmap(mapImg);
+		map = new QPixmap(fileNames[0]);
+			lblMapImage->setPixmap(*map);
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
@@ -168,7 +184,7 @@ namespace map_marker {
 			type = Workspace;
 		}
 
-	    AddMarker(Marker(pos, type));
+		AddMarker(Marker(pos, type));
 		UpdateTable();
 	}
 
@@ -184,7 +200,7 @@ namespace map_marker {
 			type = Workspace;
 		}
 		
-	    AddMarker(Marker(x, y, angle, type));
+		AddMarker(Marker(x, y, angle, type));
 		UpdateTable();
 	}
 
@@ -225,13 +241,17 @@ namespace map_marker {
 		UpdateTable();
 	}
 
+	void MainWindow::on_btnClearAllMarkers_clicked() {
+		markers.clear();
+		UpdateTable();
+	}
+
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
-	    QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
+		QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
 
-	 	for (int i = 0; i < indexes.count(); ++i)
-	 	{    
-		 	j = indexes.at(i).row();
+		for (int i = 0; i < indexes.count(); ++i) {    
+			j = indexes.at(i).row();
 		}
 
 		return j;
@@ -266,5 +286,74 @@ namespace map_marker {
 			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetY())));
 			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
 		}
+		DrawRobotOnImage();
+	}
+
+	void MainWindow::DrawRobotOnImage() {
+		geometry_msgs::Pose pos = qnode.GetRobotPosition();
+
+		QImage tmp(map->toImage());
+		QPainter painter(&tmp);
+		QPen paintpen(blue);
+		QPoint p1;
+		paintpen.setWidth(10);
+		p1.setX(ConvertRobotToPixel(pos.position.x));
+		p1.setY(ConvertRobotToPixel(pos.position.y));
+		painter.setPen(paintpen);
+		painter.drawPoint(p1);
+
+		lblMapImage->setPixmap(QPixmap::fromImage(tmp));
+
+		DrawMarkersOnImage();
+	}
+
+	void MainWindow::DrawMarkersOnImage() {
+		
+		QImage tmp(lblMapImage->pixmap()->toImage());
+		QPainter painter(&tmp);
+		QPen paintpen(orange);
+		QPoint p1;
+		paintpen.setWidth(10);
+
+		for(int i; i < markers.size(); i++) {
+			
+			if(i == GetSelectedMarker()) {
+				paintpen.setColor(red);
+				//ROS_WARN("HOI");
+			} else if(markers[i].GetType() == Workspace) {
+				paintpen.setColor(green);
+				//ROS_WARN("GOENN");
+			} else {
+				paintpen.setColor(orange);
+				//ROS_WARN("ORANJEEE");
+			}
+			
+			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
+			p1.setY(ConvertRobotToPixel(markers[i].GetY()));
+			painter.setPen(paintpen);
+			painter.drawPoint(p1);
+		}
+		lblMapImage->setPixmap(QPixmap::fromImage(tmp));
+
+		/*QPoint p2;
+		p2.setX(ConvertRobotToPixel(pos.position.x));
+		p2.setY(ConvertRobotToPixel(pos.position.y));
+		painter.setPen(paintpen);
+		painter.drawPoint(p2);
+		lblMapImage->setPixmap(QPixmap::fromImage(tmp));*/
+	}
+
+	int MainWindow::ConvertRobotToPixel(double a) {
+		return (a - map_min) * (map_pix - 0) / (map_max - map_min);
+	}
+
+	double MainWindow::ConvertPixelToRobot(int a) {
+		return (a) * (map_max - map_min) / (map_pix) + map_min;
 	}
 }
+
+/*
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}*/

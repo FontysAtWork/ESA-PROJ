@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <string>
 #include <QThread>
+#include <QMutex>
 #include <QStringListModel>
 #include "geometry_msgs/Pose.h"
 #include "geometry_msgs/Quaternion.h"
@@ -33,6 +34,7 @@ private:
 	ros::Publisher pubVelCmd;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
+    
 };
 
 }

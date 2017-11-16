@@ -20,7 +20,7 @@
       <x>1010</x>
       <y>50</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -33,7 +33,7 @@
       <x>1010</x>
       <y>80</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -57,9 +57,9 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>580</y>
+      <y>610</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -70,9 +70,9 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>580</y>
+      <y>610</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -279,7 +279,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>610</y>
+      <y>640</y>
       <width>400</width>
       <height>3</height>
      </rect>
@@ -327,10 +327,10 @@
    <widget class="QPushButton" name="btnMoveRobot">
     <property name="geometry">
      <rect>
-      <x>1200</x>
-      <y>550</y>
+      <x>1010</x>
+      <y>580</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -341,9 +341,9 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>550</y>
+      <y>520</y>
       <width>185</width>
-      <height>23</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -373,8 +373,8 @@
    <widget class="QPushButton" name="btnMoveMarkerDown">
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>520</y>
+      <x>1200</x>
+      <y>550</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -394,6 +394,19 @@
     </property>
     <property name="text">
      <string>Move marker up</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnClearAllMarkers">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>550</y>
+      <width>185</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear all markers</string>
     </property>
    </widget>
   </widget>

@@ -8,7 +8,8 @@
 
 enum MarkerType {
     Navigation = 0,
-    Workspace = 1
+    Workspace = 1,
+    Robot = 2
 };
 
 class Marker
