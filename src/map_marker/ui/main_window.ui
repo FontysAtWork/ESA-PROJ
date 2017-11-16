@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>520</y>
+      <y>580</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -70,7 +70,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>520</y>
+      <y>580</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -279,7 +279,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>580</y>
+      <y>610</y>
       <width>400</width>
       <height>3</height>
      </rect>
@@ -368,6 +368,32 @@
     </property>
     <property name="text">
      <string>PANIC BUTTON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnMoveMarkerDown">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>520</y>
+      <width>185</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move marker down</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnMoveMarkerUp">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>520</y>
+      <width>185</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move marker up</string>
     </property>
    </widget>
   </widget>

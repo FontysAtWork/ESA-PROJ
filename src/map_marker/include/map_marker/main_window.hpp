@@ -13,6 +13,7 @@ namespace map_marker {
 		Q_OBJECT
 
 	public Q_SLOTS:
+		void lblMapImage_clicked(QPoint);
 		void on_btnLoadYaml_clicked();
 		void on_btnLoadMap_clicked();
 		void on_btnWriteYaml_clicked();
@@ -22,9 +23,12 @@ namespace map_marker {
 		void on_btnMoveRobot_clicked();
 		void on_btnRemoveMarker_clicked();
 		void on_btnPanic_clicked();
-		void lblMapImage_clicked(QPoint);
+		void on_btnMoveMarkerDown_clicked();
+		void on_btnMoveMarkerUp_clicked();
 		int GetSelectedMarker();
 		void AddMarker(Marker marker);
+		void MoveMarkerUp(int selectedMarker);
+		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
 
 	public:

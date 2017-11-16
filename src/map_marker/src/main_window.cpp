@@ -206,6 +206,18 @@ namespace map_marker {
 		qnode.Panic();
 	}
 
+	void MainWindow::on_btnMoveMarkerUp_clicked() {
+		int selectedMarker = GetSelectedMarker();
+		MoveMarkerUp(selectedMarker);
+		UpdateTable();
+	}
+
+	void MainWindow::on_btnMoveMarkerDown_clicked() {
+		int selectedMarker = GetSelectedMarker();
+		MoveMarkerDown(selectedMarker);
+		UpdateTable();
+	}
+
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
 	    QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
@@ -220,6 +232,18 @@ namespace map_marker {
 
 	void MainWindow::AddMarker(Marker marker) {
 		markers.push_back(marker);
+	}
+
+	void MainWindow::MoveMarkerUp(int selectedMarker) {
+		if(selectedMarker + 1 < markers.size() && selectedMarker >= 0) {
+			std::swap(markers.at(selectedMarker), markers.at(selectedMarker + 1));
+		}
+	}
+
+	void MainWindow::MoveMarkerDown(int selectedMarker) {
+		if(selectedMarker > 0) {
+			std::swap(markers.at(selectedMarker), markers.at(selectedMarker - 1));
+		}
 	}
 
 	void MainWindow::UpdateTable() {
