@@ -1,4 +1,4 @@
-#include "../include/map_marker/MapConfig.hpp"
+#include "MapConfig.hpp"
     YamlConfig::YamlConfig()
     {
 
