@@ -6,6 +6,7 @@
 #include <vector>
 #include "Marker.hpp"
 #include "ClickableLabel.hpp"
+#include "Yaml.hpp"
 
 
 namespace map_marker {
@@ -42,6 +43,7 @@ namespace map_marker {
 		QNode qnode;
 		std::vector<Marker> markers;
 		ClickableLabel *lblMapImage;
+		Yaml yaml;
 	};
 }
 
