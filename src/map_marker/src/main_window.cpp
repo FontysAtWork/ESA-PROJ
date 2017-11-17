@@ -10,10 +10,6 @@
 
 #include "geometry_msgs/Pose.h"
 
-//extern "C" {
-//#include "yaml.h"
-//}
-
 using namespace Qt;
 
 namespace map_marker {

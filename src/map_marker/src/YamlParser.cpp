@@ -1,18 +1,18 @@
-#include "Yaml.hpp"
+#include "YamlParser.hpp"
 
-Yaml::Yaml()
+YamlParser::YamlParser()
 {
 
 
 }
 
-void Yaml::init()
+void YamlParser::init()
 {
 
 
 }
 
-void Yaml::loadYaml(std::string fileName)
+void YamlParser::loadYaml(std::string fileName)
 {
 	yaml_parser_t parser;
 	yaml_token_t  token;
@@ -74,7 +74,7 @@ void Yaml::loadYaml(std::string fileName)
 	}
 }
 
-void Yaml::printYaml(std::string fileName)
+void YamlParser::printYaml(std::string fileName)
 {
 	yaml_parser_t parser;
 	yaml_token_t  token;
@@ -146,7 +146,7 @@ void Yaml::printYaml(std::string fileName)
 
 }
 
-void Yaml::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType, KeyDataPair *k)
+void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType, KeyDataPair *k)
 {
 	if(previousType == YAML_VALUE_TOKEN)
 	{
@@ -185,7 +185,7 @@ void Yaml::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t
 
 }
 
-void Yaml::parseToken(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType)
+void YamlParser::parseToken(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType)
 {
 
 	switch(token.type)

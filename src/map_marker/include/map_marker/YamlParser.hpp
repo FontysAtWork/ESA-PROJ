@@ -15,7 +15,7 @@ typedef struct{
 	std::vector<std::string> data;
 }KeyDataPair;
 
-class Yaml
+class YamlParser
 {
 private:
 	std::vector<KeyDataPair> parsedYaml;
@@ -24,7 +24,7 @@ private:
 	void parseToken(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType);
 	void parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType, KeyDataPair* k);
 public:
-	Yaml();
+	YamlParser();
 	void init();
 	void loadYaml(std::string fileName);
 	void printYaml(std::string fileName);
