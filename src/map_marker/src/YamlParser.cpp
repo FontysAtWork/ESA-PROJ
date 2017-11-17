@@ -2,14 +2,6 @@
 
 YamlParser::YamlParser()
 {
-
-
-}
-
-void YamlParser::init()
-{
-
-
 }
 
 void YamlParser::loadYaml(std::string fileName)
@@ -61,17 +53,6 @@ void YamlParser::loadYaml(std::string fileName)
 	} while(token.type != YAML_STREAM_END_TOKEN);
 
 	fclose(fh);
-
-	for (int i = 0; i < parsedYaml.size(); ++i)
-	{
-		KeyDataPair k = parsedYaml[i];
-		std::cout << "Key: " << k.key << std::endl;
-
-		for (int j = 0; j < k.data.size(); ++j)
-		{
-			std::cout << "Data: " << k.data[j] << std::endl;
-		}
-	}
 }
 
 void YamlParser::printYaml(std::string fileName)
@@ -94,7 +75,6 @@ void YamlParser::printYaml(std::string fileName)
 
 	// Set input file
 	yaml_parser_set_input_file(&parser, fh);
-
 
 	do {
 		yaml_parser_scan(&parser, &token);
@@ -141,9 +121,6 @@ void YamlParser::printYaml(std::string fileName)
 
 	fclose(fh);
 
-
-
-
 }
 
 void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType, KeyDataPair *k)
@@ -153,7 +130,8 @@ void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_
 		if(token.type == YAML_FLOW_SEQUENCE_START_TOKEN)
 		{
 			yaml_token_t dataToken;
-			do{
+			do
+			{
 				yaml_parser_scan(&parser, &dataToken);
 				if(dataToken.type == YAML_SCALAR_TOKEN)
 				{
@@ -164,85 +142,18 @@ void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_
 
 			}while(dataToken.type != YAML_FLOW_SEQUENCE_END_TOKEN);
 		}	
-		else{
-		std::string sName(reinterpret_cast<char*>(token.data.scalar.value));
-
-					k->data.push_back(sName);
+		else
+		{
+			std::string sName(reinterpret_cast<char*>(token.data.scalar.value));
+			k->data.push_back(sName);
 		
-	}
-	for (int i = 0; i < k->data.size(); ++i)
-	{
-		//std::cout << "Data: " << k.data[i] << std::endl;
-	}
+		}
 	}
 	else if(previousType == YAML_KEY_TOKEN)
 	{
 		std::string sName(reinterpret_cast<char*>(token.data.scalar.value));
 
 					k->key = sName;
-		//std::cout << "Key: " << k->key << std::endl;
 	}
 
 }
-
-void YamlParser::parseToken(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType)
-{
-
-	switch(token.type)
-	{
-		// Token types (read before actual token) 
-		case YAML_KEY_TOKEN:   
-		{
-
-		}
-		break;
-		/*case YAML_VALUE_TOKEN:
-		{
-			yaml_token_t tmp;
-			yaml_parser_scan(&parser, &tmp);
-			//parseToken(parser, tmp, token.type);
-			//parseData(tmp, token.type, k);
-
-		}
-		break;*/
-		// Block delimeters 
-		/*case YAML_BLOCK_SEQUENCE_START_TOKEN:   
-		break;
-		case YAML_BLOCK_ENTRY_TOKEN:   
-		break;
-		case YAML_BLOCK_END_TOKEN:   
-		break;
-		// Data 
-		case YAML_BLOCK_MAPPING_START_TOKEN:   
-		break;		*/
-		/*case YAML_SCALAR_TOKEN:  
-		{
-			if(previousType ==YAML_VALUE_TOKEN)
-			{
-				data.push_back(token.data.scalar.value);
-				std::cout << data.back() << std::endl;
-			}
-			else if(previousType == YAML_KEY_TOKEN)
-			{
-				keys.push_back(token.data.scalar.value);
-				std::cout << keys.back() << std::endl;
-			}
-
-		}
-
-		break;
-		// Array
-		case YAML_FLOW_SEQUENCE_START_TOKEN:   
-		break;
-		case YAML_FLOW_SEQUENCE_END_TOKEN:   
-		break;
-		case YAML_FLOW_ENTRY_TOKEN:   
-		break;*/
-		// Others 
-		default:
-		break;
-	}
-
-}
-
-
