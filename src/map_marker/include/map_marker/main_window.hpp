@@ -29,15 +29,8 @@ namespace map_marker {
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnClearAllMarkers_clicked();
-		int GetSelectedMarker();
-		void AddMarker(Marker marker);
-		void MoveMarkerUp(int selectedMarker);
-		void MoveMarkerDown(int selectedMarker);
-		void UpdateTable();
-		void UpdateWindow();
 		void UpdateRobotPose(geometry_msgs::Pose p);
-		int ConvertRobotToPixel(double a);
-		double ConvertPixelToRobot(int a);
+		
 
 	public:
 		MainWindow(int argc, char** argv, QWidget *parent = 0);
@@ -46,6 +39,14 @@ namespace map_marker {
 		//void closeEvent(Qt::QCloseEvent *event); // Overloaded function
 
 	private:
+		void AddMarker(Marker marker);
+		void MoveMarkerUp(int selectedMarker);
+		void MoveMarkerDown(int selectedMarker);
+		void UpdateTable();
+		void UpdateWindow();
+		int GetSelectedMarker();
+		int ConvertRobotToPixel(double a);
+		double ConvertPixelToRobot(int a);
 		Ui::MapMarker ui;
 		QNode qnode;
 		std::vector<Marker> markers;
