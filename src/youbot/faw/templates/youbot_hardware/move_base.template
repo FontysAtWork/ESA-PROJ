@@ -9,7 +9,7 @@
 
     <node pkg="youbot_navigation_common" type="lowpass_filter" respawn="false" name="lowpass_filter" output="screen" />
     
-    <include file="$(find youbot_navigation_global)/launch/laser_scan_matcher.launch" />
+    <include file="$(find faw)/launch/youbot_hardware/laser_scan_matcher.include" />
     
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<rosparam file="$(find faw)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
