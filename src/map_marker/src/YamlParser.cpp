@@ -25,11 +25,10 @@ void YamlParser::loadYaml(std::string fileName)
 	// Set input file
 	yaml_parser_set_input_file(&parser, fh);
 
-
 	do {
 		yaml_parser_scan(&parser, &token);
 		if(token.type == YAML_KEY_TOKEN)
-		{		
+		{	
 			KeyDataPair k;
 			yaml_token_t data;
 			yaml_parser_scan(&parser, &data);
@@ -44,9 +43,6 @@ void YamlParser::loadYaml(std::string fileName)
 			}
 			parsedYaml.push_back(k);
 		}
-			
-
-		//parseToken(parser, token, token.type);
 
 		if(token.type != YAML_STREAM_END_TOKEN)
 		yaml_token_delete(&token);
@@ -155,5 +151,4 @@ void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_
 
 					k->key = sName;
 	}
-
 }

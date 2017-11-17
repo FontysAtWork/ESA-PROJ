@@ -7,7 +7,7 @@
 #include "Marker.hpp"
 #include "ClickableLabel.hpp"
 #include "YamlParser.hpp"
-
+#include "MapConfig.hpp"
 
 namespace map_marker {
 	class MainWindow : public QMainWindow {
@@ -48,6 +48,7 @@ namespace map_marker {
 		std::vector<Marker> markers;
 		ClickableLabel *lblMapImage;
 		YamlParser yaml;
+		MapConfig mapConfig;
 		QPixmap *map;
 
 	protected:
