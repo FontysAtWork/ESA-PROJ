@@ -9,6 +9,8 @@
 #include "YamlParser.hpp"
 #include "MapConfig.hpp"
 
+#include "geometry_msgs/Pose.h"
+
 namespace map_marker {
 	class MainWindow : public QMainWindow {
 		Q_OBJECT
@@ -33,6 +35,7 @@ namespace map_marker {
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
 		void UpdateWindow();
+		void UpdateRobotPose(geometry_msgs::Pose p);
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);
 
@@ -50,6 +53,7 @@ namespace map_marker {
 		YamlParser yaml;
 		MapConfig mapConfig;
 		QPixmap *map;
+		geometry_msgs::Pose robotPose;
 
 	protected:
     	void paintEvent(QPaintEvent *event);

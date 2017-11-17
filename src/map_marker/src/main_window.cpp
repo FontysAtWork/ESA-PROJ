@@ -8,8 +8,6 @@
 
 #include <QDebug>
 
-#include "geometry_msgs/Pose.h"
-
 using namespace Qt;
 
 namespace map_marker {
@@ -30,6 +28,7 @@ namespace map_marker {
 
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(UpdateWindow()));
+		QObject::connect(&qnode, SIGNAL(robotPosUpdated(geometry_msgs::Pose)), this, SLOT(UpdateRobotPose(geometry_msgs::Pose)));
 
 		// Load map image
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
@@ -79,7 +78,7 @@ namespace map_marker {
 
     void MainWindow::drawMarkers(QPainter *qp) {
 		QPen pen(Qt::black, 2, Qt::SolidLine);  
-		geometry_msgs::Pose pos = qnode.GetRobotPosition();
+		//geometry_msgs::Pose pos = qnode.GetRobotPosition();
 		QPoint p1;
 
 		pen.setWidth(10);
@@ -99,11 +98,10 @@ namespace map_marker {
 
 			qp->setPen(pen);
 			qp->drawPoint(p1);
-			ROS_INFO("Marker");
 		}
 
-		p1.setX(ConvertRobotToPixel(pos.position.x));
-		p1.setY(ConvertRobotToPixel(pos.position.y));
+		p1.setX(ConvertRobotToPixel(robotPose.position.x));
+		p1.setY(ConvertRobotToPixel(robotPose.position.y));
 
 		pen.setColor(blue);
 
@@ -241,16 +239,16 @@ namespace map_marker {
 	}
 
 	void MainWindow::MoveMarkerUp(int selectedMarker) {
-		if(selectedMarker + 1 < markers.size() && selectedMarker >= 0) {
-			std::swap(markers.at(selectedMarker), markers.at(selectedMarker + 1));
+		if(selectedMarker > 0) {
+			std::swap(markers.at(selectedMarker), markers.at(selectedMarker - 1));
 		} else {
 			ROS_WARN("No marker selected");
 		}
 	}
 
 	void MainWindow::MoveMarkerDown(int selectedMarker) {
-		if(selectedMarker > 0) {
-			std::swap(markers.at(selectedMarker), markers.at(selectedMarker - 1));
+		if(selectedMarker + 1 < markers.size() && selectedMarker >= 0) {
+			std::swap(markers.at(selectedMarker), markers.at(selectedMarker + 1));
 		} else {
 			ROS_WARN("No marker selected");
 		}
@@ -272,6 +270,10 @@ namespace map_marker {
 	void MainWindow::UpdateWindow() {
 		// Update window - draw map and points again
 		this->update();
+	}
+
+	void MainWindow::UpdateRobotPose(geometry_msgs::Pose p) {
+		robotPose = p;
 	}
 
 	int MainWindow::ConvertRobotToPixel(double a) {
