@@ -32,9 +32,7 @@ namespace map_marker {
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
-		void DrawOnImage();
-		void DrawRobotOnImage();
-		void DrawMarkersOnImage();
+		void UpdateWindow();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);
 
@@ -51,6 +49,10 @@ namespace map_marker {
 		ClickableLabel *lblMapImage;
 		YamlParser yaml;
 		QPixmap *map;
+
+	protected:
+    	void paintEvent(QPaintEvent *event);
+    	void drawMarkers(QPainter *qp);
 	};
 }
 

@@ -31,7 +31,7 @@ namespace map_marker {
 		qnode.init();
 
 		// Connect list update to draw function
-		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(DrawOnImage()));
+		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(UpdateWindow()));
 
 		// Load map image
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
@@ -46,7 +46,7 @@ namespace map_marker {
 		lblMapImage = new ClickableLabel(this);
 		lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
 		lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
-		lblMapImage->setPixmap(*map);
+		//lblMapImage->setPixmap(*map);
 		QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
 		// Set validator for input fields
@@ -69,6 +69,52 @@ namespace map_marker {
 		delete lblMapImage;
 
 	}
+
+	void MainWindow::paintEvent(QPaintEvent *e) {
+        
+      Q_UNUSED(e);
+
+      ROS_INFO("Paintevent");
+      
+      QPainter qp(this);
+
+      qp.drawPixmap(0,0,992,992, *map);
+      drawMarkers(&qp);
+    }
+
+    void MainWindow::drawMarkers(QPainter *qp) {
+		QPen pen(Qt::black, 2, Qt::SolidLine);  
+		geometry_msgs::Pose pos = qnode.GetRobotPosition();
+		QPoint p1;
+
+		pen.setWidth(10);
+
+		for(int i = 0; i < markers.size(); i++) {
+			
+			if(i == GetSelectedMarker()) {
+				pen.setColor(red);
+			} else if(markers[i].GetType() == Workspace) {
+				pen.setColor(green);
+			} else {
+				pen.setColor(orange);
+			}
+
+			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
+			p1.setY(ConvertRobotToPixel(markers[i].GetY()));
+
+			qp->setPen(pen);
+			qp->drawPoint(p1);
+			ROS_INFO("Marker");
+		}
+
+		p1.setX(ConvertRobotToPixel(pos.position.x));
+		p1.setY(ConvertRobotToPixel(pos.position.y));
+
+		pen.setColor(blue);
+
+		qp->setPen(pen);
+		qp->drawPoint(p1);		
+    }
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
 		QString x = QString::number(ConvertPixelToRobot(a.x()));
@@ -222,64 +268,13 @@ namespace map_marker {
 			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetY())));
 			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
 		}
-		DrawOnImage();
-		
+
+		UpdateWindow();
 	}
 
-	void MainWindow::DrawOnImage() {
-		lblMapImage->setPixmap(*map);
-		DrawRobotOnImage();
-		DrawMarkersOnImage();
-	}
-
-	void MainWindow::DrawRobotOnImage() {
-		geometry_msgs::Pose pos = qnode.GetRobotPosition();
-
-		QPoint p1;
-		p1.setX(ConvertRobotToPixel(pos.position.x));
-		p1.setY(ConvertRobotToPixel(pos.position.y));
-
-		QImage tmp(lblMapImage->pixmap()->toImage());
-		QPainter painter(&tmp);
-		QPen paintpen(blue);
-
-		paintpen.setWidth(10);
-		painter.setPen(paintpen);
-		painter.drawPoint(p1);
-		painter.end();
-
-		lblMapImage->setPixmap(QPixmap::fromImage(tmp));
-	}
-
-	void MainWindow::DrawMarkersOnImage() {	
-		QPoint p1;
-
-		QImage tmp(lblMapImage->pixmap()->toImage());
-		QPainter painter(&tmp);
-		QPen paintpen(orange);
-		
-		paintpen.setWidth(10);
-
-		for(int i; i < markers.size(); i++) {
-			
-			if(i == GetSelectedMarker()) {
-				paintpen.setColor(red);
-			} else if(markers[i].GetType() == Workspace) {
-				paintpen.setColor(green);
-			} else {
-				paintpen.setColor(orange);
-			}
-			
-			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
-			p1.setY(ConvertRobotToPixel(markers[i].GetY()));
-
-			painter.setPen(paintpen);
-			painter.drawPoint(p1);
-		}
-
-		painter.end();
-
-		lblMapImage->setPixmap(QPixmap::fromImage(tmp));
+	void MainWindow::UpdateWindow() {
+		// Update window - draw map and points again
+		this->update();
 	}
 
 	int MainWindow::ConvertRobotToPixel(double a) {
