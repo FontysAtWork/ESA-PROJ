@@ -14,7 +14,6 @@ QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
 	init_argv(argv)
 	{
-		qRegisterMetaType<geometry_msgs::Pose>("Pose");
 	}
 
 QNode::~QNode() {
@@ -58,7 +57,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 }
 
 void QNode::run() {
-	ros::Rate rate(1);
+	ros::Rate rate(10);
 	int count = 0;
 
 	tf::TransformListener tflistener;
@@ -73,7 +72,7 @@ void QNode::run() {
 			pose.position.z = transform.getOrigin().z();
 			tf::quaternionTFToMsg(transform.getRotation(), q);
 			pose.orientation = q;
-			Q_EMIT QNode::robotPosUpdated(pose);
+			Q_EMIT QNode::robotPosUpdated();
 		}
 		catch (tf::TransformException ex){
 		  ROS_ERROR("%s",ex.what());

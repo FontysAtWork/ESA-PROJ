@@ -23,14 +23,12 @@ namespace map_marker {
 
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
-		qRegisterMetaType<geometry_msgs::Pose>("Pose");
-		
 		ui.setupUi(this);
 		qnode.init();
 
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(UpdateWindow()));
-		QObject::connect(&qnode, SIGNAL(robotPosUpdated(geometry_msgs::Pose)), this, SLOT(UpdateRobotPose(geometry_msgs::Pose)));
+		QObject::connect(&qnode, SIGNAL(robotPosUpdated()), this, SLOT(UpdateRobotPose()));
 		QObject::connect(&qnode, SIGNAL(rosShutdown()), QApplication::instance(), SLOT(quit()));
 
 		// Load map image
@@ -324,8 +322,9 @@ namespace map_marker {
 		this->update();
 	}
 
-	void MainWindow::UpdateRobotPose(geometry_msgs::Pose p) {
-		robotPose = p;
+	void MainWindow::UpdateRobotPose() {
+		robotPose = qnode.GetRobotPosition();
+		UpdateWindow();
 	}
 
 	int MainWindow::ConvertRobotToPixel(double a) {
