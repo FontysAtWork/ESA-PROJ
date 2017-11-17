@@ -36,8 +36,6 @@ namespace map_marker {
 		MainWindow(int argc, char** argv, QWidget *parent = 0);
 		~MainWindow();
 
-		//void closeEvent(Qt::QCloseEvent *event); // Overloaded function
-
 	private:
 		void AddMarker(Marker marker);
 		void MoveMarkerUp(int selectedMarker);
