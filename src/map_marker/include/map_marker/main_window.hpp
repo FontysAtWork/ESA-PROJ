@@ -31,6 +31,7 @@ namespace map_marker {
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnClearAllMarkers_clicked();
 		void UpdateRobotPose(geometry_msgs::Pose p);
+		void UpdateWindow();
 		
 
 	public:
@@ -42,7 +43,7 @@ namespace map_marker {
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
-		void UpdateWindow();
+		
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);

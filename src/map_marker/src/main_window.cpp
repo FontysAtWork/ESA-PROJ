@@ -27,7 +27,7 @@ namespace map_marker {
 		qnode.init();
 
 		// Connect list update to draw function
-		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(UpdateWindow()));
+		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(UpdateWindow()));
 		QObject::connect(&qnode, SIGNAL(robotPosUpdated(geometry_msgs::Pose)), this, SLOT(UpdateRobotPose(geometry_msgs::Pose)));
 		QObject::connect(&qnode, SIGNAL(rosShutdown()), QApplication::instance(), SLOT(quit()));
 
@@ -81,12 +81,15 @@ namespace map_marker {
 		QPen pen(Qt::black, 2, Qt::SolidLine);  
 		//geometry_msgs::Pose pos = qnode.GetRobotPosition();
 		QPoint p1;
+		int selected = GetSelectedMarker();
+
+		ROS_INFO("test %d", selected);
 
 		pen.setWidth(10);
 
 		for(int i = 0; i < markers.size(); i++) {
 			
-			if(i == GetSelectedMarker()) {
+			if(i == selected) {
 				pen.setColor(red);
 			} else if(markers[i].GetType() == Workspace) {
 				pen.setColor(green);
