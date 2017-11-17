@@ -23,8 +23,6 @@ namespace map_marker {
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);
 
-	
-
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
@@ -46,7 +44,6 @@ namespace map_marker {
 		lblMapImage = new ClickableLabel(this);
 		lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
 		lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
-		//lblMapImage->setPixmap(*map);
 		QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
 		// Set validator for input fields
@@ -73,12 +70,10 @@ namespace map_marker {
 	void MainWindow::paintEvent(QPaintEvent *e) {
         
       Q_UNUSED(e);
-
-      ROS_INFO("Paintevent");
       
       QPainter qp(this);
 
-      qp.drawPixmap(0,0,992,992, *map);
+      qp.drawPixmap(0, 0, map_pix, map_pix, *map);
       drawMarkers(&qp);
     }
 
@@ -147,7 +142,7 @@ namespace map_marker {
 		fileNames = dialog.selectedFiles();
 
 		map = new QPixmap(fileNames[0]);
-			lblMapImage->setPixmap(*map);
+		UpdateWindow();
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
