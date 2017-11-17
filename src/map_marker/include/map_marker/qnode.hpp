@@ -25,6 +25,7 @@ public:
 
 Q_SIGNALS:
     void rosShutdown();
+    void robotPosUpdated(geometry_msgs::Pose);
 
 private:
 	int init_argc;

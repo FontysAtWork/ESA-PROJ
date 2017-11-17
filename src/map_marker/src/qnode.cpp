@@ -72,6 +72,7 @@ void QNode::run() {
 			pose.position.z = transform.getOrigin().z();
 			tf::quaternionTFToMsg(transform.getRotation(), q);
 			pose.orientation = q;
+			Q_EMIT QNode::robotPosUpdated(pose);
 		}
 		catch (tf::TransformException ex){
 		  ROS_ERROR("%s",ex.what());
