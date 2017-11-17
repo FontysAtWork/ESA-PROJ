@@ -87,6 +87,8 @@ namespace map_marker {
 		fileNames = dialog.selectedFiles();
 
 		yaml.loadYaml(fileNames[0].toUtf8().constData());
+		mapConfig.setFullConfigData(yaml.parsedYaml);
+
 	}
 
 	void MainWindow::on_btnLoadMap_clicked() {

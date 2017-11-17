@@ -1,33 +1,75 @@
 #include "MapConfig.hpp"
-    YamlConfig::YamlConfig()
+    MapConfig::MapConfig()
     {
 
     }
-    geometry_msgs::Pose YamlConfig::getOrigin()
+
+    void MapConfig::setFullConfigData(std::vector<KeyDataPair> data)
+    {
+        for (int i = 0; i < data.size(); ++i)
+        {
+            setConfigData(data[i]);
+        }
+
+    }
+
+    void MapConfig::setConfigData(KeyDataPair data)
+    {
+
+        if(data.key == "image")
+        {
+            imageName = data.data[0];
+        }
+        else if(data.key == "resolution")
+        {
+            resolution = std::atof(data.data[0].c_str());
+        }
+        else if(data.key == "origin")
+        {
+            origin.position.x = std::atof(data.data[0].c_str());
+            origin.position.y = std::atof(data.data[1].c_str());
+            origin.orientation.z = std::atof(data.data[2].c_str());
+        }
+        else if(data.key == "negate")
+        {
+            negate = std::atof(data.data[0].c_str());
+        }
+        else if(data.key == "occupied_thresh")
+        {
+            occupiedThresh = std::atof(data.data[0].c_str());
+        }
+        else if(data.key == "free_thresh")
+        {
+            freeThresh = std::atof(data.data[0].c_str());
+        }
+
+    }
+
+    geometry_msgs::Pose MapConfig::getOrigin()
     {
         return origin;
     }
-    double YamlConfig::getResolution()
+    double MapConfig::getResolution()
     {
         return resolution;
     }
-    std::string YamlConfig::getImageName()
+    std::string MapConfig::getImageName()
     {
         return imageName;
     }
-    double YamlConfig::getOccupiedThresh()
+    double MapConfig::getOccupiedThresh()
     {
         return occupiedThresh;
     }
-    double YamlConfig::getFreeThresh()
+    double MapConfig::getFreeThresh()
     {
         return freeThresh;
     }
-    double YamlConfig::getNegate()
+    double MapConfig::getNegate()
     {
         return negate;
     }
-    void YamlConfig::printYaml()
+    void MapConfig::printYaml()
     {
         
     }

@@ -1,10 +1,11 @@
-#ifndef YAML_CONFIG_H
-#define YAML_CONFIG_H
+#ifndef MAP_CONFIG_H
+#define MAP_CONFIG_H
 
 #include <string>
 #include "geometry_msgs/Pose.h"
+#include "YamlParser.hpp"
 
-class YamlConfig
+class MapConfig
 {
 private:
     std::string imageName;
@@ -14,7 +15,9 @@ private:
     double occupiedThresh;
     double freeThresh;
 public:
-    YamlConfig();
+    MapConfig();
+    void setFullConfigData(std::vector<KeyDataPair> data);
+    void setConfigData(KeyDataPair data);
     geometry_msgs::Pose getOrigin();
     double getResolution();
     std::string getImageName();
@@ -24,4 +27,4 @@ public:
     void printYaml();
 };
 
-#endif // YAML_CONFIG_H
+#endif // MAP_CONFIG_H
