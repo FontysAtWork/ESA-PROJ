@@ -23,6 +23,8 @@ namespace map_marker {
 
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
+		qRegisterMetaType<geometry_msgs::Pose>("Pose");
+		
 		ui.setupUi(this);
 		qnode.init();
 
@@ -64,11 +66,9 @@ namespace map_marker {
 	MainWindow::~MainWindow() {
 		delete map;
 		delete lblMapImage;
-
 	}
 
 	void MainWindow::paintEvent(QPaintEvent *e) {
-        
       Q_UNUSED(e);
       
       QPainter qp(this);
@@ -124,7 +124,7 @@ namespace map_marker {
 		dialog.setNameFilter(tr("Map yaml file (*.yaml)"));
 
 		QStringList fileNames;
-		if (dialog.exec()){
+		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
 			mapConfig.setFullConfigData(yaml.parsedYaml);
