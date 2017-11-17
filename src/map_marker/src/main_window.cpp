@@ -148,7 +148,16 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
-		yamlWriter.writeAllMarkers(markers, "/home/viki/git/ESA-PROJ/maps/markers.yaml");
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setNameFilter(tr("Nav marker file (*.yaml)"));
+		dialog.setDefaultSuffix(tr("yaml"));
+
+		QStringList fileNames;
+		if (dialog.exec())
+		fileNames = dialog.selectedFiles();
+
+		yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
 	}
 
 	void MainWindow::on_btnClearYaml_clicked() {
