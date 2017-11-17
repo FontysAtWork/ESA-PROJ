@@ -83,8 +83,6 @@ namespace map_marker {
 		QPoint p1;
 		int selected = GetSelectedMarker();
 
-		ROS_INFO("test %d", selected);
-
 		pen.setWidth(10);
 
 		for(int i = 0; i < markers.size(); i++) {
@@ -122,29 +120,32 @@ namespace map_marker {
 
 	void MainWindow::on_btnLoadYaml_clicked() {
 		QFileDialog dialog(this);
-		dialog.setFileMode(QFileDialog::AnyFile);
-		dialog.setNameFilter(tr("Map image file (*.yaml)"));
+		dialog.setFileMode(QFileDialog::ExistingFile);
+		dialog.setNameFilter(tr("Map yaml file (*.yaml)"));
 
 		QStringList fileNames;
-		if (dialog.exec())
-		fileNames = dialog.selectedFiles();
-
-		yaml.loadYaml(fileNames[0].toUtf8().constData());
-		mapConfig.setFullConfigData(yaml.parsedYaml);
-
+		if (dialog.exec()){
+			fileNames = dialog.selectedFiles();
+			yaml.loadYaml(fileNames[0].toUtf8().constData());
+			mapConfig.setFullConfigData(yaml.parsedYaml);
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
 	}
 
 	void MainWindow::on_btnLoadMap_clicked() {
 		QFileDialog dialog(this);
-		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setFileMode(QFileDialog::ExistingFile);
 		dialog.setNameFilter(tr("Map image file (*.pbm *.pgm *.ppm)"));
 
 		QStringList fileNames;
-		if (dialog.exec())
-		fileNames = dialog.selectedFiles();
-
-		map = new QPixmap(fileNames[0]);
-		UpdateWindow();
+		if (dialog.exec()) {
+			fileNames = dialog.selectedFiles();
+			map = new QPixmap(fileNames[0]);
+			UpdateWindow();
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
