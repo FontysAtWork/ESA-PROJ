@@ -32,6 +32,7 @@ namespace map_marker {
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
+		void DrawOnImage();
 		void DrawRobotOnImage();
 		void DrawMarkersOnImage();
 		int ConvertRobotToPixel(double a);
