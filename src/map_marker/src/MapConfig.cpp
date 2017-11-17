@@ -10,7 +10,6 @@
         {
             setConfigData(data[i]);
         }
-
     }
 
     void MapConfig::setConfigData(KeyDataPair data)
