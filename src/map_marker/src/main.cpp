@@ -6,7 +6,7 @@
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
 
-    qRegisterMetaType<geometry_msgs::Pose>("Pose");
+    qRegisterMetaType<geometry_msgs::Pose>("geometry_msgs::Pose");
 
     map_marker::MainWindow w(argc,argv);
     w.show();

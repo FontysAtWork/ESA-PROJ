@@ -14,7 +14,7 @@ QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
 	init_argv(argv)
 	{
-		qRegisterMetaType<geometry_msgs::Pose>("Pose");
+		qRegisterMetaType<geometry_msgs::Pose>("geometry_msgs::Pose");
 	}
 
 QNode::~QNode() {

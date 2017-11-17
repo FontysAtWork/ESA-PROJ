@@ -23,8 +23,8 @@ namespace map_marker {
 
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
-		qRegisterMetaType<geometry_msgs::Pose>("Pose");
-		
+		qRegisterMetaType<geometry_msgs::Pose>("geometry_msgs::Pose");
+
 		ui.setupUi(this);
 		qnode.init();
 
