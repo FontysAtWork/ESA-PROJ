@@ -78,9 +78,15 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnLoadYaml_clicked() {
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setNameFilter(tr("Map image file (*.yaml)"));
 
-		//yaml.printYaml("/home/viki/git/ESA-PROJ/maps/legomap-cropped.yaml");
-		yaml.loadYaml("/home/viki/git/ESA-PROJ/maps/legomap-cropped.yaml");
+		QStringList fileNames;
+		if (dialog.exec())
+		fileNames = dialog.selectedFiles();
+
+		yaml.loadYaml(fileNames[0].toUtf8().constData());
 	}
 
 	void MainWindow::on_btnLoadMap_clicked() {
