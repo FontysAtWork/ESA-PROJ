@@ -29,6 +29,7 @@ namespace map_marker {
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(UpdateWindow()));
 		QObject::connect(&qnode, SIGNAL(robotPosUpdated(geometry_msgs::Pose)), this, SLOT(UpdateRobotPose(geometry_msgs::Pose)));
+		QObject::connect(&qnode, SIGNAL(rosShutdown()), QApplication::instance(), SLOT(quit()));
 
 		// Load map image
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
