@@ -144,7 +144,7 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnWriteYaml_clicked() {
-		ROS_ERROR("Not implemented yet :(");
+		yamlWriter.writeAllMarkers(markers, "/home/viki/git/ESA-PROJ/maps/markers.yaml");
 	}
 
 	void MainWindow::on_btnClearYaml_clicked() {

@@ -8,6 +8,7 @@
 #include "ClickableLabel.hpp"
 #include "YamlParser.hpp"
 #include "MapConfig.hpp"
+#include "YamlWriter.hpp"
 
 #include "geometry_msgs/Pose.h"
 
@@ -51,6 +52,7 @@ namespace map_marker {
 		std::vector<Marker> markers;
 		ClickableLabel *lblMapImage;
 		YamlParser yaml;
+		YamlWriter yamlWriter;
 		MapConfig mapConfig;
 		QPixmap *map;
 		geometry_msgs::Pose robotPose;
