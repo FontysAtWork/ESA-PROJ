@@ -30,7 +30,7 @@ namespace map_marker {
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnClearAllMarkers_clicked();
-		void UpdateRobotPose(geometry_msgs::Pose p);
+		void UpdateRobotPose();
 		void UpdateWindow();
 		
 
