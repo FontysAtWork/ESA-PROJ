@@ -20,7 +20,8 @@
 	</include>
 	
 	<!-- loads the nav_stack of the youbot -->
-	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
+	<!--<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>-->
+	<include file="$(find faw)/launch/youbot_hardware/move_base.include"/>
 	
 	<!-- the kill node -->
 	<include file="$(find faw)/launch/youbot_hardware/cancel_goal.include" />
