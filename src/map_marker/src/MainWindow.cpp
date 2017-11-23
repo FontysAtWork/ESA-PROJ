@@ -16,6 +16,9 @@ namespace map_marker {
 	const double map_max = 5;
 	const double map_pix = 992;
 
+	const int robot_width = 71;
+	const int robot_height = 36;
+
 	const QColor red = QColor(180, 40, 0);
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
@@ -26,8 +29,11 @@ namespace map_marker {
 		ui.setupUi(this);
 		qnode.Init();
 
+		robotSize.setHeight(robot_height);
+		robotSize.setWidth(robot_width);
+
 		// Connect list update to draw function
-		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(UpdateWindow()));
+		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
 		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
 		QObject::connect(&qnode, SIGNAL(RosShutdown()), QApplication::instance(), SLOT(quit()));
 
@@ -107,9 +113,10 @@ namespace map_marker {
 		p1.setY(ConvertRobotToPixel(-robotPose.position.y));
 
 		pen.setColor(blue);
+		pen.setWidth(1);
 
 		qp->setPen(pen);
-		qp->drawPoint(p1);		
+		qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);		
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
@@ -407,8 +414,7 @@ namespace map_marker {
 		UpdateWindow();
 	}
 
-	void MainWindow::UpdateWindow() {
-
+	void MainWindow::SelectionIsChanged() {
 		int s = GetSelectedMarker();
 
 		if(s >= 0) {
@@ -425,6 +431,10 @@ namespace map_marker {
 			ui.inpCustomName->setText(QString::fromStdString(markers[s].GetName()));
 		}
 
+		UpdateWindow();
+	}
+
+	void MainWindow::UpdateWindow() {
 		// Update window - draw map and points again
 		this->update();
 	}

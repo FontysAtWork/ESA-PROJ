@@ -31,7 +31,7 @@ namespace map_marker {
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnLoadMarkersYaml_clicked();
 		void UpdateRobotPose();
-		void UpdateWindow();
+		void SelectionIsChanged();
 		
 
 	public:
@@ -45,6 +45,7 @@ namespace map_marker {
 		void UpdateTable();
 		void FillMarkerList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
+		void UpdateWindow();
 		
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
@@ -59,6 +60,7 @@ namespace map_marker {
 		MapConfig mapConfig;
 		QPixmap *map;
 		geometry_msgs::Pose robotPose;
+		QSize robotSize;
 
 	protected:
     	void paintEvent(QPaintEvent *event);
