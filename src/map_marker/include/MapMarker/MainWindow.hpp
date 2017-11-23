@@ -1,8 +1,8 @@
 #ifndef map_marker_MAIN_WINDOW_H
 #define map_marker_MAIN_WINDOW_H
 
-#include "ui_main_window.h"
-#include "qnode.hpp"
+#include "ui_MainWindow.h"
+#include "Qnode.hpp"
 #include <vector>
 #include "Marker.hpp"
 #include "ClickableLabel.hpp"

@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <iostream>
 #include <algorithm>
-#include "main_window.hpp"
+#include "MainWindow.hpp"
 
 #include <QDebug>
 
@@ -257,7 +257,7 @@ namespace map_marker {
             {
             	t = Navigation;
             }
-            else if(data[i].data[0].key.compare(0,3,"Wor"))
+            else if(/*data[i].data[0].key.compare(0,3,"Wor")*/false)
             {
             	t = Workspace;
             }

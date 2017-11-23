@@ -1,6 +1,6 @@
 #include <QtGui>
 #include <QApplication>
-#include "main_window.hpp"
+#include "MainWindow.hpp"
 #include "geometry_msgs/Pose.h"
 
 int main(int argc, char **argv) {

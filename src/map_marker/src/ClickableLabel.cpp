@@ -1,4 +1,4 @@
-#include "../include/map_marker/ClickableLabel.hpp"
+#include "ClickableLabel.hpp"
 
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent) {
