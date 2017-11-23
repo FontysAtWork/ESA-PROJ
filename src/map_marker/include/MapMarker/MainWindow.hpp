@@ -46,7 +46,11 @@ namespace map_marker {
 		void FillMarkerList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
 		void UpdateWindow();
-		
+		QPointF Rotatestuff(QPoint center, double x, double y, double angle);
+			
+		double Deg2Rad(double deg);
+		double Rad2Deg(double rad);
+
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);

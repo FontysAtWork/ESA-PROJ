@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include "MainWindow.hpp"
+#include <tf/transform_datatypes.h>
 
 #include <QDebug>
 
@@ -23,6 +24,15 @@ namespace map_marker {
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);
+
+	double MainWindow::Rad2Deg(double rad) {
+    return (rad*(180/M_PI));
+	}
+
+	double MainWindow::Deg2Rad(double deg) {
+	    return (deg*M_PI/180);
+	}
+
 
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
@@ -84,6 +94,16 @@ namespace map_marker {
 	  drawMarkers(&qp);
 	}
 
+	QPointF MainWindow::Rotatestuff(QPoint center, double x, double y, double angle) {
+		double tempX = x - center.x();
+		double tempY = y - center.y();
+
+		double rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		double rotatedY = tempX * sin(angle) + tempY * cos(angle);
+
+		return QPointF(rotatedX + center.x(), rotatedY + center.y());
+	}
+
 	void MainWindow::drawMarkers(QPainter *qp) {
 		QPen pen(Qt::black, 2, Qt::SolidLine);  
 		//geometry_msgs::Pose pos = qnode.GetRobotPosition();
@@ -113,10 +133,21 @@ namespace map_marker {
 		p1.setY(ConvertRobotToPixel(-robotPose.position.y));
 
 		pen.setColor(blue);
-		pen.setWidth(1);
-
 		qp->setPen(pen);
-		qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);		
+		qp->drawPoint(p1);
+
+		pen.setWidth(3);
+		qp->setPen(pen);
+		//qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);
+
+		QPointF points[4] = {
+			Rotatestuff(p1, p1.x() - robotSize.width(), p1.y() + robotSize.height(), -tf::getYaw(robotPose.orientation)),
+			Rotatestuff(p1, p1.x() + robotSize.width(), p1.y() + robotSize.height(), -tf::getYaw(robotPose.orientation)),
+			Rotatestuff(p1, p1.x() + robotSize.width(), p1.y() - robotSize.height(), -tf::getYaw(robotPose.orientation)),			
+			Rotatestuff(p1, p1.x() - robotSize.width(), p1.y() - robotSize.height(), -tf::getYaw(robotPose.orientation))
+		};
+
+		qp->drawPolygon(points, 4);	
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
