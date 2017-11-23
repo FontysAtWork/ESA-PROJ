@@ -35,7 +35,7 @@
 	<include file="$(find faw)/launch/youbot_hardware/move_base.include"/>
 	
 	<!-- the kill node -->
-	<include file="$(find faw)/launch/youbot_hardware/cancel_goal.include" />
+	<!--<include file="$(find faw)/launch/youbot_hardware/cancel_goal.include" />-->
 
 	<!-- Control of youbot via PS4 controller -->
 	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>

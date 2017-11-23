@@ -40,14 +40,21 @@
 		name="hokuyo_back_broadcaster" 
 		args="-0.335 0 -0.025 0 3.14 3.14 base_link hokuyo_back_link 100" />
 		
-	<node pkg="tf" type="static_transform_publisher" name="localizer" args="0 0 0 0 0 0 map odom 10" output="screen" />
+	<!--<node pkg="tf" type="static_transform_publisher" name="localizer" args="0 0 0 0 0 0 map odom 10" output="screen" />-->
+	
+	<node pkg="topic_tools" type="relay" name="relay_hokuyo_front" 
+	      args="/scan_front /scan_combined" />
+	<node pkg="topic_tools" type="relay" name="relay_hokuyo_rear" 
+	      args="/scan_back /scan_combined" />
 
 	<!-- combine laserscan topics -->
+	<!--
 	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" >
 		<param name="destination_frame" value="/base_link"/>
 		<param name="cloud_destination_topic" value="/merged_cloud"/>
 		<param name="scan_destination_topic" value="/scan_multi"/>
 		<param name="laserscan_topics" value ="/scan_front /scan_back" />
 	</node>
+	-->
 
 </launch>

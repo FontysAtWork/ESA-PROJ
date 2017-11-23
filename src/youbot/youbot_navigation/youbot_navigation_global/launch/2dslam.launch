@@ -6,7 +6,8 @@
 
 
 
-    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:=scan_multi" output="screen">
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+	  <remap from="scan" to="scan_front"/>
       <param name="map_update_interval" value="5.0"/>
       <param name="maxUrange" value="3.0"/>
       <param name="maxRange" value="5.0"/>
