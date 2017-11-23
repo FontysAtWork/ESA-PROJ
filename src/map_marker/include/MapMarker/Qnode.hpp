@@ -18,7 +18,7 @@ public:
 	virtual ~QNode();
 	bool Init();
 	bool Init(const std::string &master_url, const std::string &host_url);
-	void Run();
+	void run();
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
 	void Panic();
