@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
 <launch>
+	<!-- Should we start a simulation or run on hardware? -->
+	<arg name="sim" default="false" />
 	
 	<!-- laser scanners (lidar) -->
-	<include file="$(find faw)/launch/youbot_hardware/lasers.include" />
+	<include file="$(find faw)/launch/youbot_hardware/lasers.include">
+		<arg name="sim" value="true" if="$(arg sim)"/>
+	</include>
 	
-	<!-- include original youbot driver launch file -->
-	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
+	<!-- Only start ethercat driver and API when running on hardware -->
+	<group unless="$(arg sim)">
+		<!-- include original youbot driver launch file -->
+		<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
+	</group>
 	
 	<!--Mapping-->
 	<include file="$(find youbot_navigation_global)/launch/2dslam.launch"/>
