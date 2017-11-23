@@ -24,12 +24,12 @@ namespace map_marker {
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
-		qnode.init();
+		qnode.Init();
 
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(UpdateWindow()));
-		QObject::connect(&qnode, SIGNAL(robotPosUpdated()), this, SLOT(UpdateRobotPose()));
-		QObject::connect(&qnode, SIGNAL(rosShutdown()), QApplication::instance(), SLOT(quit()));
+		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
+		QObject::connect(&qnode, SIGNAL(RosShutdown()), QApplication::instance(), SLOT(quit()));
 
 		// Load map image
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
@@ -57,6 +57,8 @@ namespace map_marker {
 		// Add marker for testing
 		Marker m(1.0, 2.0, 40.0, Navigation);
 		AddMarker(m);
+
+		ToggleInterface(true);
 
 		UpdateTable();
 	}
@@ -111,7 +113,7 @@ namespace map_marker {
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
 		QString x = QString::number(ConvertPixelToRobot(a.x()));
-		QString y = QString::number(ConvertPixelToRobot(a.y()));
+		QString y = QString::number(-ConvertPixelToRobot(a.y()));
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
 	}
@@ -153,25 +155,18 @@ namespace map_marker {
 		dialog.setDefaultSuffix(tr("yaml"));
 
 		QStringList fileNames;
-		if (dialog.exec())
-		fileNames = dialog.selectedFiles();
-
-		yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
-	}
-
-	void MainWindow::on_btnClearYaml_clicked() {
-		QFileDialog dialog(this);
-		dialog.setFileMode(QFileDialog::ExistingFile);
-		dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
-
-		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			yaml.printYaml(fileNames[0].toUtf8().constData());
-
+			yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
+		
+	}
+
+	void MainWindow::on_btnClearAllMarkers_clicked() {
+		markers.clear();
+		UpdateTable();
 	}
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
@@ -241,9 +236,19 @@ namespace map_marker {
 		UpdateTable();
 	}
 
-	void MainWindow::on_btnClearAllMarkers_clicked() {
-		markers.clear();
-		UpdateTable();
+	void MainWindow::on_btnLoadMarkersYaml_clicked() {
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::ExistingFile);
+		dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
+
+		QStringList fileNames;
+		if (dialog.exec()) {
+			fileNames = dialog.selectedFiles();
+			yaml.printYaml(fileNames[0].toUtf8().constData());
+
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
 	}
 
 	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)
@@ -270,6 +275,29 @@ namespace map_marker {
 
         }
 
+	}
+
+	void MainWindow::ToggleInterface(bool b) {
+			ui.lblCreateMarkers->setEnabled(b);
+			ui.lblMarkertype->setEnabled(b);
+			ui.lblXpos->setEnabled(b);
+			ui.lblYpos->setEnabled(b);
+			ui.lblAnglepos->setEnabled(b);
+			ui.radioNav->setEnabled(b);
+			ui.radioWorkspace->setEnabled(b);
+			ui.inpCustomX->setEnabled(b);
+			ui.inpCustomY->setEnabled(b);
+			ui.inpCustomAngle->setEnabled(b);
+			ui.tableWidget->setEnabled(b);
+			ui.btnAddCurrentPose->setEnabled(b);
+			ui.btnAddCustomPose->setEnabled(b);
+			ui.btnRemoveMarker->setEnabled(b);
+			ui.btnMoveMarkerUp->setEnabled(b);
+			ui.btnMoveMarkerDown->setEnabled(b);
+			ui.btnClearAllMarkers->setEnabled(b);
+			ui.btnMoveRobot->setEnabled(b);
+			ui.btnWriteYaml->setEnabled(b);
+			ui.btnLoadMarkersYaml->setEnabled(b);
 	}
 
 

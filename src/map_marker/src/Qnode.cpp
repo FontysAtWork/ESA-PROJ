@@ -25,7 +25,7 @@ QNode::~QNode() {
 	wait();
 }
 
-bool QNode::init() {
+bool QNode::Init() {
 	ros::init(init_argc,init_argv,"map_marker");
 	if ( ! ros::master::check() ) {
 		return false;
@@ -39,7 +39,7 @@ bool QNode::init() {
 	return true;
 }
 
-bool QNode::init(const std::string &master_url, const std::string &host_url) {
+bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	std::map<std::string,std::string> remappings;
 	remappings["__master"] = master_url;
 	remappings["__hostname"] = host_url;
@@ -56,7 +56,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	return true;
 }
 
-void QNode::run() {
+void QNode::Run() {
 	ros::Rate rate(10);
 	int count = 0;
 
@@ -72,7 +72,7 @@ void QNode::run() {
 			pose.position.z = transform.getOrigin().z();
 			tf::quaternionTFToMsg(transform.getRotation(), q);
 			pose.orientation = q;
-			Q_EMIT QNode::robotPosUpdated();
+			Q_EMIT QNode::RobotPosUpdated();
 		}
 		catch (tf::TransformException ex){
 		  ROS_ERROR("%s",ex.what());
@@ -83,7 +83,7 @@ void QNode::run() {
 	}
 
 	ROS_INFO("Ros shutdown, proceeding to close the gui.");
-	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
+	Q_EMIT RosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
 
 geometry_msgs::Pose QNode::GetRobotPosition() {

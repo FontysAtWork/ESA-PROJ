@@ -16,16 +16,16 @@ class QNode : public QThread {
 public:
 	QNode(int argc, char** argv );
 	virtual ~QNode();
-	bool init();
-	bool init(const std::string &master_url, const std::string &host_url);
-	void run();
+	bool Init();
+	bool Init(const std::string &master_url, const std::string &host_url);
+	void Run();
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
 	void Panic();
 
 Q_SIGNALS:
-    void rosShutdown();
-    void robotPosUpdated();
+    void RosShutdown();
+    void RobotPosUpdated();
 
 private:
 	int init_argc;
