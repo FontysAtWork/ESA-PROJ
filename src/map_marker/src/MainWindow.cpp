@@ -261,6 +261,7 @@ namespace map_marker {
 		markers.clear();
 		geometry_msgs::Pose p;
 		MarkerType t;
+		std::string name; 
 		for (int i = 0; i < data.size(); i++)
 		{
 			
@@ -307,6 +308,10 @@ namespace map_marker {
 			{
 				p.orientation.w = std::atof(data[i].data[0].c_str());
 			}
+			else if (data[i].key.compare("Name") == 0)
+			{
+				name = data[i].data[0];
+			}
 			else
 			{
 				ROS_ERROR("Unkown data!");
@@ -314,8 +319,7 @@ namespace map_marker {
 
 			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,6,"Marker") == 0)
 			{
-				ROS_ERROR("JASPER IMPLEMENTEER GVD");
-				Marker m(p, t, "OMG");
+				Marker m(p, t, name);
 				markers.push_back(m);
 				t = Robot;
 				p.position.x = 0;
@@ -325,6 +329,7 @@ namespace map_marker {
 				p.orientation.y = 0;
 				p.orientation.z = 0;
 				p.orientation.w = 0;
+				name = "";
 			}
 		}
 		UpdateTable();

@@ -19,13 +19,13 @@ void YamlWriter::writeAllMarkers(std::vector<Marker> markers, std::string fileNa
 		stream << text << data;
 	}
 	stream.close();
-
 }
 
 std::string YamlWriter::writeMarker(Marker marker)
 {
 	geometry_msgs::Pose pose = marker.GetPose();
-	std::string text = positionPrefix + "x: " + std::to_string(pose.position.x) + "\n";
+	std::string text = "Name: " + marker.GetName() + "\n";
+	text += positionPrefix + "x: " + std::to_string(pose.position.x) + "\n";
 	text += positionPrefix + "y: " + std::to_string(pose.position.y) + "\n";
 	text += positionPrefix + "z: " + std::to_string(pose.position.z) + "\n";
 	text += orientationPrefix + "x: " + std::to_string(pose.orientation.x) + "\n";
