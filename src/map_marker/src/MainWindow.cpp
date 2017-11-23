@@ -96,14 +96,14 @@ namespace map_marker {
 			}
 
 			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
-			p1.setY(ConvertRobotToPixel(markers[i].GetY()));
+			p1.setY(ConvertRobotToPixel(-markers[i].GetY()));
 
 			qp->setPen(pen);
 			qp->drawPoint(p1);
 		}
 
 		p1.setX(ConvertRobotToPixel(robotPose.position.x));
-		p1.setY(ConvertRobotToPixel(robotPose.position.y));
+		p1.setY(ConvertRobotToPixel(-robotPose.position.y));
 
 		pen.setColor(blue);
 
