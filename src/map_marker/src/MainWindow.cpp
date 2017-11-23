@@ -25,27 +25,19 @@ namespace map_marker {
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);
 
-	double MainWindow::Rad2Deg(double rad) {
-    return (rad*(180/M_PI));
-	}
-
-	double MainWindow::Deg2Rad(double deg) {
-	    return (deg*M_PI/180);
-	}
-
-
-
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
 		qnode.Init();
 
-		robotSize.setHeight(robot_height);
-		robotSize.setWidth(robot_width);
-
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
+		QObject::connect(ui.spinRobotWidth, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
+		QObject::connect(ui.spinRobotHeight, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
 		QObject::connect(&qnode, SIGNAL(RosShutdown()), QApplication::instance(), SLOT(quit()));
+
+		// Set robot size
+		UpdateRobotSize();
 
 		// Load map image
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
@@ -141,10 +133,10 @@ namespace map_marker {
 		//qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);
 
 		QPointF points[4] = {
-			Rotatestuff(p1, p1.x() - robotSize.width(), p1.y() + robotSize.height(), -tf::getYaw(robotPose.orientation)),
-			Rotatestuff(p1, p1.x() + robotSize.width(), p1.y() + robotSize.height(), -tf::getYaw(robotPose.orientation)),
-			Rotatestuff(p1, p1.x() + robotSize.width(), p1.y() - robotSize.height(), -tf::getYaw(robotPose.orientation)),			
-			Rotatestuff(p1, p1.x() - robotSize.width(), p1.y() - robotSize.height(), -tf::getYaw(robotPose.orientation))
+			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),
+			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),
+			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),			
+			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -tf::getYaw(robotPose.orientation))
 		};
 
 		qp->drawPolygon(points, 4);	
@@ -292,6 +284,12 @@ namespace map_marker {
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
+	}
+
+	void MainWindow::UpdateRobotSize() {
+		robotSize.setHeight(ui.spinRobotWidth->value());
+		robotSize.setWidth(ui.spinRobotHeight->value());
+		UpdateWindow();
 	}
 
 	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)

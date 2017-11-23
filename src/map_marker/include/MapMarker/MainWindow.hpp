@@ -32,6 +32,7 @@ namespace map_marker {
 		void on_btnLoadMarkersYaml_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();
+		void UpdateRobotSize();
 		
 
 	public:
@@ -46,11 +47,8 @@ namespace map_marker {
 		void FillMarkerList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
 		void UpdateWindow();
-		QPointF Rotatestuff(QPoint center, double x, double y, double angle);
-			
-		double Deg2Rad(double deg);
-		double Rad2Deg(double rad);
 
+		QPointF Rotatestuff(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);
