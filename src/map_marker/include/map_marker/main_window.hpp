@@ -43,6 +43,7 @@ namespace map_marker {
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
+		void FillMarkerList(std::vector<KeyDataPair> data);
 		
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);

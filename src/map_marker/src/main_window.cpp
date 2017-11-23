@@ -160,7 +160,18 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnClearYaml_clicked() {
-		ROS_ERROR("Not implemented yet :(");
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::ExistingFile);
+		dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
+
+		QStringList fileNames;
+		if (dialog.exec()) {
+			fileNames = dialog.selectedFiles();
+			yaml.printYaml(fileNames[0].toUtf8().constData());
+
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
 	}
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
@@ -234,6 +245,33 @@ namespace map_marker {
 		markers.clear();
 		UpdateTable();
 	}
+
+	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)
+	{
+		markers.clear();
+		for (int i = 0; i < data.size(); ++i)
+        {
+            geometry_msgs::Pose p;
+            MarkerType t;
+            if(data[i].data[0].compare(0,3,"Nav"))
+            {
+            	t = Navigation;
+            }
+            else if(data[i].data[0].key.compare(0,3,"Wor"))
+            {
+            	t = Workspace;
+            }
+            else
+            {
+            	t = Robot;
+            }
+
+            //TODO Read the pose
+
+        }
+
+	}
+
 
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
