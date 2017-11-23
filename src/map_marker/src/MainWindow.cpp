@@ -17,9 +17,6 @@ namespace map_marker {
 	const double map_max = 5;
 	const double map_pix = 992;
 
-	const int robot_width = 71;
-	const int robot_height = 36;
-
 	const QColor red = QColor(180, 40, 0);
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
@@ -61,11 +58,6 @@ namespace map_marker {
 
 		// Panic button color
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
-
-		// Add marker for testing
-		Marker m(1.0, 2.0, 40.0, Navigation,"hoi_ik_ben_een_marker");
-
-		AddMarker(m);
 
 		ToggleInterface(true);
 
@@ -132,11 +124,16 @@ namespace map_marker {
 		qp->setPen(pen);
 		//qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);
 
+		tf::Quaternion q;	
+		tf::quaternionMsgToTF(robotPose.orientation, q);
+		q.normalize();
+		double angle = tf::getYaw(q);
+
 		QPointF points[4] = {
-			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),
-			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),
-			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -tf::getYaw(robotPose.orientation)),			
-			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -tf::getYaw(robotPose.orientation))
+			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
+			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
+			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle),			
+			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle)
 		};
 
 		qp->drawPolygon(points, 4);	
@@ -287,8 +284,8 @@ namespace map_marker {
 	}
 
 	void MainWindow::UpdateRobotSize() {
-		robotSize.setHeight(ui.spinRobotWidth->value());
-		robotSize.setWidth(ui.spinRobotHeight->value());
+		robotSize.setHeight(ui.spinRobotHeight->value());
+		robotSize.setWidth(ui.spinRobotWidth->value());
 		UpdateWindow();
 	}
 

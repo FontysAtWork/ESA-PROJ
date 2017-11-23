@@ -70,7 +70,9 @@ void QNode::run() {
 			pose.position.x = transform.getOrigin().x();
 			pose.position.y = transform.getOrigin().y();
 			pose.position.z = transform.getOrigin().z();
-			tf::quaternionTFToMsg(transform.getRotation(), q);
+			tf::Quaternion tfq = transform.getRotation();
+			tfq.normalize();
+			tf::quaternionTFToMsg(tfq, q);
 			pose.orientation = q;
 			Q_EMIT QNode::RobotPosUpdated();
 		}

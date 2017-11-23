@@ -29,7 +29,10 @@ double Marker::GetY() {
 }
 
 double Marker::GetAngle() {
-    return Rad2Deg(tf::getYaw(pos.orientation));
+	tf::Quaternion q;
+	tf::quaternionMsgToTF(pos.orientation, q);
+	q.normalize();
+	return Rad2Deg(tf::getYaw(q));
 }
 
 MarkerType Marker::GetType() {
