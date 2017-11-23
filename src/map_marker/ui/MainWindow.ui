@@ -54,6 +54,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnWriteYaml">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -66,7 +69,10 @@
      <string>Write to marker file</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnClearYaml">
+   <widget class="QPushButton" name="btnLoadMarkersYaml">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1200</x>
@@ -76,10 +82,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>Clear marker file</string>
+     <string>Load markers from file</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnAddCurrentPose">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -93,6 +102,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnAddCustomPose">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1210</x>
@@ -106,6 +118,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomX">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1290</x>
@@ -116,6 +131,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="lblXpos">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1210</x>
@@ -129,6 +147,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomY">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1290</x>
@@ -139,6 +160,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="lblYpos">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1210</x>
@@ -152,6 +176,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomAngle">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1310</x>
@@ -162,6 +189,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="lblAnglepos">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1210</x>
@@ -175,6 +205,9 @@
     </property>
    </widget>
    <widget class="QRadioButton" name="radioWorkspace">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -191,6 +224,9 @@
     </property>
    </widget>
    <widget class="QRadioButton" name="radioNav">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -210,6 +246,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="lblMarkertype">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -256,6 +295,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="lblCreateMarkers">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -289,6 +331,9 @@
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -325,6 +370,9 @@
     </column>
    </widget>
    <widget class="QPushButton" name="btnMoveRobot">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -338,6 +386,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnRemoveMarker">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -371,6 +422,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnMoveMarkerDown">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1200</x>
@@ -384,6 +438,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnMoveMarkerUp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1200</x>
@@ -397,6 +454,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnClearAllMarkers">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -407,6 +467,32 @@
     </property>
     <property name="text">
      <string>Clear all markers</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblImgMapYaml">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>55</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblImgMapPgm">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>85</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

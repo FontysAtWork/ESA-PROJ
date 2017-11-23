@@ -21,7 +21,7 @@ namespace map_marker {
 		void on_btnLoadYaml_clicked();
 		void on_btnLoadMap_clicked();
 		void on_btnWriteYaml_clicked();
-		void on_btnClearYaml_clicked();
+		void on_btnClearAllMarkers_clicked();
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();
 		void on_btnMoveRobot_clicked();
@@ -29,7 +29,7 @@ namespace map_marker {
 		void on_btnPanic_clicked();
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
-		void on_btnClearAllMarkers_clicked();
+		void on_btnLoadMarkersYaml_clicked();
 		void UpdateRobotPose();
 		void UpdateWindow();
 		
@@ -44,10 +44,12 @@ namespace map_marker {
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();
 		void FillMarkerList(std::vector<KeyDataPair> data);
+		void ToggleInterface(bool b);
 		
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);
+
 		Ui::MapMarker ui;
 		QNode qnode;
 		std::vector<Marker> markers;
