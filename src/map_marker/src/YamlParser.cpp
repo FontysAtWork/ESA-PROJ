@@ -28,6 +28,7 @@ YamlParser::YamlParser()
 
 void YamlParser::loadYaml(std::string fileName)
 {
+	parsedYaml.clear();
 	yaml_parser_t parser;
 	yaml_token_t  token;
 	FILE *fh = fopen(fileName.c_str(), "r");
@@ -181,3 +182,11 @@ void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_
 		k->key = sName;
 	}
 }
+
+std::vector<KeyDataPair> YamlParser::GetParsedYaml()
+{
+
+	return parsedYaml;
+}
+
+

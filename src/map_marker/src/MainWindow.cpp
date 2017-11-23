@@ -67,15 +67,15 @@ namespace map_marker {
 	}
 
 	void MainWindow::paintEvent(QPaintEvent *e) {
-      Q_UNUSED(e);
-      
-      QPainter qp(this);
+	  Q_UNUSED(e);
+	  
+	  QPainter qp(this);
 
-      qp.drawPixmap(0, 0, map_pix, map_pix, *map);
-      drawMarkers(&qp);
-    }
+	  qp.drawPixmap(0, 0, map_pix, map_pix, *map);
+	  drawMarkers(&qp);
+	}
 
-    void MainWindow::drawMarkers(QPainter *qp) {
+	void MainWindow::drawMarkers(QPainter *qp) {
 		QPen pen(Qt::black, 2, Qt::SolidLine);  
 		//geometry_msgs::Pose pos = qnode.GetRobotPosition();
 		QPoint p1;
@@ -107,7 +107,7 @@ namespace map_marker {
 
 		qp->setPen(pen);
 		qp->drawPoint(p1);		
-    }
+	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
 		QString x = QString::number(ConvertPixelToRobot(a.x()));
@@ -125,7 +125,7 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			mapConfig.setFullConfigData(yaml.parsedYaml);
+			mapConfig.setFullConfigData(yaml.GetParsedYaml());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -167,7 +167,8 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			yaml.printYaml(fileNames[0].toUtf8().constData());
+			yaml.loadYaml(fileNames[0].toUtf8().constData());
+			FillMarkerList(yaml.GetParsedYaml());
 
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -249,29 +250,69 @@ namespace map_marker {
 	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)
 	{
 		markers.clear();
-		for (int i = 0; i < data.size(); ++i)
-        {
-            geometry_msgs::Pose p;
-            MarkerType t;
-            if(data[i].data[0].compare(0,3,"Nav"))
-            {
-            	t = Navigation;
-            }
-            else if(/*data[i].data[0].key.compare(0,3,"Wor")*/false)
-            {
-            	t = Workspace;
-            }
-            else
-            {
-            	t = Robot;
-            }
+		UpdateTable();
+		geometry_msgs::Pose p;
+		MarkerType t;
+		for (int i = 0; i < data.size(); i++)
+		{
+			
+			if(data[i].key.compare(0,6,"Marker") == 0)
+			{
+				if(data[i].data[0].compare(0,3,"Nav") == 0)
+				{
+					t = Navigation;
+				}
+				else if(data[i].data[0].compare(0,3,"Wor") == 0)
+				{
+					t = Workspace;
+				}
+				else
+				{
+					t = Robot;
+				}
+			}
+			else if (data[i].key.compare("position_x") == 0)
+			{
+				p.position.x = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("position_y") == 0)
+			{
+				p.position.y = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("position_z") == 0)
+			{
+				p.position.z = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("orientation_x") == 0)
+			{
+				p.orientation.x = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("orientation_y") == 0)
+			{
+				p.orientation.y = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("orientation_z") == 0)
+			{
+				p.orientation.z = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("orientation_w") == 0)
+			{
+				p.orientation.w = std::atof(data[i].data[0].c_str());
+			}
+			else
+			{
+				ROS_ERROR("Unkown data!");
+			}
 
-            //TODO Read the pose
-
-        }
-
+			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,6,"Marker") == 0)
+			{
+				Marker m(p, t);
+				markers.push_back(m);
+				//write away the things. 
+			}
+		}
+		UpdateTable();
 	}
-
 
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
