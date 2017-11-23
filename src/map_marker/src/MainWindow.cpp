@@ -94,20 +94,38 @@ namespace map_marker {
 		QPoint p1;
 		int selected = GetSelectedMarker();
 
-		pen.setWidth(10);
-
 		for(int i = 0; i < markers.size(); i++) {
+
+			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
+			p1.setY(ConvertRobotToPixel(-markers[i].GetY()));
 			
 			if(i == selected) {
+				pen.setWidth(3);
 				pen.setColor(red);
+		
+				qp->setPen(pen);
+
+				tf::Quaternion q1;	
+				tf::quaternionMsgToTF(markers[i].GetQuaternation(), q1);
+				q1.normalize();
+				double angle1 = tf::getYaw(q1);
+
+				QPointF points[4] = {
+					Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
+					Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
+					Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1),			
+					Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1)
+				};
+
+				qp->drawPolygon(points, 4);	
+				
 			} else if(markers[i].GetType() == Workspace) {
 				pen.setColor(green);
 			} else {
 				pen.setColor(orange);
 			}
 
-			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
-			p1.setY(ConvertRobotToPixel(-markers[i].GetY()));
+			pen.setWidth(10);
 
 			qp->setPen(pen);
 			qp->drawPoint(p1);
@@ -116,6 +134,7 @@ namespace map_marker {
 		p1.setX(ConvertRobotToPixel(robotPose.position.x));
 		p1.setY(ConvertRobotToPixel(-robotPose.position.y));
 
+		pen.setWidth(10);
 		pen.setColor(blue);
 		qp->setPen(pen);
 		qp->drawPoint(p1);
