@@ -65,3 +65,5 @@ src/CMakeLists.txt
 
 # editors
 .vscode/
+*.sublime-project
+*.sublime-workspace
