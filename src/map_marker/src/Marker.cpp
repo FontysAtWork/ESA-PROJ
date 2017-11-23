@@ -2,16 +2,18 @@
 #include <tf/transform_datatypes.h>
 #include <math.h>
 
-Marker::Marker(double xPos, double yPos, double angle, MarkerType t) {
+Marker::Marker(double xPos, double yPos, double angle, MarkerType t, std::string name) {
 	pos.position.x = xPos;
 	pos.position.y = yPos;
 	pos.orientation = SetQuaternation(0, 0, Deg2Rad(angle));
 	type = t;
+	markerName = name;
 }
 
-Marker::Marker(geometry_msgs::Pose p, MarkerType t) {
+Marker::Marker(geometry_msgs::Pose p, MarkerType t, std::string name) {
 	pos = p;
 	type = t;
+	markerName = name;
 }
 
 geometry_msgs::Quaternion Marker::SetQuaternation(double roll, double pitch, double yaw) {
@@ -42,6 +44,10 @@ std::string Marker::GetTypeStr() {
 	} else {
 		return "Other";
 	}
+}
+
+std::string Marker::GetName() {
+	return markerName;
 }
 
 geometry_msgs::Quaternion Marker::GetQuaternation() {

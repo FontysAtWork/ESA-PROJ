@@ -55,7 +55,8 @@ namespace map_marker {
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
 
 		// Add marker for testing
-		Marker m(1.0, 2.0, 40.0, Navigation);
+		Marker m(1.0, 2.0, 40.0, Navigation,"hoi_ik_ben_een_marker");
+
 		AddMarker(m);
 
 		ToggleInterface(true);
@@ -171,6 +172,7 @@ namespace map_marker {
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
 		geometry_msgs::Pose pos = qnode.GetRobotPosition();
+		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 
 		MarkerType type;
 		if(ui.radioNav->isChecked()) {
@@ -179,7 +181,7 @@ namespace map_marker {
 			type = Workspace;
 		}
 
-		AddMarker(Marker(pos, type));
+		AddMarker(Marker(pos, type, name));
 		UpdateTable();
 	}
 
@@ -187,6 +189,7 @@ namespace map_marker {
 		double x = ui.inpCustomX->text().toDouble();
 		double y = ui.inpCustomY->text().toDouble();
 		double angle = ui.inpCustomAngle->text().toDouble();
+		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 		
 		MarkerType type;
 		if(ui.radioNav->isChecked()) {
@@ -195,7 +198,7 @@ namespace map_marker {
 			type = Workspace;
 		}
 		
-		AddMarker(Marker(x, y, angle, type));
+		AddMarker(Marker(x, y, angle, type, name));
 		UpdateTable();
 	}
 
@@ -311,7 +314,8 @@ namespace map_marker {
 
 			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,6,"Marker") == 0)
 			{
-				Marker m(p, t);
+				ROS_ERROR("JASPER IMPLEMENTEER GVD");
+				Marker m(p, t, "OMG");
 				markers.push_back(m);
 				t = Robot;
 				p.position.x = 0;
@@ -327,16 +331,18 @@ namespace map_marker {
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
-			ui.lblCreateMarkers->setEnabled(b);
+			ui.lblMarkers->setEnabled(b);
 			ui.lblMarkertype->setEnabled(b);
 			ui.lblXpos->setEnabled(b);
 			ui.lblYpos->setEnabled(b);
 			ui.lblAnglepos->setEnabled(b);
+			ui.lblName->setEnabled(b);
 			ui.radioNav->setEnabled(b);
 			ui.radioWorkspace->setEnabled(b);
 			ui.inpCustomX->setEnabled(b);
 			ui.inpCustomY->setEnabled(b);
 			ui.inpCustomAngle->setEnabled(b);
+			ui.inpCustomName->setEnabled(b);
 			ui.tableWidget->setEnabled(b);
 			ui.btnAddCurrentPose->setEnabled(b);
 			ui.btnAddCustomPose->setEnabled(b);
@@ -347,6 +353,8 @@ namespace map_marker {
 			ui.btnMoveRobot->setEnabled(b);
 			ui.btnWriteYaml->setEnabled(b);
 			ui.btnLoadMarkersYaml->setEnabled(b);
+			ui.btnUpdateCustomPose->setEnabled(b);
+
 	}
 
 	int MainWindow::GetSelectedMarker() {
@@ -384,16 +392,34 @@ namespace map_marker {
 		ui.tableWidget->setRowCount(0);
 		for(int i=0; i < markers.size(); i++) {
 			ui.tableWidget->insertRow ( ui.tableWidget->rowCount() );
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 1, new QTableWidgetItem(QString::number(markers[i].GetX())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetY())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetName())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 1, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
+			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
 		}
 
 		UpdateWindow();
 	}
 
 	void MainWindow::UpdateWindow() {
+
+		int s = GetSelectedMarker();
+
+		if(s >= 0) {
+			if(markers[s].GetType() == Navigation) {
+				ui.radioNav->setChecked(true);
+				ui.radioWorkspace->setChecked(false);
+			} else if (markers[s].GetType() == Workspace) {
+				ui.radioNav->setChecked(false);
+				ui.radioWorkspace->setChecked(true);
+			}
+			ui.inpCustomX->setText(QString::number(markers[s].GetX()));
+			ui.inpCustomY->setText(QString::number(markers[s].GetY()));
+			ui.inpCustomAngle->setText(QString::number(markers[s].GetAngle()));
+			ui.inpCustomName->setText(QString::fromStdString(markers[s].GetName()));
+		}
+
 		// Update window - draw map and points again
 		this->update();
 	}

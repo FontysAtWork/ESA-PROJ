@@ -18,14 +18,16 @@ private:
     MarkerType type;
     geometry_msgs::Pose pos;
     geometry_msgs::Quaternion SetQuaternation(double roll, double pitch, double yaw);
+    std::string markerName;
 public:
-    Marker(double x, double y, double angle, MarkerType t);
-    Marker(geometry_msgs::Pose p, MarkerType t);
+    Marker(double x, double y, double angle, MarkerType t, std::string name);
+    Marker(geometry_msgs::Pose p, MarkerType t, std::string name);
     double GetX();
     double GetY();
     double GetAngle();
     MarkerType GetType();
     std::string GetTypeStr();
+    std::string GetName();
     geometry_msgs::Quaternion GetQuaternation();
     geometry_msgs::Point GetPoint();
     geometry_msgs::Pose GetPose();

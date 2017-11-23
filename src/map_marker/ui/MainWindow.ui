@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1400</width>
+    <width>1580</width>
     <height>992</height>
    </rect>
   </property>
@@ -59,8 +59,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>610</y>
+      <x>1390</x>
+      <y>680</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -75,8 +75,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1200</x>
-      <y>610</y>
+      <x>1390</x>
+      <y>650</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>260</y>
+      <y>290</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -101,20 +101,20 @@
      <string>Add current robot pose</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnAddCustomPose">
+   <widget class="QPushButton" name="btnUpdateCustomPose">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>260</y>
+      <x>1200</x>
+      <y>290</y>
       <width>185</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Add custom pose</string>
+     <string>Update pose</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomX">
@@ -123,9 +123,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1290</x>
+      <x>1420</x>
       <y>170</y>
-      <width>103</width>
+      <width>151</width>
       <height>23</height>
      </rect>
     </property>
@@ -136,14 +136,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1210</x>
+      <x>1370</x>
       <y>172</y>
       <width>90</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
-     <string>Custom X:</string>
+     <string>X:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomY">
@@ -152,9 +152,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1290</x>
+      <x>1420</x>
       <y>200</y>
-      <width>103</width>
+      <width>151</width>
       <height>23</height>
      </rect>
     </property>
@@ -165,14 +165,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1210</x>
+      <x>1370</x>
       <y>202</y>
       <width>90</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
-     <string>Custom Y:</string>
+     <string>Y:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomAngle">
@@ -181,9 +181,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1310</x>
+      <x>1420</x>
       <y>230</y>
-      <width>83</width>
+      <width>151</width>
       <height>23</height>
      </rect>
     </property>
@@ -194,14 +194,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1210</x>
+      <x>1370</x>
       <y>232</y>
       <width>103</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
-     <string>Custom Angle:</string>
+     <string>Angle:</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioWorkspace">
@@ -266,7 +266,7 @@
      <rect>
       <x>1000</x>
       <y>120</y>
-      <width>400</width>
+      <width>600</width>
       <height>3</height>
      </rect>
     </property>
@@ -294,7 +294,7 @@
      <string>Load map file:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblCreateMarkers">
+   <widget class="QLabel" name="lblMarkers">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -314,15 +314,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Create markers:</string>
+     <string>Markers:</string>
     </property>
    </widget>
    <widget class="Line" name="lineH2">
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>640</y>
-      <width>400</width>
+      <y>740</y>
+      <width>580</width>
       <height>3</height>
      </rect>
     </property>
@@ -337,17 +337,22 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>290</y>
-      <width>382</width>
-      <height>221</height>
+      <y>320</y>
+      <width>564</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="rowCount">
      <number>0</number>
     </property>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>80</number>
+     <number>115</number>
     </attribute>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
     <column>
      <property name="text">
       <string>Type</string>
@@ -376,7 +381,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>580</y>
+      <y>710</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -392,7 +397,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>520</y>
+      <y>650</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -406,7 +411,7 @@
      <rect>
       <x>1010</x>
       <y>910</y>
-      <width>371</width>
+      <width>561</width>
       <height>71</height>
      </rect>
     </property>
@@ -428,7 +433,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>550</y>
+      <y>680</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -444,7 +449,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>520</y>
+      <y>650</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -460,7 +465,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>550</y>
+      <y>680</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -493,6 +498,51 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblName">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>262</y>
+      <width>103</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Name:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inpCustomName">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>260</y>
+      <width>151</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnAddCustomPose">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1390</x>
+      <y>290</y>
+      <width>185</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add custom pose</string>
     </property>
    </widget>
   </widget>
