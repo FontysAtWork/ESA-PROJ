@@ -256,7 +256,6 @@ namespace map_marker {
 	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)
 	{
 		markers.clear();
-		UpdateTable();
 		geometry_msgs::Pose p;
 		MarkerType t;
 		for (int i = 0; i < data.size(); i++)
@@ -314,7 +313,14 @@ namespace map_marker {
 			{
 				Marker m(p, t);
 				markers.push_back(m);
-				//write away the things. 
+				t = Robot;
+				p.position.x = 0;
+				p.position.y = 0;
+				p.position.z = 0;
+				p.orientation.x = 0;
+				p.orientation.y = 0;
+				p.orientation.z = 0;
+				p.orientation.w = 0;
 			}
 		}
 		UpdateTable();
