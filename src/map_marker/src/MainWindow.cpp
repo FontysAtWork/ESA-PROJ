@@ -26,6 +26,9 @@ namespace map_marker {
 		ui.setupUi(this);
 		qnode.Init();
 
+		// Make a pose to avoid warnings if to pose is not yet retreived from the robot
+		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
+
 		// Connect list update to draw function
 		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
 		QObject::connect(ui.spinRobotWidth, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
@@ -78,7 +81,7 @@ namespace map_marker {
 	  drawMarkers(&qp);
 	}
 
-	QPointF MainWindow::Rotatestuff(QPoint center, double x, double y, double angle) {
+	QPointF MainWindow::RotateDrawPoint(QPoint center, double x, double y, double angle) {
 		double tempX = x - center.x();
 		double tempY = y - center.y();
 
@@ -487,6 +490,26 @@ namespace map_marker {
 	void MainWindow::UpdateRobotPose() {
 		robotPose = qnode.GetRobotPosition();
 		UpdateWindow();
+	}
+
+	geometry_msgs::Pose MainWindow::MakePose(double pX, double pY, double pZ, double qX, double qY, double qZ, double qW) {
+		geometry_msgs::Point p;
+		geometry_msgs::Quaternion q;
+		geometry_msgs::Pose pos;
+
+		p.x = pX;
+		p.y = pY;
+		p.z = pZ;
+
+		q.x = qX;
+		q.y = qY;
+		q.z = qZ;
+		q.w = qW;
+
+		pos.position = p;
+		pos.orientation = q;
+
+		return pos;
 	}
 
 	int MainWindow::ConvertRobotToPixel(double a) {

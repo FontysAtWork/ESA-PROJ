@@ -48,10 +48,11 @@ namespace map_marker {
 		void ToggleInterface(bool b);
 		void UpdateWindow();
 
-		QPointF Rotatestuff(QPoint center, double x, double y, double angle);
+		QPointF RotateDrawPoint(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();
 		int ConvertRobotToPixel(double a);
 		double ConvertPixelToRobot(int a);
+		geometry_msgs::Pose MakePose(double pX, double pY, double pZ, double qX, double qY, double qZ, double qW);
 
 		Ui::MapMarker ui;
 		QNode qnode;
