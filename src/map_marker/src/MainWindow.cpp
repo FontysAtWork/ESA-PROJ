@@ -316,6 +316,14 @@ namespace map_marker {
 		}
 	}
 
+	void MainWindow::on_radioNav_clicked() {
+		ui.inpCustomName->setText("nav_");
+	}
+
+	void MainWindow::on_radioWorkspace_clicked() {
+		ui.inpCustomName->setText("wsp_");
+	}
+
 	void MainWindow::UpdateRobotSize() {
 		robotSize.setHeight(ui.spinRobotHeight->value());
 		robotSize.setWidth(ui.spinRobotWidth->value());

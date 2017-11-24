@@ -30,6 +30,8 @@ namespace map_marker {
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnLoadMarkersYaml_clicked();
+		void on_radioNav_clicked();
+		void on_radioWorkspace_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();
 		void UpdateRobotSize();
