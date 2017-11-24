@@ -50,8 +50,8 @@ namespace map_marker {
 
 		QPointF RotateDrawPoint(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();
-		int ConvertRobotToPixel(double a);
-		double ConvertPixelToRobot(int a);
+		int ConvertRealSizeToPixel(double a);
+		double ConvertPixelToRealSize(int a);
 		geometry_msgs::Pose MakePose(double pX, double pY, double pZ, double qX, double qY, double qZ, double qW);
 
 		Ui::MapMarker ui;
@@ -64,6 +64,10 @@ namespace map_marker {
 		QPixmap *map;
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;
+
+		double map_min;
+		double map_max;
+		double map_pix;
 
 	protected:
     	void paintEvent(QPaintEvent *event);

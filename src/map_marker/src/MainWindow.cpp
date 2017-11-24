@@ -13,9 +13,7 @@ using namespace Qt;
 
 namespace map_marker {
 
-	const double map_min = -5;
-	const double map_max = 5;
-	const double map_pix = 992;
+
 
 	const QColor red = QColor(180, 40, 0);
 	const QColor blue = QColor(30, 30, 140);
@@ -25,6 +23,13 @@ namespace map_marker {
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
 		qnode.Init();
+
+		// This gets overwritten when loading yaml or a map. 
+		// Change with full version because the map and yaml need to be loaded before using it. 
+		// Or when getting from the map_server
+		map_min = -5;
+		map_max = 5;
+		map_pix = 992;
 
 		// Make a pose to avoid warnings if to pose is not yet retreived from the robot
 		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
@@ -40,6 +45,8 @@ namespace map_marker {
 		UpdateRobotSize();
 
 		// Load map image
+		// Change with full version because the map and yaml need to be loaded before using it.
+		// Or when getting from the map_server
 		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
 		map = new QPixmap(url);
 
@@ -99,8 +106,8 @@ namespace map_marker {
 
 		for(int i = 0; i < markers.size(); i++) {
 
-			p1.setX(ConvertRobotToPixel(markers[i].GetX()));
-			p1.setY(ConvertRobotToPixel(-markers[i].GetY()));
+			p1.setX(ConvertRealSizeToPixel(markers[i].GetX()));
+			p1.setY(ConvertRealSizeToPixel(-markers[i].GetY()));
 			
 			if(i == selected) {
 				pen.setWidth(3);
@@ -134,8 +141,8 @@ namespace map_marker {
 			qp->drawPoint(p1);
 		}
 
-		p1.setX(ConvertRobotToPixel(robotPose.position.x));
-		p1.setY(ConvertRobotToPixel(-robotPose.position.y));
+		p1.setX(ConvertRealSizeToPixel(robotPose.position.x));
+		p1.setY(ConvertRealSizeToPixel(-robotPose.position.y));
 
 		pen.setWidth(10);
 		pen.setColor(blue);
@@ -162,8 +169,8 @@ namespace map_marker {
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
-		QString x = QString::number(ConvertPixelToRobot(a.x()));
-		QString y = QString::number(-ConvertPixelToRobot(a.y()));
+		QString x = QString::number(ConvertPixelToRealSize(a.x()));
+		QString y = QString::number(-ConvertPixelToRealSize(a.y()));
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
 	}
@@ -178,6 +185,8 @@ namespace map_marker {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
 			mapConfig.setFullConfigData(yaml.GetParsedYaml());
+			map_min = mapConfig.getOrigin().position.x;
+			map_max = fabs(map_min);
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -192,6 +201,8 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			map = new QPixmap(fileNames[0]);
+			QSize a = map->size();
+			map_pix = a.height();
 			UpdateWindow();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -512,11 +523,11 @@ namespace map_marker {
 		return pos;
 	}
 
-	int MainWindow::ConvertRobotToPixel(double a) {
-		return (a - map_min) * (map_pix - 0) / (map_max - map_min);
+	int MainWindow::ConvertRealSizeToPixel(double a) {
+		return (a - map_min) * (map_pix) / (map_max - map_min);
 	}
 
-	double MainWindow::ConvertPixelToRobot(int a) {
+	double MainWindow::ConvertPixelToRealSize(int a) {
 		return (a) * (map_max - map_min) / (map_pix) + map_min;
 	}
 }
