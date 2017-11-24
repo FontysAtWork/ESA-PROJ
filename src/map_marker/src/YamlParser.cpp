@@ -4,28 +4,6 @@ YamlParser::YamlParser()
 {
 }
 
-/*
-(Key token)   value   Navigation_2
-(Data token)  [Block mapping]
-(Key token)   value   position_x
-(Data token)  value   2.701610
-(Key token)   value   position_y
-(Data token)  value   -0.090726
-(Key token)   value   position_z
-(Data token)  value   0.000000
-(Key token)   value   orientation_x
-(Data token)  value   0.000000
-(Key token)   value   orientation_y
-(Data token)  value   0.000000
-(Key token)   value   orientation_z
-(Data token)  value   0.000000
-(Key token)   value   orientation_w
-(Data token)  value   1.000000
-<b>End block</b>
-
-
-*/
-
 void YamlParser::loadYaml(std::string fileName)
 {
 	parsedYaml.clear();
@@ -52,22 +30,7 @@ void YamlParser::loadYaml(std::string fileName)
 		yaml_parser_scan(&parser, &token);
 		if(token.type == YAML_KEY_TOKEN)
 		{	
-			KeyDataPair k;
-			yaml_token_t data;
-			yaml_parser_scan(&parser, &data);
-			parseData(parser, data, token.type, &k);
-			
-			yaml_token_t value;
-			yaml_parser_scan(&parser, &value);
-			if(value.type == YAML_VALUE_TOKEN)
-			{
-
-				yaml_parser_scan(&parser, &data);
-
-				parseData(parser, data, value.type, &k);
-
-				parsedYaml.push_back(k);
-			}
+			ParseKeyAndValue(parser, token);
 		}
 
 		if(token.type != YAML_STREAM_END_TOKEN)
@@ -75,6 +38,53 @@ void YamlParser::loadYaml(std::string fileName)
 	} while(token.type != YAML_STREAM_END_TOKEN);
 
 	fclose(fh);
+}
+
+void YamlParser::ParseKeyAndValue(yaml_parser_t parser, yaml_token_t token)
+{
+
+	KeyDataPair k;
+	yaml_token_t data;
+	yaml_parser_scan(&parser, &data);
+	parseData(parser, data, token.type, &k);
+
+	yaml_token_t value;
+	yaml_parser_scan(&parser, &value);
+	if(value.type == YAML_VALUE_TOKEN)
+	{
+
+		yaml_parser_scan(&parser, &data);
+
+		if(data.type == YAML_KEY_TOKEN)
+		{
+			k.data.push_back("");
+			parsedYaml.push_back(k);
+			ParseKeyAndValue(parser, data);
+		}
+		else 
+		{
+			parseData(parser, data, value.type, &k);
+			parsedYaml.push_back(k);
+		}
+	}
+}
+
+void YamlParser::printLoadedYaml()
+{
+
+	for (int i = 0; i < parsedYaml.size(); ++i)
+	{
+		KeyDataPair k = parsedYaml[i];
+
+		std::cout << "Key: " << k.key << std::endl;
+
+		for (int j = 0; j < k.data.size(); ++j)
+		{
+			std::cout << "Data: " << k.data[j] << std::endl;
+		}
+	}
+
+
 }
 
 void YamlParser::printYaml(std::string fileName)
@@ -147,10 +157,11 @@ void YamlParser::printYaml(std::string fileName)
 
 void YamlParser::parseData(yaml_parser_t parser, yaml_token_t token, yaml_token_type_t previousType, KeyDataPair *k)
 {
-	if(!token.data.scalar.value)
+	if(token.type == YAML_SCALAR_TOKEN  && !token.data.scalar.value)
 	{
 		return;
 	}
+
 	if(previousType == YAML_VALUE_TOKEN)
 	{
 
