@@ -49,6 +49,7 @@ namespace map_marker {
 		void FillMarkerList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
 		void UpdateWindow();
+		void EnableInterface();
 
 		QPointF RotateDrawPoint(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();

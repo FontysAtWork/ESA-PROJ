@@ -9,27 +9,24 @@
 
 #include <QDebug>
 
+#define DEBUG false
+
 using namespace Qt;
 
 namespace map_marker {
-
-
-
 	const QColor red = QColor(180, 40, 0);
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);
 
+	bool YamlLoaded;
+	bool ImageLoaded; 
+
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
 		qnode.Init();
 
-		// This gets overwritten when loading yaml or a map. 
-		// Change with full version because the map and yaml need to be loaded before using it. 
-		// Or when getting from the map_server
-		map_min = -5;
-		map_max = 5;
-		map_pix = 992;
+		
 
 		// Make a pose to avoid warnings if to pose is not yet retreived from the robot
 		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
@@ -43,12 +40,32 @@ namespace map_marker {
 
 		// Set robot size
 		UpdateRobotSize();
+		YamlLoaded = false;
+		ImageLoaded = false;
 
-		// Load map image
-		// Change with full version because the map and yaml need to be loaded before using it.
-		// Or when getting from the map_server
-		QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
-		map = new QPixmap(url);
+		if(DEBUG)
+		{
+			// This gets overwritten when loading yaml or a map. 
+			map_min = -5;
+			map_max = 5;
+			map_pix = 992;
+			// Load map image
+			QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
+			map = new QPixmap(url);
+
+			ToggleInterface(true);
+
+		}
+		else
+		{
+			map = new QPixmap();
+		}
+
+		ui.cbxImgMapPgm->setAttribute(Qt::WA_TransparentForMouseEvents);
+		ui.cbxImgMapPgm->setFocusPolicy(Qt::NoFocus);
+
+		ui.cbxImgMapYaml->setAttribute(Qt::WA_TransparentForMouseEvents);
+		ui.cbxImgMapYaml->setFocusPolicy(Qt::NoFocus);
 
 		// Ttable editing
 		ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -68,8 +85,6 @@ namespace map_marker {
 
 		// Panic button color
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
-
-		ToggleInterface(true);
 
 		UpdateTable();
 	}
@@ -176,6 +191,7 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnLoadYaml_clicked() {
+
 		QFileDialog dialog(this);
 		dialog.setFileMode(QFileDialog::ExistingFile);
 		dialog.setNameFilter(tr("Map yaml file (*.yaml)"));
@@ -184,9 +200,13 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
+			yaml.printLoadedYaml();
 			mapConfig.setFullConfigData(yaml.GetParsedYaml());
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
+			YamlLoaded = true;
+			ui.cbxImgMapYaml->setChecked(1);
+			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -204,6 +224,9 @@ namespace map_marker {
 			QSize a = map->size();
 			map_pix = a.height();
 			UpdateWindow();
+			ImageLoaded = true;
+			ui.cbxImgMapPgm->setChecked(1);
+			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -223,6 +246,23 @@ namespace map_marker {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
 		
+	}
+
+	void MainWindow::on_btnLoadMarkersYaml_clicked() {
+	QFileDialog dialog(this);
+	dialog.setFileMode(QFileDialog::ExistingFile);
+	dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
+
+	QStringList fileNames;
+	if (dialog.exec()) {
+		fileNames = dialog.selectedFiles();
+		yaml.loadYaml(fileNames[0].toUtf8().constData());
+		FillMarkerList(yaml.GetParsedYaml());
+
+
+	} else {
+		ROS_ERROR("No file selected, nothing loaded");
+	}
 	}
 
 	void MainWindow::on_btnClearAllMarkers_clicked() {
@@ -299,22 +339,7 @@ namespace map_marker {
 		UpdateTable();
 	}
 
-	void MainWindow::on_btnLoadMarkersYaml_clicked() {
-		QFileDialog dialog(this);
-		dialog.setFileMode(QFileDialog::ExistingFile);
-		dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
 
-		QStringList fileNames;
-		if (dialog.exec()) {
-			fileNames = dialog.selectedFiles();
-			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			FillMarkerList(yaml.GetParsedYaml());
-
-
-		} else {
-			ROS_ERROR("No file selected, nothing loaded");
-		}
-	}
 
 	void MainWindow::on_radioNav_clicked() {
 		ui.inpCustomName->setText("nav_");
@@ -529,6 +554,14 @@ namespace map_marker {
 		pos.orientation = q;
 
 		return pos;
+	}
+
+	void MainWindow::EnableInterface()
+	{
+		if(YamlLoaded && ImageLoaded)
+		{
+			ToggleInterface(true);
+		}
 	}
 
 	int MainWindow::ConvertRealSizeToPixel(double a) {
