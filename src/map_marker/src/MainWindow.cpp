@@ -114,10 +114,10 @@ namespace map_marker {
 				double angle1 = tf::getYaw(q1);
 
 				QPointF points[4] = {
-					Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
-					Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
-					Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1),			
-					Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1)
+					RotateDrawPoint(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
+					RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle1),
+					RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1),			
+					RotateDrawPoint(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle1)
 				};
 
 				qp->drawPolygon(points, 4);	
@@ -152,10 +152,10 @@ namespace map_marker {
 		double angle = tf::getYaw(q);
 
 		QPointF points[4] = {
-			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
-			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
-			Rotatestuff(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle),			
-			Rotatestuff(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle)
+			RotateDrawPoint(p1, p1.x() - robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
+			RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y() + robotSize.height() / 2, -angle),
+			RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle),			
+			RotateDrawPoint(p1, p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, -angle)
 		};
 
 		qp->drawPolygon(points, 4);	
