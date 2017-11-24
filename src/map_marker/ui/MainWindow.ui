@@ -114,7 +114,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Update pose</string>
+     <string>Update marker</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomX">
@@ -346,7 +346,7 @@
      <number>0</number>
     </property>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>115</number>
+     <number>110</number>
     </attribute>
     <column>
      <property name="text">
@@ -542,7 +542,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Add custom pose</string>
+     <string>Add custom marker</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblLoadMap_2">
