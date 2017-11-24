@@ -60,7 +60,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>680</y>
+      <y>790</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -76,7 +76,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>650</y>
+      <y>760</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>290</y>
+      <y>400</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -108,7 +108,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>290</y>
+      <y>400</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -124,7 +124,7 @@
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>170</y>
+      <y>280</y>
       <width>151</width>
       <height>23</height>
      </rect>
@@ -137,7 +137,7 @@
     <property name="geometry">
      <rect>
       <x>1370</x>
-      <y>172</y>
+      <y>282</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -153,7 +153,7 @@
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>200</y>
+      <y>310</y>
       <width>151</width>
       <height>23</height>
      </rect>
@@ -166,7 +166,7 @@
     <property name="geometry">
      <rect>
       <x>1370</x>
-      <y>202</y>
+      <y>312</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -182,7 +182,7 @@
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>230</y>
+      <y>340</y>
       <width>151</width>
       <height>23</height>
      </rect>
@@ -195,7 +195,7 @@
     <property name="geometry">
      <rect>
       <x>1370</x>
-      <y>232</y>
+      <y>342</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -211,7 +211,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>220</y>
+      <y>330</y>
       <width>185</width>
       <height>21</height>
      </rect>
@@ -230,7 +230,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>200</y>
+      <y>310</y>
       <width>185</width>
       <height>21</height>
      </rect>
@@ -252,7 +252,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>175</y>
+      <y>285</y>
       <width>185</width>
       <height>15</height>
      </rect>
@@ -265,7 +265,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>120</y>
+      <y>230</y>
       <width>600</width>
       <height>3</height>
      </rect>
@@ -301,7 +301,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>140</y>
+      <y>250</y>
       <width>180</width>
       <height>15</height>
      </rect>
@@ -321,7 +321,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>740</y>
+      <y>860</y>
       <width>580</width>
       <height>3</height>
      </rect>
@@ -337,7 +337,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>320</y>
+      <y>430</y>
       <width>564</width>
       <height>321</height>
      </rect>
@@ -381,7 +381,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>710</y>
+      <y>820</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -397,7 +397,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>650</y>
+      <y>760</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -433,7 +433,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>680</y>
+      <y>790</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -449,7 +449,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>650</y>
+      <y>760</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -465,7 +465,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>680</y>
+      <y>790</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -507,7 +507,7 @@
     <property name="geometry">
      <rect>
       <x>1370</x>
-      <y>262</y>
+      <y>372</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -523,7 +523,7 @@
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>260</y>
+      <y>370</y>
       <width>151</width>
       <height>23</height>
      </rect>
@@ -536,7 +536,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>290</y>
+      <y>400</y>
       <width>185</width>
       <height>23</height>
      </rect>
@@ -548,8 +548,8 @@
    <widget class="QLabel" name="lblLoadMap_2">
     <property name="geometry">
      <rect>
-      <x>1320</x>
-      <y>20</y>
+      <x>1010</x>
+      <y>128</y>
       <width>180</width>
       <height>15</height>
      </rect>
@@ -568,10 +568,10 @@
    <widget class="Line" name="lineV_2">
     <property name="geometry">
      <rect>
-      <x>1300</x>
+      <x>1240</x>
       <y>0</y>
       <width>20</width>
-      <height>121</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="orientation">
@@ -581,8 +581,8 @@
    <widget class="QSpinBox" name="spinRobotWidth">
     <property name="geometry">
      <rect>
-      <x>1400</x>
-      <y>50</y>
+      <x>1090</x>
+      <y>158</y>
       <width>61</width>
       <height>26</height>
      </rect>
@@ -600,8 +600,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1320</x>
-      <y>52</y>
+      <x>1010</x>
+      <y>160</y>
       <width>75</width>
       <height>18</height>
      </rect>
@@ -613,8 +613,8 @@
    <widget class="QSpinBox" name="spinRobotHeight">
     <property name="geometry">
      <rect>
-      <x>1400</x>
-      <y>80</y>
+      <x>1090</x>
+      <y>188</y>
       <width>61</width>
       <height>26</height>
      </rect>
@@ -632,8 +632,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1320</x>
-      <y>82</y>
+      <x>1010</x>
+      <y>190</y>
       <width>75</width>
       <height>18</height>
      </rect>
@@ -674,6 +674,174 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLineEdit" name="inpMaster">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>50</y>
+      <width>201</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>110</y>
+      <width>211</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Use environment variables</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblMaster">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>52</y>
+      <width>91</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Master URL:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblHost">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>82</y>
+      <width>81</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Host IP:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblConnect">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>20</y>
+      <width>180</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Connect to ROS master:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inpHost">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>80</y>
+      <width>201</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Line" name="lineH1_2">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>110</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1480</x>
+      <y>140</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+   </widget>
+   <zorder>lineH1_2</zorder>
+   <zorder>btnLoadYaml</zorder>
+   <zorder>btnLoadMap</zorder>
+   <zorder>lineV</zorder>
+   <zorder>btnWriteYaml</zorder>
+   <zorder>btnLoadMarkersYaml</zorder>
+   <zorder>btnAddCurrentPose</zorder>
+   <zorder>btnUpdateCustomPose</zorder>
+   <zorder>inpCustomX</zorder>
+   <zorder>lblXpos</zorder>
+   <zorder>inpCustomY</zorder>
+   <zorder>lblYpos</zorder>
+   <zorder>inpCustomAngle</zorder>
+   <zorder>lblAnglepos</zorder>
+   <zorder>radioWorkspace</zorder>
+   <zorder>radioNav</zorder>
+   <zorder>lblMarkertype</zorder>
+   <zorder>lineH1</zorder>
+   <zorder>lblLoadMap</zorder>
+   <zorder>lblMarkers</zorder>
+   <zorder>lineH2</zorder>
+   <zorder>tableWidget</zorder>
+   <zorder>btnMoveRobot</zorder>
+   <zorder>btnRemoveMarker</zorder>
+   <zorder>btnPanic</zorder>
+   <zorder>btnMoveMarkerDown</zorder>
+   <zorder>btnMoveMarkerUp</zorder>
+   <zorder>btnClearAllMarkers</zorder>
+   <zorder>lblImgMapYaml</zorder>
+   <zorder>lblImgMapPgm</zorder>
+   <zorder>lblName</zorder>
+   <zorder>inpCustomName</zorder>
+   <zorder>btnAddCustomPose</zorder>
+   <zorder>lblLoadMap_2</zorder>
+   <zorder>lineV_2</zorder>
+   <zorder>spinRobotWidth</zorder>
+   <zorder>lblRobotWidth</zorder>
+   <zorder>spinRobotHeight</zorder>
+   <zorder>lblRobotHeight</zorder>
+   <zorder>cbxImgMapYaml</zorder>
+   <zorder>cbxImgMapPgm</zorder>
+   <zorder>inpMaster</zorder>
+   <zorder>checkBox</zorder>
+   <zorder>lblMaster</zorder>
+   <zorder>lblHost</zorder>
+   <zorder>lblConnect</zorder>
+   <zorder>inpHost</zorder>
+   <zorder>pushButton</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
