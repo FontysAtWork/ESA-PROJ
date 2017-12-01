@@ -7,11 +7,12 @@ file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} resources/*.qrc)
 file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS include/MapMarker/*.hpp)
 file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS src/*.cpp)
 
+include_directories(include/MapMarker/)
+
 if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
 
 	message(STATUS "Compiling on ROS indigo")
 
-	include_directories(include/MapMarker/)
 
 	find_package(catkin REQUIRED COMPONENTS qt_build tf roscpp)
 	include_directories(${catkin_INCLUDE_DIRS}) 
@@ -38,10 +39,7 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 
 	message(STATUS "Compiling on ROS kinetic")
 
-	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-	include_directories(include/MapMarker/)
 
 	find_package(catkin REQUIRED COMPONENTS tf roscpp)
 	include_directories(${catkin_INCLUDE_DIRS})
@@ -61,7 +59,7 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	include_directories(${PYTHON_INCLUDE_DIRS})
 
 	if(NOT PythonLibs_FOUND)
-	 	message(FATAL_ERROR "find_package(PythonLibs) failed. Python was not installed. Try running 'sudo apt-get install pyhton-dev' This package is tested with Python 2.7.12")
+	 	message(FATAL_ERROR "find_package(PythonLibs) failed. Python was not installed. Try running 'sudo apt-get install python-dev' This package is tested with Python 2.7.12")
 	endif()
 
 	find_package(Boost COMPONENTS python REQUIRED)
@@ -91,3 +89,5 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	install(TARGETS map_marker RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 endif()
+
+message(STATUS "Qt version: ${Qt5Widgets_VERSION}")

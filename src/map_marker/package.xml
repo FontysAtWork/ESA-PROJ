@@ -2,17 +2,13 @@
 <package>
   <name>map_marker</name>
   <version>0.1.0</version>
-  <description>
-
-     map_marker
-
-  </description>
+  <description>map_marker</description>
   <maintainer email="viki@gmail.com">viki</maintainer>
   <author>viki</author>
   <license>BSD</license>
-  <!-- <url type="bugtracker">https://github.com/stonier/qt_ros/issues</url> -->
-  <!-- <url type="repository">https://github.com/stonier/qt_ros</url> -->
-
+  <url type="bugtracker">https://github.com/minhtrietdiep/ESA-PROJ/issues</url>
+  <url type="repository">https://github.com/minhtrietdiep/ESA-PROJ</url>
+  <url type="wiki">https://github.com/minhtrietdiep/ESA-PROJ/wiki</url>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>qt_build</build_depend>
   <build_depend>roscpp</build_depend>
