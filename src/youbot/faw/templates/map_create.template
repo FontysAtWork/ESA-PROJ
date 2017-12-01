@@ -15,7 +15,7 @@
 	</group>
 	
 	<!--Mapping-->
-	<include file="$(find youbot_navigation_global)/launch/2dslam.launch"/>
+	<include file="$(find faw)/launch/youbot_navigation/gmapping_slam.include"/>
 	
 	<!-- Control of youbot via PS4 controller -->
 	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>

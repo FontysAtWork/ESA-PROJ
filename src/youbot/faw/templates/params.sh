@@ -1,6 +1,12 @@
 #Comment only lines are allowed
 TMP="Example variable" #Example comment
 
+############## MULTI FILE VARS ##############
+
+MAP_NORMAL="map_normal"
+
+############## /MULTI FILE VARS ##############
+
 # nav_only.template
 ROBOT_DESC="\$(find xacro)/xacro.py \$(find youbot_description)/robots/youbot.urdf.xacro"
 MAP_FILE="\$(find faw)/map/test2.yaml"

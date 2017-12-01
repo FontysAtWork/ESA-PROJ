@@ -7,9 +7,9 @@
     <param name="T" type="double" value="0.2"/>
     <param name="dt" type="double" value="0.1"/>
 
-    <node pkg="youbot_navigation_common" type="lowpass_filter" respawn="false" name="lowpass_filter" output="screen" />
+    <node pkg="lowpass_filter" type="lowpass_filter" respawn="false" name="lowpass_filter" output="screen" />
     
-    <include file="$(find faw)/launch/youbot_hardware/laser_scan_matcher.include" />
+    <include file="$(find faw)/launch/youbot_navigation/amcl.include" />
     
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<rosparam file="$(find faw)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
