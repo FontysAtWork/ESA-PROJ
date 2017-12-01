@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+	<include file="$(find faw)/launch/nav_only.launch" />
+	
+	<node name="nogomap_server" pkg="map_server" type="map_server" args="$(find faw)/map/map_normal_baas.yaml" ns="nogomap" />
+</launch>
