@@ -1,7 +1,7 @@
 # Robot Configuration Parameters
 TrajectoryPlannerROS:
-    acc_lim_x: 1.0
-    acc_lim_y: 1.0
+    acc_lim_x: 0.5
+    acc_lim_y: 0.5
     acc_lim_th: 1.8
     max_vel_x: 0.3
     min_vel_x: 0.1
@@ -29,4 +29,3 @@ TrajectoryPlannerROS:
 
     # Oscillation Prevention Parameters
     oscillation_reset_dist: 0.01
-
