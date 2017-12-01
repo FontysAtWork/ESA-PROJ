@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	/// Publishes Odometry messages
 	ros::Publisher baseOdometryPublisher;
 
-	ros::init(argc, argv, "emgergency-stop");
+        ros::init(argc, argv, "emgergency_stop");
 	ros::NodeHandle n;
 	/* setup input/output communication */
 	
