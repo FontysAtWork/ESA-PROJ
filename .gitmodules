@@ -17,3 +17,6 @@
 	path = src/youbot_fontys/youbot_interface
 	url = https://github.com/BasB1/youbot_interface
 	ignore = dirty
+[submodule "src/atwork_refbox_ros_client"]
+	path = src/atwork_refbox_ros_client
+	url = https://github.com/industrial-robotics/atwork_refbox_ros_client.git
