@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 	n.param("dt", dt, 0.1);
 
 	ros::Subscriber twistSubscriber = n.subscribe("move_base/cmd_vel", 1000, &twistCallback);
-	twistPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
+	twistPublisher = n.advertise<geometry_msgs::Twist>("lowpass/cmd_vel",1);
 
 	/* coordination */
 	ros::Rate rate(100); //Input and output at the same time... (in Hz)
