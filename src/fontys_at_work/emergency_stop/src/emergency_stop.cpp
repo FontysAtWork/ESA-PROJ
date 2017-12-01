@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	stop.linear.z = 0;
 	stop.angular.z = 0;
 
-    ros::Subscriber twistSubscriber = n.subscribe("lowpass/cmd_vel", 1000, &twistCallback);
+    ros::Subscriber twistSubscriber = n.subscribe("move_base/cmd_vel", 1000, &twistCallback);
     ros::Subscriber emergencySubscriber = n.subscribe("emergency_stop", 1000, &emergencyCallback);
 	twistPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
 
