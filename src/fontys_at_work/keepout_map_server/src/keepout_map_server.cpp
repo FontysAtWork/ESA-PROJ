@@ -58,6 +58,9 @@ int main(int argc, char **argv)
 	mapPublisher = n.advertise<nav_msgs::OccupancyGrid>("map", 10);
 	
 	ros::Timer mapPubTimer = n.createTimer(ros::Duration(publishInterval), cbPublishMap);
+	
+	faw::mapFunctions::drawLine(m, 100, 100, 300, 300, 100);
+	faw::mapFunctions::drawSquare(m, 200, 200, 250, 300, 100);
 
 	ros::spin();
 
