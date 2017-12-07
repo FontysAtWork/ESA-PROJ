@@ -1,4 +1,4 @@
-image: /home/viki/school/PTT7/new-launch-dual-lasers/ESA-PROJ/src/youbot/faw/map/map_normal.pgm
+image: /home/youbot/git/master/ESA-PROJ/src/youbot/faw/map/map_normal.pgm
 resolution: 0.010000
 origin: [-5.000000, -5.000000, 0.000000]
 negate: 0
