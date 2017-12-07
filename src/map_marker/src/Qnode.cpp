@@ -40,7 +40,7 @@ bool QNode::Init() {
 bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	std::map<std::string,std::string> remappings;
 	remappings["__master"] = master_url;
-	remappings["__hostname"] = host_url;
+	remappings["__ip"] = host_url;
 	ros::init(remappings,"map_marker");
 	if ( ! ros::master::check() ) {
 		return false;

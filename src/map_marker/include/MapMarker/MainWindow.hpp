@@ -29,9 +29,11 @@ namespace map_marker {
 		void on_btnPanic_clicked();
 		void on_btnMoveMarkerDown_clicked();
 		void on_btnMoveMarkerUp_clicked();
+		void on_btnConnect_clicked();
 		void on_btnLoadMarkersYaml_clicked();
 		void on_radioNav_clicked();
 		void on_radioWorkspace_clicked();
+		void on_cbxEnvVars_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();
 		void UpdateRobotSize();
@@ -50,6 +52,7 @@ namespace map_marker {
 		void ToggleInterface(bool b);
 		void UpdateWindow();
 		void EnableInterface();
+		void ShowNoMasterMessage();
 
 		QPointF RotateDrawPoint(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();
@@ -71,6 +74,10 @@ namespace map_marker {
 		double map_min;
 		double map_max;
 		double map_pix;
+
+		bool YamlLoaded;
+		bool ImageLoaded;
+		bool NodeStarted;
 
 	protected:
     	void paintEvent(QPaintEvent *event);

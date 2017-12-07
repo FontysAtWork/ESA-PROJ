@@ -17,17 +17,11 @@ namespace map_marker {
 	const QColor red = QColor(180, 40, 0);
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
-	const QColor orange = QColor(230, 120, 0);
-
-	bool YamlLoaded;
-	bool ImageLoaded; 
+	const QColor orange = QColor(230, 120, 0);	
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
-		qnode.Init();
-
 		
-
 		// Make a pose to avoid warnings if to pose is not yet retreived from the robot
 		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
 
@@ -40,8 +34,11 @@ namespace map_marker {
 
 		// Set robot size
 		UpdateRobotSize();
+
+		// Bools to enable gui features
 		YamlLoaded = false;
 		ImageLoaded = false;
+		NodeStarted = false;
 
 		if(DEBUG)
 		{
@@ -339,7 +336,31 @@ namespace map_marker {
 		UpdateTable();
 	}
 
-
+	void MainWindow::on_btnConnect_clicked() {
+		if(ui.cbxEnvVars->isChecked()) {
+			if (!qnode.Init()) {
+				ShowNoMasterMessage();
+			} else {
+				ui.btnConnect->setEnabled(false);
+				ui.inpMaster->setEnabled(false);
+				ui.inpHost->setEnabled(false);
+				ui.cbxEnvVars->setEnabled(false);
+				NodeStarted = true;
+			}
+		} else {
+			if (!qnode.Init(ui.inpMaster->text().toStdString(), 
+					ui.inpHost->text().toStdString())) {
+					ShowNoMasterMessage();
+			} else {
+				ui.btnConnect->setEnabled(false);
+				ui.inpMaster->setEnabled(false);
+				ui.inpHost->setEnabled(false);
+				ui.cbxEnvVars->setEnabled(false);
+				NodeStarted = true;
+			}
+		}
+		EnableInterface();
+	}
 
 	void MainWindow::on_radioNav_clicked() {
 		ui.inpCustomName->setText("nav_");
@@ -347,6 +368,13 @@ namespace map_marker {
 
 	void MainWindow::on_radioWorkspace_clicked() {
 		ui.inpCustomName->setText("wsp_");
+	}
+
+	void MainWindow::on_cbxEnvVars_clicked() {
+		ui.inpMaster->setEnabled(!ui.cbxEnvVars->isChecked());
+		ui.inpHost->setEnabled(!ui.cbxEnvVars->isChecked());
+		ui.lblMaster->setEnabled(!ui.cbxEnvVars->isChecked());
+		ui.lblHost->setEnabled(!ui.cbxEnvVars->isChecked());
 	}
 
 	void MainWindow::UpdateRobotSize() {
@@ -461,7 +489,6 @@ namespace map_marker {
 			ui.lblNogo->setEnabled(b);
 			ui.btnNogoLine->setEnabled(b);
 			ui.btnNogoSquare->setEnabled(b);
-
 	}
 
 	int MainWindow::GetSelectedMarker() {
@@ -561,11 +588,19 @@ namespace map_marker {
 
 	void MainWindow::EnableInterface()
 	{
-		if(YamlLoaded && ImageLoaded)
+		if(YamlLoaded && ImageLoaded && NodeStarted)
 		{
 			ToggleInterface(true);
 		}
 	}
+
+	void MainWindow::ShowNoMasterMessage() {
+		QMessageBox msgBox;
+		msgBox.setText("Couldn't find the ros master...");
+		msgBox.exec();
+	    close();
+	}
+
 
 	int MainWindow::ConvertRealSizeToPixel(double a) {
 		return (a - map_min) * (map_pix) / (map_max - map_min);

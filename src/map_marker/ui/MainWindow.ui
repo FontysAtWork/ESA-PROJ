@@ -61,7 +61,7 @@
      <rect>
       <x>1390</x>
       <y>830</y>
-      <width>185</width>
+      <width>181</width>
       <height>25</height>
      </rect>
     </property>
@@ -77,7 +77,7 @@
      <rect>
       <x>1390</x>
       <y>800</y>
-      <width>185</width>
+      <width>181</width>
       <height>25</height>
      </rect>
     </property>
@@ -338,7 +338,7 @@
      <rect>
       <x>1010</x>
       <y>470</y>
-      <width>564</width>
+      <width>561</width>
       <height>321</height>
      </rect>
     </property>
@@ -660,13 +660,16 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="text">
+     <string>http://192.168.1.42:11311/</string>
+    </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="cbxEnvVars">
     <property name="geometry">
      <rect>
       <x>1370</x>
       <y>110</y>
-      <width>211</width>
+      <width>201</width>
       <height>23</height>
      </rect>
     </property>
@@ -741,6 +744,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="text">
+     <string>192.168.1.100</string>
+    </property>
    </widget>
    <widget class="Line" name="lineH1_2">
     <property name="geometry">
@@ -755,7 +761,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnConnect">
     <property name="geometry">
      <rect>
       <x>1480</x>
@@ -892,11 +898,11 @@
    <zorder>cbxImgMapYaml</zorder>
    <zorder>cbxImgMapPgm</zorder>
    <zorder>inpMaster</zorder>
-   <zorder>checkBox</zorder>
+   <zorder>cbxEnvVars</zorder>
    <zorder>lblMaster</zorder>
    <zorder>lblHost</zorder>
    <zorder>inpHost</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>btnConnect</zorder>
    <zorder>lblNogo</zorder>
    <zorder>btnNogoLine</zorder>
    <zorder>btnNogoSquare</zorder>
