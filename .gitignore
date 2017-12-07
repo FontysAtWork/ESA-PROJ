@@ -62,6 +62,10 @@ build/
 devel/
 .catkin_workspace
 src/CMakeLists.txt
+.git
+.vscode
+src/youbot/faw/launch/*.launch
+*.include
 
 # editors
 .vscode/

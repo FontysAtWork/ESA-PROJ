@@ -1,3 +1,9 @@
+[submodule "src/fontys_at_work/dependencies/ira_laser_tools"]
+	path = src/fontys_at_work/dependencies/ira_laser_tools
+	url = https://github.com/iralabdisco/ira_laser_tools
+[submodule "src/youbot/youbot_simulation"]
+	path = src/youbot/youbot_simulation
+	url = http://github.com/youbot/youbot_simulation.git
 [submodule "src/youbot_fontys/brics_actuator"]
 	path = src/youbot_fontys/brics_actuator
 	url = https://github.com/wnowak/brics_actuator
