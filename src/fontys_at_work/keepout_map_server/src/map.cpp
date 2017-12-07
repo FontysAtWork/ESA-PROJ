@@ -23,18 +23,18 @@ namespace faw {
 
 	int8_t Map::getPixel(const int x, const int y)
 	{
-		assert(x >= 0 && x <= _width);
-		assert(y >= 0 && y <= _height);
+		assert(y >= 0 && y <= _width);
+		assert(x >= 0 && x <= _height);
 		
-		return _mapData.at( (y * _height) + x );
+		return _mapData.at( (x * _height) + y );
 	}
 	
 	void Map::setPixel(const int x, const int y, const int8_t val)
 	{
-		assert(x >= 0 && x <= _width);
-		assert(y >= 0 && y <= _height);
+		assert(y >= 0 && y <= _width);
+		assert(x >= 0 && x <= _height);
 		
-		_mapData[(y * _height) + x] = val;
+		_mapData[(x * _height) + y] = val;
 	}
 	
 	void Map::clear(void)
@@ -55,21 +55,6 @@ namespace faw {
 		msg.info.origin.position.x = -5.0;
 		msg.info.origin.position.y = -5.0;
 
-		msg.data = _mapData;
-		
-		return msg;
-	}
-	
-	map_msgs::OccupancyGridUpdate Map::toUpdateMessage(void)
-	{
-		map_msgs::OccupancyGridUpdate msg;
-		msg.header.stamp = ros::Time::now();
-		
-		msg.x = 0;
-		msg.y = 0;
-		msg.width = _width;
-		msg.height = _height;
-		
 		msg.data = _mapData;
 		
 		return msg;
