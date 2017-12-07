@@ -204,7 +204,7 @@ add_compile_options(-std=c++11)
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(keepout_map_server src/keepout_map_server.cpp src/map.cpp)
-add_dependencies(keepout_map_server ${catkin_EXPORTED_TARGETS})
+add_dependencies(keepout_map_server ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(keepout_map_server ${catkin_LIBRARIES})
 
 
