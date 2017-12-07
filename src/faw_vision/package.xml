@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package>
+  <name>faw_vision</name>
+  <version>1.0.0</version>
+  <description>Vision component</description>
+  <maintainer email="luuk.vanrossum@student.fontys.nl">Luuk van Rossum</maintainer>
+  <maintainer email="m.diep@student.fontys.nl">Minh-Triet Diep</maintainer>
+  <license>GPLv3</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>rviz</run_depend>
+  <run_depend>octovis</run_depend>
+</package>
