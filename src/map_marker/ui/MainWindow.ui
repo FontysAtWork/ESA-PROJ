@@ -502,6 +502,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="text">
+     <string>nav_</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnAddCustomPose">
     <property name="enabled">
