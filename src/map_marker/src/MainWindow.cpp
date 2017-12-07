@@ -336,6 +336,30 @@ namespace map_marker {
 		UpdateTable();
 	}
 
+	void MainWindow::on_btnUpdateMarker_clicked() {
+		int s = GetSelectedMarker();
+
+		if(s == -1) {
+			ROS_WARN("No marker selected");
+			return;
+		} 
+
+		double x = ui.inpCustomX->text().toDouble();
+		double y = ui.inpCustomY->text().toDouble();
+		double angle = ui.inpCustomAngle->text().toDouble();
+		std::string name = ui.inpCustomName->text().toUtf8().constData();;
+		
+		MarkerType type;
+		if(ui.radioNav->isChecked()) {
+			type = Navigation;
+		} else if (ui.radioWorkspace->isChecked()) {
+			type = Workspace;
+		}
+		
+		UpdateMarker(s, Marker(x, y, angle, type, name));
+		UpdateTable();
+	}
+
 	void MainWindow::on_btnConnect_clicked() {
 		if(ui.cbxEnvVars->isChecked()) {
 			if (!qnode.Init()) {
@@ -485,7 +509,7 @@ namespace map_marker {
 			ui.btnMoveRobot->setEnabled(b);
 			ui.btnWriteYaml->setEnabled(b);
 			ui.btnLoadMarkersYaml->setEnabled(b);
-			ui.btnUpdateCustomPose->setEnabled(b);
+			ui.btnUpdateMarker->setEnabled(b);
 			ui.lblNogo->setEnabled(b);
 			ui.btnNogoLine->setEnabled(b);
 			ui.btnNogoSquare->setEnabled(b);
@@ -504,6 +528,10 @@ namespace map_marker {
 
 	void MainWindow::AddMarker(Marker marker) {
 		markers.push_back(marker);
+	}
+
+	void MainWindow::UpdateMarker(int index, Marker marker) {
+		markers.at(index) = marker;
 	}
 
 	void MainWindow::MoveMarkerUp(int selectedMarker) {

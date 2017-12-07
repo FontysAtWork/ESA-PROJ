@@ -31,6 +31,7 @@ namespace map_marker {
 		void on_btnMoveMarkerUp_clicked();
 		void on_btnConnect_clicked();
 		void on_btnLoadMarkersYaml_clicked();
+		void on_btnUpdateMarker_clicked();
 		void on_radioNav_clicked();
 		void on_radioWorkspace_clicked();
 		void on_cbxEnvVars_clicked();
@@ -45,6 +46,7 @@ namespace map_marker {
 
 	private:
 		void AddMarker(Marker marker);
+		void UpdateMarker(int index, Marker marker);
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateTable();

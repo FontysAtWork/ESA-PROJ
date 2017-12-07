@@ -101,20 +101,20 @@
      <string>Add current robot pose</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnUpdateCustomPose">
+   <widget class="QPushButton" name="btnUpdateMarker">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>410</y>
+      <y>440</y>
       <width>181</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Update marker</string>
+     <string>Update selected marker</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inpCustomX">
@@ -253,8 +253,8 @@
      <rect>
       <x>1260</x>
       <y>220</y>
-      <width>185</width>
-      <height>15</height>
+      <width>91</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -279,8 +279,8 @@
      <rect>
       <x>1010</x>
       <y>20</y>
-      <width>180</width>
-      <height>15</height>
+      <width>111</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -302,8 +302,8 @@
      <rect>
       <x>1260</x>
       <y>190</y>
-      <width>180</width>
-      <height>15</height>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -513,7 +513,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>440</y>
+      <y>410</y>
       <width>181</width>
       <height>23</height>
      </rect>
@@ -811,8 +811,8 @@
      <rect>
       <x>1010</x>
       <y>240</y>
-      <width>180</width>
-      <height>15</height>
+      <width>101</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -868,7 +868,7 @@
    <zorder>btnWriteYaml</zorder>
    <zorder>btnLoadMarkersYaml</zorder>
    <zorder>btnAddCurrentPose</zorder>
-   <zorder>btnUpdateCustomPose</zorder>
+   <zorder>btnUpdateMarker</zorder>
    <zorder>inpCustomX</zorder>
    <zorder>lblXpos</zorder>
    <zorder>inpCustomY</zorder>
