@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nav_msgs/OccupancyGrid.h>
+#include <map_msgs/OccupancyGridUpdate.h>
 
 namespace faw {
 
@@ -15,6 +16,7 @@ namespace faw {
 			void setPixel(const int x, const int y, const int8_t val);
 			void clear(void);
 			nav_msgs::OccupancyGrid toMessage(void);
+			map_msgs::OccupancyGridUpdate toUpdateMessage(void);
 		
 		private:
 			int _width;

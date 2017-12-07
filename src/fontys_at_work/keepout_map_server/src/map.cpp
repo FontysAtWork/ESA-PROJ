@@ -52,8 +52,24 @@ namespace faw {
 		msg.info.resolution = _res;
 		msg.info.width = _width;
 		msg.info.height = _height;
-		
+		msg.info.origin.position.x = -5.0;
+		msg.info.origin.position.y = -5.0;
 
+		msg.data = _mapData;
+		
+		return msg;
+	}
+	
+	map_msgs::OccupancyGridUpdate Map::toUpdateMessage(void)
+	{
+		map_msgs::OccupancyGridUpdate msg;
+		msg.header.stamp = ros::Time::now();
+		
+		msg.x = 0;
+		msg.y = 0;
+		msg.width = _width;
+		msg.height = _height;
+		
 		msg.data = _mapData;
 		
 		return msg;

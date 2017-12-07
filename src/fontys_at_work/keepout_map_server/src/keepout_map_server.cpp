@@ -2,6 +2,7 @@
 #include <ros/timer.h>
 
 #include <nav_msgs/OccupancyGrid.h>
+#include <map_msgs/OccupancyGridUpdate.h>
 #include <std_msgs/Empty.h>
 #include <keepout_map_server/Line.h>
 #include <keepout_map_server/Square.h>
@@ -10,6 +11,7 @@
 #include "map_functions.hpp"
 
 ros::Publisher mapPublisher;
+ros::Publisher mapUpdatePublisher;
 faw::Map m;
 
 void cbClearMap(const std_msgs::Empty::ConstPtr& msg)
@@ -30,6 +32,7 @@ void cbDrawSquare(const keepout_map_server::Square::ConstPtr& msg)
 void cbPublishMap(const ros::TimerEvent&)
 {
 	mapPublisher.publish(m.toMessage());
+	//mapUpdatePublisher.publish(m.toUpdateMessage());
 }
 
 int main(int argc, char **argv)
@@ -56,6 +59,7 @@ int main(int argc, char **argv)
 	ros::Subscriber subDrawSquare = n.subscribe("drawsquare", 1000, cbDrawSquare);
 	
 	mapPublisher = n.advertise<nav_msgs::OccupancyGrid>("map", 10);
+	mapUpdatePublisher = n.advertise<map_msgs::OccupancyGridUpdate>("map_updates", 10);
 	
 	ros::Timer mapPubTimer = n.createTimer(ros::Duration(publishInterval), cbPublishMap);
 	
