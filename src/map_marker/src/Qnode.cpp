@@ -32,9 +32,8 @@ bool QNode::Init() {
 	}
 	ros::start();
 	ros::NodeHandle n;
+	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubVelCmd = n.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
-	pubActionLibCancel = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel", 100);
 	start();
 	return true;
 }
@@ -49,9 +48,8 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	}
 	ros::start();
 	ros::NodeHandle n;
+	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubVelCmd = n.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
-	pubActionLibCancel = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel", 100);
 	start();
 	return true;
 }
@@ -93,11 +91,9 @@ geometry_msgs::Pose QNode::GetRobotPosition() {
 }
 
 void QNode::Panic() {
-	actionlib_msgs::GoalID kill_msg;
-    geometry_msgs::Twist vel_msg;        
-
-	pubActionLibCancel.publish(kill_msg);
-	pubVelCmd.publish(vel_msg);
+    std_msgs::Bool emergency_msg; 
+    emergency_msg.data = true;      
+	pubEmergency.publish(emergency_msg);
 }
 
 void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {

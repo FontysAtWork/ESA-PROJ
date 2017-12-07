@@ -31,8 +31,7 @@ private:
 	int init_argc;
 	char** init_argv;
 	ros::Publisher pubPose;
-	ros::Publisher pubActionLibCancel;
-	ros::Publisher pubVelCmd;
+	ros::Publisher pubEmergency;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
     
