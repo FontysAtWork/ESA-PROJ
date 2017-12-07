@@ -9,6 +9,7 @@
 #include "YamlParser.hpp"
 #include "MapConfig.hpp"
 #include "YamlWriter.hpp"
+#include "NoGoLine.hpp"
 
 #include "geometry_msgs/Pose.h"
 
@@ -32,6 +33,7 @@ namespace map_marker {
 		void on_btnConnect_clicked();
 		void on_btnLoadMarkersYaml_clicked();
 		void on_btnUpdateMarker_clicked();
+		void on_btnNogoLine_clicked();
 		void on_radioNav_clicked();
 		void on_radioWorkspace_clicked();
 		void on_cbxEnvVars_clicked();
@@ -72,6 +74,7 @@ namespace map_marker {
 		QPixmap *map;
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;
+		NoGoLine line;
 
 		double map_min;
 		double map_max;

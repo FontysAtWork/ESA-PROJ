@@ -207,6 +207,9 @@ namespace map_marker {
 	void MainWindow::lblMapImage_clicked(QPoint a) {
 		QString x = QString::number(ConvertPixelToRealSize(a.x()));
 		QString y = QString::number(-ConvertPixelToRealSize(a.y()));
+		
+		line.SetPoint(a.x(), a.y(), qnode);
+
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
 	}
@@ -409,6 +412,12 @@ namespace map_marker {
 		}
 		EnableInterface();
 	}
+
+	void MainWindow::on_btnNogoLine_clicked() {
+
+		line.ButtonClicked();
+	}
+
 
 	void MainWindow::on_radioNav_clicked() {
 		ui.inpCustomName->setText("nav_");

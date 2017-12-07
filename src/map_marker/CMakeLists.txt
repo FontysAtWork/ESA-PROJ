@@ -30,6 +30,7 @@ if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
 	QT4_WRAP_CPP(QT_MOC_HPP ${QT_MOC})
 
 	add_executable(map_marker ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+	add_dependencies(map_marker ${catkin_EXPORTED_TARGETS})
 	target_link_libraries(map_marker ${QT_LIBRARIES} ${catkin_LIBRARIES} yaml)
 	install(TARGETS map_marker RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
@@ -79,7 +80,7 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	qt5_wrap_cpp(QT_MOC_HPP ${QT_MOC})
 
 	add_executable(map_marker ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
-
+	add_dependencies(map_marker ${catkin_EXPORTED_TARGETS})
 	target_link_libraries(map_marker ${catkin_LIBRARIES})
 	target_link_libraries(map_marker Qt5::Widgets)
 	target_link_libraries(map_marker ${PYTHON_LIBRARIES})

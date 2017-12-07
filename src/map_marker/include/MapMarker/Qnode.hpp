@@ -22,6 +22,7 @@ public:
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
 	void Panic();
+	void DrawLine(const int x1, const int y1, const int x2, const int y2);
 
 Q_SIGNALS:
     void RosShutdown();
@@ -32,6 +33,7 @@ private:
 	char** init_argv;
 	ros::Publisher pubPose;
 	ros::Publisher pubEmergency;
+	ros::Publisher pubNoGoLine;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
     
