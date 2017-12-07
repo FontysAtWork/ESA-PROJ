@@ -1,11 +1,10 @@
 #include <ros/ros.h>
 #include <ros/network.h>
 #include <string>
-#include <std_msgs/String.h>
+#include <std_msgs/Bool.h>
 #include <sstream>
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
-#include <actionlib_msgs/GoalID.h>
 #include "Qnode.hpp"
 
 namespace map_marker {
