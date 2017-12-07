@@ -49,6 +49,7 @@ namespace map_marker {
 			// Load map image
 			QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
 			map = new QPixmap(url);
+			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
 			ToggleInterface(true);
 
@@ -72,7 +73,7 @@ namespace map_marker {
 		// Create map image
 		lblMapImage = new ClickableLabel(this);
 		lblMapImage->setAlignment(Qt::AlignBottom | Qt::AlignRight);
-		lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
+		
 		QObject::connect(lblMapImage, SIGNAL(clicked(QPoint)), this, SLOT(lblMapImage_clicked(QPoint)));
 
 		// Set validator for input fields
@@ -618,6 +619,7 @@ namespace map_marker {
 	{
 		if(YamlLoaded && ImageLoaded && NodeStarted)
 		{
+			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 			ToggleInterface(true);
 		}
 	}
