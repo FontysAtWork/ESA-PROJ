@@ -18,6 +18,7 @@ namespace map_marker {
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);	
+	const QColor pink = QColor(255, 105, 180);	
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
@@ -141,6 +142,16 @@ namespace map_marker {
 				};
 
 				qp->drawPolygon(points, 4);	
+
+				QPointF centerFront = RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y(), -angle1);
+				QPointF centerRight = RotateDrawPoint(p1, p1.x() + robotSize.width() / 4, p1.y() - robotSize.height() / 2, -angle1);
+				QPointF centerLeft = RotateDrawPoint(p1, p1.x() + robotSize.width() / 4, p1.y() + robotSize.height() / 2, -angle1);
+
+				pen.setWidth(2);
+				qp->setPen(pen);
+
+				qp->drawLine(centerFront, centerRight);
+				qp->drawLine(centerFront, centerLeft);
 				
 			} else if(markers[i].GetType() == Workspace) {
 				pen.setColor(green);
@@ -152,6 +163,8 @@ namespace map_marker {
 
 			qp->setPen(pen);
 			qp->drawPoint(p1);
+
+			
 		}
 
 		p1.setX(ConvertRealSizeToPixel(robotPose.position.x));
@@ -179,6 +192,16 @@ namespace map_marker {
 		};
 
 		qp->drawPolygon(points, 4);	
+
+		QPointF centerFront = RotateDrawPoint(p1, p1.x() + robotSize.width() / 2, p1.y(), -angle);
+		QPointF centerRight = RotateDrawPoint(p1, p1.x() + robotSize.width() / 4, p1.y() - robotSize.height() / 2, -angle);
+		QPointF centerLeft = RotateDrawPoint(p1, p1.x() + robotSize.width() / 4, p1.y() + robotSize.height() / 2, -angle);
+
+		pen.setWidth(2);
+		qp->setPen(pen);
+
+		qp->drawLine(centerFront, centerRight);
+		qp->drawLine(centerFront, centerLeft);
 	}
 
 	void MainWindow::lblMapImage_clicked(QPoint a) {
