@@ -458,6 +458,9 @@ namespace map_marker {
 			ui.btnWriteYaml->setEnabled(b);
 			ui.btnLoadMarkersYaml->setEnabled(b);
 			ui.btnUpdateCustomPose->setEnabled(b);
+			ui.lblNogo->setEnabled(b);
+			ui.btnNogoLine->setEnabled(b);
+			ui.btnNogoSquare->setEnabled(b);
 
 	}
 

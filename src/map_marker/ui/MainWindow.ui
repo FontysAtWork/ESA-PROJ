@@ -60,7 +60,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>790</y>
+      <y>830</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -76,7 +76,7 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>760</y>
+      <y>800</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -91,9 +91,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>400</y>
-      <width>185</width>
+      <x>1390</x>
+      <y>380</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -107,9 +107,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1200</x>
-      <y>400</y>
-      <width>185</width>
+      <x>1390</x>
+      <y>410</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -123,9 +123,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1420</x>
-      <y>280</y>
-      <width>151</width>
+      <x>1390</x>
+      <y>260</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -136,8 +136,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1370</x>
-      <y>282</y>
+      <x>1260</x>
+      <y>260</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -152,9 +152,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1420</x>
-      <y>310</y>
-      <width>151</width>
+      <x>1390</x>
+      <y>290</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -165,8 +165,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1370</x>
-      <y>312</y>
+      <x>1260</x>
+      <y>290</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -181,9 +181,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1420</x>
-      <y>340</y>
-      <width>151</width>
+      <x>1390</x>
+      <y>320</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -194,8 +194,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1370</x>
-      <y>342</y>
+      <x>1260</x>
+      <y>320</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -210,8 +210,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>330</y>
+      <x>1390</x>
+      <y>210</y>
       <width>185</width>
       <height>21</height>
      </rect>
@@ -229,8 +229,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>310</y>
+      <x>1390</x>
+      <y>230</y>
       <width>185</width>
       <height>21</height>
      </rect>
@@ -251,8 +251,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>285</y>
+      <x>1260</x>
+      <y>220</y>
       <width>185</width>
       <height>15</height>
      </rect>
@@ -264,10 +264,10 @@
    <widget class="Line" name="lineH1">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>230</y>
-      <width>600</width>
-      <height>3</height>
+      <x>1250</x>
+      <y>170</y>
+      <width>341</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="orientation">
@@ -300,8 +300,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>250</y>
+      <x>1260</x>
+      <y>190</y>
       <width>180</width>
       <height>15</height>
      </rect>
@@ -321,7 +321,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>860</y>
+      <y>900</y>
       <width>580</width>
       <height>3</height>
      </rect>
@@ -337,7 +337,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>430</y>
+      <y>470</y>
       <width>564</width>
       <height>321</height>
      </rect>
@@ -381,7 +381,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>820</y>
+      <y>860</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -397,7 +397,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>760</y>
+      <y>800</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -433,7 +433,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>790</y>
+      <y>830</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -449,7 +449,7 @@
     <property name="geometry">
      <rect>
       <x>1200</x>
-      <y>760</y>
+      <y>800</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -465,7 +465,7 @@
     <property name="geometry">
      <rect>
       <x>1010</x>
-      <y>790</y>
+      <y>830</y>
       <width>185</width>
       <height>25</height>
      </rect>
@@ -474,40 +474,14 @@
      <string>Clear all markers</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblImgMapYaml">
-    <property name="geometry">
-     <rect>
-      <x>1170</x>
-      <y>20</y>
-      <width>67</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblImgMapPgm">
-    <property name="geometry">
-     <rect>
-      <x>1240</x>
-      <y>20</y>
-      <width>67</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblName">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>1370</x>
-      <y>372</y>
+      <x>1260</x>
+      <y>350</y>
       <width>45</width>
       <height>18</height>
      </rect>
@@ -522,9 +496,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1420</x>
-      <y>370</y>
-      <width>151</width>
+      <x>1390</x>
+      <y>350</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -536,8 +510,8 @@
     <property name="geometry">
      <rect>
       <x>1390</x>
-      <y>400</y>
-      <width>185</width>
+      <y>440</y>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -545,7 +519,7 @@
      <string>Add custom marker</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblLoadMap_2">
+   <widget class="QLabel" name="lblRobotSize">
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -571,7 +545,7 @@
       <x>1240</x>
       <y>0</y>
       <width>20</width>
-      <height>231</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="orientation">
@@ -645,8 +619,8 @@
    <widget class="QCheckBox" name="cbxImgMapYaml">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>50</y>
+      <x>1210</x>
+      <y>53</y>
       <width>16</width>
       <height>21</height>
      </rect>
@@ -661,8 +635,8 @@
    <widget class="QCheckBox" name="cbxImgMapPgm">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>80</y>
+      <x>1210</x>
+      <y>83</y>
       <width>16</width>
       <height>21</height>
      </rect>
@@ -794,6 +768,90 @@
      <string>Connect</string>
     </property>
    </widget>
+   <widget class="Line" name="lineH1_3">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>220</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="lineH1_4">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>330</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblNogo">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>240</y>
+      <width>180</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>No-go zones:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnNogoLine">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>270</y>
+      <width>185</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create no-go line</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnNogoSquare">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>300</y>
+      <width>185</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create no-go square</string>
+    </property>
+   </widget>
+   <zorder>lblConnect</zorder>
+   <zorder>lineH1_4</zorder>
+   <zorder>lineH1_3</zorder>
    <zorder>lineH1_2</zorder>
    <zorder>btnLoadYaml</zorder>
    <zorder>btnLoadMap</zorder>
@@ -822,12 +880,10 @@
    <zorder>btnMoveMarkerDown</zorder>
    <zorder>btnMoveMarkerUp</zorder>
    <zorder>btnClearAllMarkers</zorder>
-   <zorder>lblImgMapYaml</zorder>
-   <zorder>lblImgMapPgm</zorder>
    <zorder>lblName</zorder>
    <zorder>inpCustomName</zorder>
    <zorder>btnAddCustomPose</zorder>
-   <zorder>lblLoadMap_2</zorder>
+   <zorder>lblRobotSize</zorder>
    <zorder>lineV_2</zorder>
    <zorder>spinRobotWidth</zorder>
    <zorder>lblRobotWidth</zorder>
@@ -839,9 +895,11 @@
    <zorder>checkBox</zorder>
    <zorder>lblMaster</zorder>
    <zorder>lblHost</zorder>
-   <zorder>lblConnect</zorder>
    <zorder>inpHost</zorder>
    <zorder>pushButton</zorder>
+   <zorder>lblNogo</zorder>
+   <zorder>btnNogoLine</zorder>
+   <zorder>btnNogoSquare</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
