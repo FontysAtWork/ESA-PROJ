@@ -4,13 +4,18 @@ project(faw_vision)
 add_definitions(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  #roscpp
-  #std_msgs
-  #tf
-  #message_generation
+  roscpp
+  sensor_msgs
+  tf
 )
 
-catkin_package()
+catkin_package (
+  #INCLUDE_DIRS include
+  LIBRARIES
+  CATKIN_DEPENDS roscpp sensor_msgs tf
+)
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+add_executable(broadcast_tf_node src/broadcast_tf.cpp)
+target_link_libraries(broadcast_tf_node ${catkin_LIBRARIES})

@@ -10,7 +10,7 @@ void cbPose(const geometry_msgs::Pose::ConstPtr &msg);
 int main(int argc, char** argv){
   ros::init(argc, argv, "broadcast_tf");
   ros::NodeHandle n;
-  ros::Subscriber subPath = n.subscribe("/aids", 100, cbPose);
+  ros::Subscriber subPath = n.subscribe("/tf_update", 100, cbPose);
 
   tf::TransformBroadcaster tf_Broadcaster;
   transform.setOrigin( tf::Vector3(0.0, 0.0, 0.0) );

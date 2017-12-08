@@ -7,6 +7,8 @@
 -->
 
 <launch>
+  <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch"/>
+  <!--<node pkg="realsense_camera" type="sr300_nodelet_rgbd" name="sr300_nodelet_rgbd"/>-->
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
     <param name="resolution" value="0.01" />
 
@@ -23,5 +25,5 @@
     <remap from="cloud_in" to="/camera/depth/points" />
   </node>
   <node name="rviz" pkg="rviz" type="rviz" required="true" />
-
+  <node pkg="faw_vision" type="broadcast_tf_node" name="broadcast_tf_node" />
 </launch>
