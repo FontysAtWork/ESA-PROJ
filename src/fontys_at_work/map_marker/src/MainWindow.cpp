@@ -18,7 +18,9 @@ namespace map_marker {
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);	
-	const QColor pink = QColor(255, 105, 180);	
+	const QColor pink = QColor(255, 105, 180);
+	const QColor purple = QColor(188, 66, 244);
+	const QColor lightblue = QColor(65, 184, 244);	
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
@@ -153,10 +155,18 @@ namespace map_marker {
 				qp->drawLine(centerFront, centerRight);
 				qp->drawLine(centerFront, centerLeft);
 				
-			} else if(markers[i].GetType() == Workspace) {
+			} else if(markers[i].GetType() == Shelf) {
 				pen.setColor(green);
-			} else {
+			} else if(markers[i].GetType() == Workstation) {
+				pen.setColor(lightblue);
+			} else if(markers[i].GetType() == Conveyor) {
+				pen.setColor(pink);
+			} else if(markers[i].GetType() == Waypoint) {
 				pen.setColor(orange);
+			} else if(markers[i].GetType() == Precision) {
+				pen.setColor(purple);
+			} else {
+				pen.setColor(blue);
 			}
 
 			pen.setWidth(10);
@@ -299,10 +309,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 
 		AddMarker(Marker(pos, type, name));
@@ -316,10 +332,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 		
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 		
 		AddMarker(Marker(x, y, angle, type, name));
@@ -377,10 +399,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 		
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 		
 		UpdateMarker(s, Marker(x, y, angle, type, name));
@@ -419,12 +447,24 @@ namespace map_marker {
 	}
 
 
-	void MainWindow::on_radioNav_clicked() {
-		ui.inpCustomName->setText("nav_");
+	void MainWindow::on_radioShelf_clicked() {
+		ui.inpCustomName->setText("SH");
 	}
 
-	void MainWindow::on_radioWorkspace_clicked() {
-		ui.inpCustomName->setText("wsp_");
+	void MainWindow::on_radioWorkstation_clicked() {
+		ui.inpCustomName->setText("WS");
+	}
+
+	void MainWindow::on_radioConveyor_clicked() {
+		ui.inpCustomName->setText("CB");
+	}
+
+	void MainWindow::on_radioWaypoint_clicked() {
+		ui.inpCustomName->setText("WP");
+	}
+
+	void MainWindow::on_radioPrecision_clicked() {
+		ui.inpCustomName->setText("PP");
 	}
 
 	void MainWindow::on_cbxEnvVars_clicked() {
@@ -451,16 +491,29 @@ namespace map_marker {
 			
 			if(data[i].key.compare(0,6,"Marker") == 0)
 			{
-				if(data[i].data[0].compare(0,3,"Nav") == 0)
+				if(data[i].data[0].compare(0,3,"She") == 0)
 				{
-					t = Navigation;
+					t = Shelf;
 				}
 				else if(data[i].data[0].compare(0,3,"Wor") == 0)
 				{
-					t = Workspace;
+					t = Workstation;
+				}
+				else if(data[i].data[0].compare(0,3,"Con") == 0)
+				{
+					t = Conveyor;
+				}
+				else if(data[i].data[0].compare(0,3,"Way") == 0)
+				{
+					t = Waypoint;
+				}
+				else if(data[i].data[0].compare(0,3,"Pre") == 0)
+				{
+					t = Precision;
 				}
 				else
 				{
+					std::cout << data[i].data[0] << std::endl;
 					t = Robot;
 				}
 			}
@@ -526,8 +579,11 @@ namespace map_marker {
 			ui.lblYpos->setEnabled(b);
 			ui.lblAnglepos->setEnabled(b);
 			ui.lblName->setEnabled(b);
-			ui.radioNav->setEnabled(b);
-			ui.radioWorkspace->setEnabled(b);
+			ui.radioShelf->setEnabled(b);
+			ui.radioWorkstation->setEnabled(b);
+			ui.radioConveyor->setEnabled(b);
+			ui.radioWaypoint->setEnabled(b);
+			ui.radioPrecision->setEnabled(b);
 			ui.inpCustomX->setEnabled(b);
 			ui.inpCustomY->setEnabled(b);
 			ui.inpCustomAngle->setEnabled(b);
@@ -601,12 +657,36 @@ namespace map_marker {
 		int s = GetSelectedMarker();
 
 		if(s >= 0) {
-			if(markers[s].GetType() == Navigation) {
-				ui.radioNav->setChecked(true);
-				ui.radioWorkspace->setChecked(false);
-			} else if (markers[s].GetType() == Workspace) {
-				ui.radioNav->setChecked(false);
-				ui.radioWorkspace->setChecked(true);
+			if(markers[s].GetType() == Shelf) {
+				ui.radioShelf->setChecked(true);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Workstation) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(true);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Conveyor) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(true);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Waypoint) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(true);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Precision) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(true);
 			}
 			ui.inpCustomX->setText(QString::number(markers[s].GetX()));
 			ui.inpCustomY->setText(QString::number(markers[s].GetY()));

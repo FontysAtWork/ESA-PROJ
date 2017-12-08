@@ -34,8 +34,11 @@ namespace map_marker {
 		void on_btnLoadMarkersYaml_clicked();
 		void on_btnUpdateMarker_clicked();
 		void on_btnNogoLine_clicked();
-		void on_radioNav_clicked();
-		void on_radioWorkspace_clicked();
+		void on_radioShelf_clicked();
+		void on_radioWorkstation_clicked();
+		void on_radioConveyor_clicked();
+		void on_radioWaypoint_clicked();
+		void on_radioPrecision_clicked();
 		void on_cbxEnvVars_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();

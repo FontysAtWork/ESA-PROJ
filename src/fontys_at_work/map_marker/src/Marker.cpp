@@ -40,10 +40,16 @@ MarkerType Marker::GetType() {
 }
 
 std::string Marker::GetTypeStr() {
-	if(type == Navigation) {
-		return "Navigation";
-	} else if (type == Workspace) {
-		return "Workspace";
+	if(type == Shelf) {
+		return "Shelf";
+	} else if (type == Workstation) {
+		return "Workstation";
+	} else if (type == Conveyor) {
+		return "Conveyor";
+	} else if (type == Waypoint) {
+		return "Waypoint";
+	} else if (type == Precision) {
+		return "Precision";
 	} else {
 		return "Other";
 	}
