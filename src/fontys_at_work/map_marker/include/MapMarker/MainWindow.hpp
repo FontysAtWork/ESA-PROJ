@@ -23,7 +23,7 @@ namespace map_marker {
 		void lblMapImage_clicked(QPoint);
 		void on_btnLoadYaml_clicked();
 		void on_btnLoadMap_clicked();
-		void on_btnWriteYaml_clicked();
+		void on_btnWriteMarkersYaml_clicked();
 		void on_btnClearAllMarkers_clicked();
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();
@@ -36,8 +36,11 @@ namespace map_marker {
 		void on_btnLoadMarkersYaml_clicked();
 		void on_btnUpdateMarker_clicked();
 		void on_btnNogoLine_clicked();
-		void on_radioNav_clicked();
-		void on_radioWorkspace_clicked();
+		void on_radioShelf_clicked();
+		void on_radioWorkstation_clicked();
+		void on_radioConveyor_clicked();
+		void on_radioWaypoint_clicked();
+		void on_radioPrecision_clicked();
 		void on_cbxEnvVars_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();

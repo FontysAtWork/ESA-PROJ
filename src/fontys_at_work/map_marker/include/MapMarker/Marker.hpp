@@ -7,9 +7,12 @@
 #include <string>
 
 enum MarkerType {
-    Navigation = 0,
-    Workspace = 1,
-    Robot = 2
+    Shelf = 1,
+    Workstation = 2,
+    Conveyor = 3,
+    Waypoint = 4,
+    Precision = 5,
+    Robot = 6
 };
 
 class Marker

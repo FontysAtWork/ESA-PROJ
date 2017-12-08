@@ -19,7 +19,9 @@ namespace map_marker {
 	const QColor blue = QColor(30, 30, 140);
 	const QColor green = QColor(50, 140, 30);
 	const QColor orange = QColor(230, 120, 0);	
-	const QColor pink = QColor(255, 105, 180);	
+	const QColor pink = QColor(255, 105, 180);
+	const QColor purple = QColor(188, 66, 244);
+	const QColor lightblue = QColor(65, 184, 244);	
 
 	MainWindow::MainWindow(int argc, char** argv, QWidget *parent) : QMainWindow(parent), qnode(argc,argv) {
 		ui.setupUi(this);
@@ -28,7 +30,7 @@ namespace map_marker {
 		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
 
 		// Connect list update to draw function
-		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
+		QObject::connect(ui.tableMarkers->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
 		QObject::connect(ui.spinRobotWidth, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(ui.spinRobotHeight, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
@@ -75,9 +77,9 @@ namespace map_marker {
 		ui.cbxImgMapYaml->setFocusPolicy(Qt::NoFocus);
 
 		// Ttable editing
-		ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-		ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+		ui.tableMarkers->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		ui.tableMarkers->setSelectionBehavior(QAbstractItemView::SelectRows);
+		ui.tableMarkers->setSelectionMode(QAbstractItemView::SingleSelection);
 
 		// Create map image
 		lblMapImage = new ClickableLabel(this);
@@ -162,10 +164,18 @@ namespace map_marker {
 				qp->drawLine(centerFront, centerRight);
 				qp->drawLine(centerFront, centerLeft);
 				
-			} else if(markers[i].GetType() == Workspace) {
+			} else if(markers[i].GetType() == Shelf) {
 				pen.setColor(green);
-			} else {
+			} else if(markers[i].GetType() == Workstation) {
+				pen.setColor(lightblue);
+			} else if(markers[i].GetType() == Conveyor) {
+				pen.setColor(pink);
+			} else if(markers[i].GetType() == Waypoint) {
 				pen.setColor(orange);
+			} else if(markers[i].GetType() == Precision) {
+				pen.setColor(purple);
+			} else {
+				pen.setColor(blue);
 			}
 
 			pen.setWidth(10);
@@ -267,7 +277,7 @@ namespace map_marker {
 		}
 	}
 
-	void MainWindow::on_btnWriteYaml_clicked() {
+	void MainWindow::on_btnWriteMarkersYaml_clicked() {
 		QFileDialog dialog(this);
 		dialog.setFileMode(QFileDialog::AnyFile);
 		dialog.setNameFilter(tr("Nav marker file (*.yaml)"));
@@ -310,10 +320,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 
 		AddMarker(Marker(pos, type, name));
@@ -327,10 +343,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 		
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 		
 		AddMarker(Marker(x, y, angle, type, name));
@@ -388,10 +410,16 @@ namespace map_marker {
 		std::string name = ui.inpCustomName->text().toUtf8().constData();;
 		
 		MarkerType type;
-		if(ui.radioNav->isChecked()) {
-			type = Navigation;
-		} else if (ui.radioWorkspace->isChecked()) {
-			type = Workspace;
+		if(ui.radioShelf->isChecked()) {
+			type = Shelf;
+		} else if (ui.radioWorkstation->isChecked()) {
+			type = Workstation;
+		} else if (ui.radioConveyor->isChecked()) {
+			type = Conveyor;
+		} else if (ui.radioWaypoint->isChecked()) {
+			type = Waypoint;
+		} else if (ui.radioPrecision->isChecked()) {
+			type = Precision;
 		}
 		
 		UpdateMarker(s, Marker(x, y, angle, type, name));
@@ -430,12 +458,24 @@ namespace map_marker {
 	}
 
 
-	void MainWindow::on_radioNav_clicked() {
-		ui.inpCustomName->setText("nav_");
+	void MainWindow::on_radioShelf_clicked() {
+		ui.inpCustomName->setText("SH");
 	}
 
-	void MainWindow::on_radioWorkspace_clicked() {
-		ui.inpCustomName->setText("wsp_");
+	void MainWindow::on_radioWorkstation_clicked() {
+		ui.inpCustomName->setText("WS");
+	}
+
+	void MainWindow::on_radioConveyor_clicked() {
+		ui.inpCustomName->setText("CB");
+	}
+
+	void MainWindow::on_radioWaypoint_clicked() {
+		ui.inpCustomName->setText("WP");
+	}
+
+	void MainWindow::on_radioPrecision_clicked() {
+		ui.inpCustomName->setText("PP");
 	}
 
 	void MainWindow::on_cbxEnvVars_clicked() {
@@ -462,16 +502,29 @@ namespace map_marker {
 			
 			if(data[i].key.compare(0,6,"Marker") == 0)
 			{
-				if(data[i].data[0].compare(0,3,"Nav") == 0)
+				if(data[i].data[0].compare(0,3,"She") == 0)
 				{
-					t = Navigation;
+					t = Shelf;
 				}
 				else if(data[i].data[0].compare(0,3,"Wor") == 0)
 				{
-					t = Workspace;
+					t = Workstation;
+				}
+				else if(data[i].data[0].compare(0,3,"Con") == 0)
+				{
+					t = Conveyor;
+				}
+				else if(data[i].data[0].compare(0,3,"Way") == 0)
+				{
+					t = Waypoint;
+				}
+				else if(data[i].data[0].compare(0,3,"Pre") == 0)
+				{
+					t = Precision;
 				}
 				else
 				{
+					std::cout << data[i].data[0] << std::endl;
 					t = Robot;
 				}
 			}
@@ -531,37 +584,63 @@ namespace map_marker {
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
+			// Panic button
+			ui.btnPanic->setEnabled(b);
+			
+			// Markers
 			ui.lblMarkers->setEnabled(b);
 			ui.lblMarkertype->setEnabled(b);
 			ui.lblXpos->setEnabled(b);
 			ui.lblYpos->setEnabled(b);
 			ui.lblAnglepos->setEnabled(b);
 			ui.lblName->setEnabled(b);
-			ui.radioNav->setEnabled(b);
-			ui.radioWorkspace->setEnabled(b);
+			ui.btnAddCustomPose->setEnabled(b);
+			ui.btnUpdateMarker->setEnabled(b);
+			ui.btnAddCurrentPose->setEnabled(b);
+			ui.btnClearAllMarkers->setEnabled(b);
+			ui.btnRemoveMarker->setEnabled(b);
+			ui.btnMoveMarkerUp->setEnabled(b);
+			ui.btnMoveMarkerDown->setEnabled(b);
+			ui.btnLoadMarkersYaml->setEnabled(b);
+			ui.btnWriteMarkersYaml->setEnabled(b);
+			ui.btnMoveRobot->setEnabled(b);
 			ui.inpCustomX->setEnabled(b);
 			ui.inpCustomY->setEnabled(b);
 			ui.inpCustomAngle->setEnabled(b);
 			ui.inpCustomName->setEnabled(b);
-			ui.tableWidget->setEnabled(b);
-			ui.btnAddCurrentPose->setEnabled(b);
-			ui.btnAddCustomPose->setEnabled(b);
-			ui.btnRemoveMarker->setEnabled(b);
-			ui.btnMoveMarkerUp->setEnabled(b);
-			ui.btnMoveMarkerDown->setEnabled(b);
-			ui.btnClearAllMarkers->setEnabled(b);
-			ui.btnMoveRobot->setEnabled(b);
-			ui.btnWriteYaml->setEnabled(b);
-			ui.btnLoadMarkersYaml->setEnabled(b);
-			ui.btnUpdateMarker->setEnabled(b);
+			ui.radioShelf->setEnabled(b);
+			ui.radioWorkstation->setEnabled(b);
+			ui.radioConveyor->setEnabled(b);
+			ui.radioWaypoint->setEnabled(b);
+			ui.radioPrecision->setEnabled(b);
+			ui.tableMarkers->setEnabled(b);
+
+			// No-go lines
 			ui.lblNogo->setEnabled(b);
+			ui.lblLineX1->setEnabled(b);
+			ui.lblLineX2->setEnabled(b);
+			ui.lblLineY1->setEnabled(b);
+			ui.lblLineY2->setEnabled(b);
+			ui.lblLineName->setEnabled(b);
 			ui.btnNogoLine->setEnabled(b);
-			ui.btnNogoSquare->setEnabled(b);
+			ui.btnUpdateLine->setEnabled(b);
+			ui.btnClearLine->setEnabled(b);
+			ui.btnRemoveLine->setEnabled(b);
+			ui.btnMoveLineUp->setEnabled(b);
+			ui.btnMoveLineDown->setEnabled(b);
+			ui.btnLoadLinesYaml->setEnabled(b);
+			ui.btnWriteLinesYaml->setEnabled(b);
+			ui.inpLineX1->setEnabled(b);
+			ui.inpLineX2->setEnabled(b);
+			ui.inpLineY1->setEnabled(b);
+			ui.inpLineY2->setEnabled(b);
+			ui.inpLineName->setEnabled(b);
+			ui.tableLines->setEnabled(b);
 	}
 
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
-		QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
+		QModelIndexList indexes = ui.tableMarkers->selectionModel()->selectedRows();
 
 		for (int i = 0; i < indexes.count(); ++i) {    
 			j = indexes.at(i).row();
@@ -595,14 +674,14 @@ namespace map_marker {
 	}
 
 	void MainWindow::UpdateTable() {
-		ui.tableWidget->setRowCount(0);
+		ui.tableMarkers->setRowCount(0);
 		for(int i=0; i < markers.size(); i++) {
-			ui.tableWidget->insertRow ( ui.tableWidget->rowCount() );
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetName())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 1, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
+			ui.tableMarkers->insertRow ( ui.tableMarkers->rowCount() );
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetName())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 1, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
 		}
 
 		UpdateWindow();
@@ -612,12 +691,36 @@ namespace map_marker {
 		int s = GetSelectedMarker();
 
 		if(s >= 0) {
-			if(markers[s].GetType() == Navigation) {
-				ui.radioNav->setChecked(true);
-				ui.radioWorkspace->setChecked(false);
-			} else if (markers[s].GetType() == Workspace) {
-				ui.radioNav->setChecked(false);
-				ui.radioWorkspace->setChecked(true);
+			if(markers[s].GetType() == Shelf) {
+				ui.radioShelf->setChecked(true);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Workstation) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(true);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Conveyor) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(true);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Waypoint) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(true);
+				ui.radioPrecision->setChecked(false);
+			} else if (markers[s].GetType() == Precision) {
+				ui.radioShelf->setChecked(false);
+				ui.radioWorkstation->setChecked(false);
+				ui.radioConveyor->setChecked(false);
+				ui.radioWaypoint->setChecked(false);
+				ui.radioPrecision->setChecked(true);
 			}
 			ui.inpCustomX->setText(QString::number(markers[s].GetX()));
 			ui.inpCustomY->setText(QString::number(markers[s].GetY()));
