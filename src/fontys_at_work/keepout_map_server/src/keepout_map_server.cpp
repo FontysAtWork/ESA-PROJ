@@ -3,8 +3,8 @@
 
 #include <nav_msgs/OccupancyGrid.h>
 #include <std_msgs/Empty.h>
-#include <keepout_map_server/Line.h>
-#include <keepout_map_server/Square.h>
+#include <keepout_map_server_msg/Line.h>
+#include <keepout_map_server_msg/Square.h>
 
 #include "map.hpp"
 #include "map_functions.hpp"
@@ -17,12 +17,12 @@ void cbClearMap(const std_msgs::Empty::ConstPtr& msg)
 	m.clear();
 }
 
-void cbDrawLine(const keepout_map_server::Line::ConstPtr& msg)
+void cbDrawLine(const keepout_map_server_msg::Line::ConstPtr& msg)
 {
 	faw::mapFunctions::drawLine(m, msg->x1, msg->y1, msg->x2, msg->y2, msg->gradient);
 }
 
-void cbDrawSquare(const keepout_map_server::Square::ConstPtr& msg)
+void cbDrawSquare(const keepout_map_server_msg::Square::ConstPtr& msg)
 {
 	faw::mapFunctions::drawSquare(m, msg->x, msg->y, msg->width, msg->height, msg->gradient);
 }
