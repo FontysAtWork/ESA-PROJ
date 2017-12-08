@@ -6,7 +6,7 @@
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
 #include "Qnode.hpp"
-#include "keepout_map_server/Line.h"
+#include "keepout_map_server_msg/Line.h"
 
 namespace map_marker {
 
@@ -34,7 +34,7 @@ bool QNode::Init() {
 	ros::NodeHandle n;
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<keepout_map_server::Line>("/keepout/drawline", 100);
+	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
 	start();
 	return true;
 }
@@ -51,7 +51,7 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	ros::NodeHandle n;
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<keepout_map_server::Line>("/keepout/drawline", 100);
+	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
 	start();
 	return true;
 }
@@ -112,7 +112,7 @@ void QNode::DrawLine(const int x1, const int y1, const int x2, const int y2)
 {
 	ROS_INFO("Sending line");
 
-	keepout_map_server::Line line;
+	keepout_map_server_msg::Line line;
 	line.x1 = x1;
 	line.x2 = x2;
 	line.y1 = y1;
