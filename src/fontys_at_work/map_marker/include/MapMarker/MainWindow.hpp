@@ -10,6 +10,8 @@
 #include "MapConfig.hpp"
 #include "YamlWriter.hpp"
 #include "NoGoLine.hpp"
+#include "MapRenderer.hpp"
+#include <QTimer>
 
 #include "geometry_msgs/Pose.h"
 
@@ -40,6 +42,7 @@ namespace map_marker {
 		void UpdateRobotPose();
 		void SelectionIsChanged();
 		void UpdateRobotSize();
+		void UpdateMap();
 		
 
 	public:
@@ -76,6 +79,8 @@ namespace map_marker {
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;
 		NoGoLine line;
+		MapRenderer mapRenderer;
+		QTimer timerForMap;
 
 		double map_min;
 		double map_max;
