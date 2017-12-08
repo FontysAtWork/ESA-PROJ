@@ -1202,6 +1202,19 @@
      <string>Name:</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="cbxDynamicImage">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>100</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Dynamically load image</string>
+    </property>
+   </widget>
    <zorder>lblConnect</zorder>
    <zorder>btnLoadYaml</zorder>
    <zorder>btnLoadMap</zorder>
@@ -1272,6 +1285,7 @@
    <zorder>btnUpdateLine</zorder>
    <zorder>inpLineName</zorder>
    <zorder>lblLineName</zorder>
+   <zorder>cbxDynamicImage</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

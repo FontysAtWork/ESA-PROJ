@@ -788,7 +788,7 @@ namespace map_marker {
 
 	void MainWindow::UpdateMap()
 	{
-		if(NodeStarted)
+		if(NodeStarted && ui.cbxDynamicImage->isChecked())
 		{
 			nav_msgs::OccupancyGrid keepoutGrid;
 			keepoutGrid = qnode.GetKeepOutMap();
