@@ -21,7 +21,7 @@ namespace map_marker {
 		void lblMapImage_clicked(QPoint);
 		void on_btnLoadYaml_clicked();
 		void on_btnLoadMap_clicked();
-		void on_btnWriteYaml_clicked();
+		void on_btnWriteMarkersYaml_clicked();
 		void on_btnClearAllMarkers_clicked();
 		void on_btnAddCurrentPose_clicked();
 		void on_btnAddCustomPose_clicked();

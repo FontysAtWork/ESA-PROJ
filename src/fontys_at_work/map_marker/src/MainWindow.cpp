@@ -29,7 +29,7 @@ namespace map_marker {
 		robotPose = MakePose(-4.5, 4.5, 0.0, 0.0, 0.0, 0.0, 1.0);
 
 		// Connect list update to draw function
-		QObject::connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
+		QObject::connect(ui.tableMarkers->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(SelectionIsChanged()));
 		QObject::connect(ui.spinRobotWidth, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(ui.spinRobotHeight, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
@@ -69,9 +69,9 @@ namespace map_marker {
 		ui.cbxImgMapYaml->setFocusPolicy(Qt::NoFocus);
 
 		// Ttable editing
-		ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-		ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+		ui.tableMarkers->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		ui.tableMarkers->setSelectionBehavior(QAbstractItemView::SelectRows);
+		ui.tableMarkers->setSelectionMode(QAbstractItemView::SingleSelection);
 
 		// Create map image
 		lblMapImage = new ClickableLabel(this);
@@ -266,7 +266,7 @@ namespace map_marker {
 		}
 	}
 
-	void MainWindow::on_btnWriteYaml_clicked() {
+	void MainWindow::on_btnWriteMarkersYaml_clicked() {
 		QFileDialog dialog(this);
 		dialog.setFileMode(QFileDialog::AnyFile);
 		dialog.setNameFilter(tr("Nav marker file (*.yaml)"));
@@ -573,40 +573,63 @@ namespace map_marker {
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
+			// Panic button
+			ui.btnPanic->setEnabled(b);
+			
+			// Markers
 			ui.lblMarkers->setEnabled(b);
 			ui.lblMarkertype->setEnabled(b);
 			ui.lblXpos->setEnabled(b);
 			ui.lblYpos->setEnabled(b);
 			ui.lblAnglepos->setEnabled(b);
 			ui.lblName->setEnabled(b);
+			ui.btnAddCustomPose->setEnabled(b);
+			ui.btnUpdateMarker->setEnabled(b);
+			ui.btnAddCurrentPose->setEnabled(b);
+			ui.btnClearAllMarkers->setEnabled(b);
+			ui.btnRemoveMarker->setEnabled(b);
+			ui.btnMoveMarkerUp->setEnabled(b);
+			ui.btnMoveMarkerDown->setEnabled(b);
+			ui.btnLoadMarkersYaml->setEnabled(b);
+			ui.btnWriteMarkersYaml->setEnabled(b);
+			ui.btnMoveRobot->setEnabled(b);
+			ui.inpCustomX->setEnabled(b);
+			ui.inpCustomY->setEnabled(b);
+			ui.inpCustomAngle->setEnabled(b);
+			ui.inpCustomName->setEnabled(b);
 			ui.radioShelf->setEnabled(b);
 			ui.radioWorkstation->setEnabled(b);
 			ui.radioConveyor->setEnabled(b);
 			ui.radioWaypoint->setEnabled(b);
 			ui.radioPrecision->setEnabled(b);
-			ui.inpCustomX->setEnabled(b);
-			ui.inpCustomY->setEnabled(b);
-			ui.inpCustomAngle->setEnabled(b);
-			ui.inpCustomName->setEnabled(b);
-			ui.tableWidget->setEnabled(b);
-			ui.btnAddCurrentPose->setEnabled(b);
-			ui.btnAddCustomPose->setEnabled(b);
-			ui.btnRemoveMarker->setEnabled(b);
-			ui.btnMoveMarkerUp->setEnabled(b);
-			ui.btnMoveMarkerDown->setEnabled(b);
-			ui.btnClearAllMarkers->setEnabled(b);
-			ui.btnMoveRobot->setEnabled(b);
-			ui.btnWriteYaml->setEnabled(b);
-			ui.btnLoadMarkersYaml->setEnabled(b);
-			ui.btnUpdateMarker->setEnabled(b);
+			ui.tableMarkers->setEnabled(b);
+
+			// No-go lines
 			ui.lblNogo->setEnabled(b);
+			ui.lblLineX1->setEnabled(b);
+			ui.lblLineX2->setEnabled(b);
+			ui.lblLineY1->setEnabled(b);
+			ui.lblLineY2->setEnabled(b);
+			ui.lblLineName->setEnabled(b);
 			ui.btnNogoLine->setEnabled(b);
-			ui.btnNogoSquare->setEnabled(b);
+			ui.btnUpdateLine->setEnabled(b);
+			ui.btnClearLine->setEnabled(b);
+			ui.btnRemoveLine->setEnabled(b);
+			ui.btnMoveLineUp->setEnabled(b);
+			ui.btnMoveLineDown->setEnabled(b);
+			ui.btnLoadLinesYaml->setEnabled(b);
+			ui.btnWriteLinesYaml->setEnabled(b);
+			ui.inpLineX1->setEnabled(b);
+			ui.inpLineX2->setEnabled(b);
+			ui.inpLineY1->setEnabled(b);
+			ui.inpLineY2->setEnabled(b);
+			ui.inpLineName->setEnabled(b);
+			ui.tableLines->setEnabled(b);
 	}
 
 	int MainWindow::GetSelectedMarker() {
 		int j = -1;
-		QModelIndexList indexes = ui.tableWidget->selectionModel()->selectedRows();
+		QModelIndexList indexes = ui.tableMarkers->selectionModel()->selectedRows();
 
 		for (int i = 0; i < indexes.count(); ++i) {    
 			j = indexes.at(i).row();
@@ -640,14 +663,14 @@ namespace map_marker {
 	}
 
 	void MainWindow::UpdateTable() {
-		ui.tableWidget->setRowCount(0);
+		ui.tableMarkers->setRowCount(0);
 		for(int i=0; i < markers.size(); i++) {
-			ui.tableWidget->insertRow ( ui.tableWidget->rowCount() );
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetName())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 1, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
-			ui.tableWidget->setItem(ui.tableWidget->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
+			ui.tableMarkers->insertRow ( ui.tableMarkers->rowCount() );
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(markers[i].GetName())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 1, new QTableWidgetItem(QString::fromStdString(markers[i].GetTypeStr())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
+			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
 		}
 
 		UpdateWindow();
