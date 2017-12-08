@@ -49,7 +49,8 @@ namespace map_marker {
 			map_pix = 992;
 			// Load map image
 			QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
-			map = new QPixmap(url);
+			//map = new QPixmap(url);
+			map = new QImage(url);
 			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
 			ToggleInterface(true);
@@ -57,7 +58,8 @@ namespace map_marker {
 		}
 		else
 		{
-			map = new QPixmap();
+			//map = new QPixmap();
+			map = new QImage();
 		}
 
 		ui.cbxImgMapPgm->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -98,7 +100,8 @@ namespace map_marker {
 	  
 	  QPainter qp(this);
 
-	  qp.drawPixmap(0, 0, map_pix, map_pix, *map);
+	  //qp.drawPixmap(0, 0, map_pix, map_pix, *map);
+	  qp.drawImage(0,0,*map);
 	  drawMarkers(&qp);
 	}
 
@@ -224,7 +227,7 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			yaml.printLoadedYaml();
+			//yaml.printLoadedYaml();
 			mapConfig.setFullConfigData(yaml.GetParsedYaml());
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
@@ -244,7 +247,8 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			map = new QPixmap(fileNames[0]);
+			//map = new QPixmap(fileNames[0]);
+			map = new QImage(fileNames[0]);
 			QSize a = map->size();
 			map_pix = a.height();
 			UpdateWindow();
