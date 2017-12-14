@@ -94,6 +94,8 @@ namespace map_marker {
 
 		// Panic button color
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
+		
+		NoGoOneSelected = true;
 
 		UpdateTable();
 
@@ -233,6 +235,16 @@ namespace map_marker {
 
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
+		if(NoGoOneSelected)
+		{
+			ui.inpLineX1->setText(x);
+			ui.inpLineY1->setText(y);
+		}
+		else
+		{
+			ui.inpLineX2->setText(x);
+			ui.inpLineY2->setText(y);
+		}
 	}
 
 	void MainWindow::on_btnLoadYaml_clicked() {
@@ -480,6 +492,14 @@ namespace map_marker {
 	void MainWindow::on_radioPrecision_clicked() {
 		ui.inpCustomName->setText("PP");
 	}
+	
+	void MainWindow::on_radioNoGoOne_clicked() {
+		NoGoOneSelected = true;
+	}
+	
+	void MainWindow::on_radioNoGoTwo_clicked() {
+		NoGoOneSelected = false;
+	}
 
 	void MainWindow::on_cbxEnvVars_clicked() {
 		ui.inpMaster->setEnabled(!ui.cbxEnvVars->isChecked());
@@ -639,6 +659,8 @@ namespace map_marker {
 			ui.inpLineY2->setEnabled(b);
 			ui.inpLineName->setEnabled(b);
 			ui.tableLines->setEnabled(b);
+			ui.radioNoGoOne->setEnabled(b);
+			ui.radioNoGoTwo->setEnabled(b);
 	}
 
 	int MainWindow::GetSelectedMarker() {

@@ -41,6 +41,8 @@ namespace map_marker {
 		void on_radioConveyor_clicked();
 		void on_radioWaypoint_clicked();
 		void on_radioPrecision_clicked();
+		void on_radioNoGoOne_clicked();
+		void on_radioNoGoTwo_clicked();
 		void on_cbxEnvVars_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();
@@ -92,6 +94,7 @@ namespace map_marker {
 		bool YamlLoaded;
 		bool ImageLoaded;
 		bool NodeStarted;
+		bool NoGoOneSelected;
 
 	protected:
     	void paintEvent(QPaintEvent *event);
