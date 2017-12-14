@@ -59,7 +59,8 @@ namespace map_marker {
 		void UpdateMarker(int index, Marker marker);
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
-		void UpdateTable();
+		void UpdateMarkerTable();
+		void UpdateLineTable();
 		void FillMarkerList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
 		void UpdateWindow();
@@ -75,6 +76,7 @@ namespace map_marker {
 		Ui::MapMarker ui;
 		QNode qnode;
 		std::vector<Marker> markers;
+		std::vector<NoGoLine> lines;
 		ClickableLabel *lblMapImage;
 		YamlParser yaml;
 		YamlWriter yamlWriter;
@@ -83,7 +85,6 @@ namespace map_marker {
 		QImage *map;
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;
-		NoGoLine line;
 		MapRenderer mapRenderer;
 		QTimer timerForMap;
 

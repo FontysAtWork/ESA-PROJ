@@ -97,7 +97,7 @@ namespace map_marker {
 		
 		NoGoOneSelected = true;
 
-		UpdateTable();
+		UpdateMarkerTable();
 
 		ROS_INFO("User interface loaded");
 	}
@@ -231,7 +231,7 @@ namespace map_marker {
 		QString x = QString::number(ConvertPixelToRealSize(a.x()));
 		QString y = QString::number(-ConvertPixelToRealSize(a.y()));
 		
-		line.SetPoint(a.x(), a.y(), qnode);
+		//line.SetPoint(a.x(), a.y(), qnode);
 
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
@@ -326,7 +326,7 @@ namespace map_marker {
 
 	void MainWindow::on_btnClearAllMarkers_clicked() {
 		markers.clear();
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnAddCurrentPose_clicked() {
@@ -347,7 +347,7 @@ namespace map_marker {
 		}
 
 		AddMarker(Marker(pos, type, name));
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnAddCustomPose_clicked() {
@@ -370,7 +370,7 @@ namespace map_marker {
 		}
 		
 		AddMarker(Marker(x, y, angle, type, name));
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnMoveRobot_clicked() {
@@ -390,7 +390,7 @@ namespace map_marker {
 			return;
 		} 
 		markers.erase(markers.begin()+index);
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnPanic_clicked() {
@@ -401,13 +401,13 @@ namespace map_marker {
 	void MainWindow::on_btnMoveMarkerUp_clicked() {
 		int selectedMarker = GetSelectedMarker();
 		MoveMarkerUp(selectedMarker);
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnMoveMarkerDown_clicked() {
 		int selectedMarker = GetSelectedMarker();
 		MoveMarkerDown(selectedMarker);
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnUpdateMarker_clicked() {
@@ -437,7 +437,7 @@ namespace map_marker {
 		}
 		
 		UpdateMarker(s, Marker(x, y, angle, type, name));
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::on_btnConnect_clicked() {
@@ -469,7 +469,18 @@ namespace map_marker {
 
 	void MainWindow::on_btnNogoLine_clicked() {
 
-		line.ButtonClicked();
+		//line.ButtonClicked();
+		double x1 = ui.inpLineX1->text().toDouble();
+		double y1 = ui.inpLineY1->text().toDouble();
+		double x2 = ui.inpLineX2->text().toDouble();
+		double y2 = ui.inpLineY2->text().toDouble();
+		std::string name = ui.inpLineName->text().toUtf8().constData();
+		
+		
+		NoGoLine line(x1, y1, x2, y2, name);
+		
+		lines.push_back(line);
+		UpdateLineTable();
 	}
 
 
@@ -603,7 +614,7 @@ namespace map_marker {
 				name = "";
 			}
 		}
-		UpdateTable();
+		UpdateMarkerTable();
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
@@ -698,7 +709,7 @@ namespace map_marker {
 		}
 	}
 
-	void MainWindow::UpdateTable() {
+	void MainWindow::UpdateMarkerTable() {
 		ui.tableMarkers->setRowCount(0);
 		for(int i=0; i < markers.size(); i++) {
 			ui.tableMarkers->insertRow ( ui.tableMarkers->rowCount() );
@@ -707,6 +718,20 @@ namespace map_marker {
 			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 2, new QTableWidgetItem(QString::number(markers[i].GetX())));
 			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 3, new QTableWidgetItem(QString::number(markers[i].GetY())));
 			ui.tableMarkers->setItem(ui.tableMarkers->rowCount()-1, 4, new QTableWidgetItem(QString::number(markers[i].GetAngle())));
+		}
+
+		UpdateWindow();
+	}
+	
+	void MainWindow::UpdateLineTable() {
+		ui.tableLines->setRowCount(0);
+		for(int i=0; i < lines.size(); i++) {
+			ui.tableLines->insertRow ( ui.tableLines->rowCount() );
+			ui.tableLines->setItem(ui.tableLines->rowCount()-1, 0, new QTableWidgetItem(QString::fromStdString(lines[i].GetName())));
+			ui.tableLines->setItem(ui.tableLines->rowCount()-1, 1, new QTableWidgetItem(QString::number(lines[i].GetX1())));
+			ui.tableLines->setItem(ui.tableLines->rowCount()-1, 2, new QTableWidgetItem(QString::number(lines[i].GetY1())));
+			ui.tableLines->setItem(ui.tableLines->rowCount()-1, 3, new QTableWidgetItem(QString::number(lines[i].GetX2())));
+			ui.tableLines->setItem(ui.tableLines->rowCount()-1, 4, new QTableWidgetItem(QString::number(lines[i].GetY2())));
 		}
 
 		UpdateWindow();
