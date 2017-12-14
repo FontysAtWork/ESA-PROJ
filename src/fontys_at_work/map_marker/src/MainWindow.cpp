@@ -44,6 +44,8 @@ namespace map_marker {
 		YamlLoaded = false;
 		ImageLoaded = false;
 		NodeStarted = false;
+		DynamicImage = false;
+		NoGoOneSelected = true;
 
 		if(DEBUG)
 		{
@@ -66,9 +68,6 @@ namespace map_marker {
 			map = new QImage(992,992,QImage::Format_RGB888);
 			map->fill(lightGray);
 		}
-
-		timerForMap.setInterval(2000);
-		timerForMap.start();
 
 		ui.cbxImgMapPgm->setAttribute(Qt::WA_TransparentForMouseEvents);
 		ui.cbxImgMapPgm->setFocusPolicy(Qt::NoFocus);
@@ -94,8 +93,6 @@ namespace map_marker {
 
 		// Panic button color
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
-		
-		NoGoOneSelected = true;
 
 		UpdateMarkerTable();
 
@@ -230,8 +227,6 @@ namespace map_marker {
 	void MainWindow::lblMapImage_clicked(QPoint a) {
 		QString x = QString::number(ConvertPixelToRealSize(a.x()));
 		QString y = QString::number(-ConvertPixelToRealSize(a.y()));
-		
-		//line.SetPoint(a.x(), a.y(), qnode);
 
 		ui.inpCustomX->setText(x);
 		ui.inpCustomY->setText(y);
@@ -262,7 +257,7 @@ namespace map_marker {
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
 			YamlLoaded = true;
-			ui.cbxImgMapYaml->setChecked(1);
+			ui.cbxImgMapYaml->setChecked(true);
 			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -277,14 +272,12 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			//map = new QPixmap(fileNames[0]);
 			map = new QImage(fileNames[0]);
-			//std::cout << "Format: " << map->format() << std::endl;
 			QSize a = map->size();
 			map_pix = a.height();
 			UpdateWindow();
 			ImageLoaded = true;
-			ui.cbxImgMapPgm->setChecked(1);
+			ui.cbxImgMapPgm->setChecked(true);
 			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -449,6 +442,7 @@ namespace map_marker {
 				ui.inpMaster->setEnabled(false);
 				ui.inpHost->setEnabled(false);
 				ui.cbxEnvVars->setEnabled(false);
+				ui.cbxDynamicImage->setEnabled(true);
 				NodeStarted = true;
 			}
 		} else {
@@ -460,6 +454,7 @@ namespace map_marker {
 				ui.inpMaster->setEnabled(false);
 				ui.inpHost->setEnabled(false);
 				ui.cbxEnvVars->setEnabled(false);
+				ui.cbxDynamicImage->setEnabled(true);
 				NodeStarted = true;
 			}
 		}
@@ -468,21 +463,101 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnNogoLine_clicked() {
-
-		//line.ButtonClicked();
-		double x1 = ui.inpLineX1->text().toDouble();
-		double y1 = ui.inpLineY1->text().toDouble();
-		double x2 = ui.inpLineX2->text().toDouble();
-		double y2 = ui.inpLineY2->text().toDouble();
+		double x1 = ConvertRealSizeToPixel(ui.inpLineX1->text().toDouble());
+		double y1 = ConvertRealSizeToPixel(-ui.inpLineY1->text().toDouble());
+		double x2 = ConvertRealSizeToPixel(ui.inpLineX2->text().toDouble());
+		double y2 = ConvertRealSizeToPixel(-ui.inpLineY2->text().toDouble());
 		std::string name = ui.inpLineName->text().toUtf8().constData();
 		
 		
 		NoGoLine line(x1, y1, x2, y2, name);
 		
 		lines.push_back(line);
+		qnode.DrawLine(line);
 		UpdateLineTable();
 	}
+	
+	void MainWindow::on_btnUpdateLine_clicked() {
+		int s = GetSelectedLine();
 
+		if(s == -1) {
+			ROS_WARN("No line selected");
+			return;
+		}
+
+		double x1 = ConvertRealSizeToPixel(ui.inpLineX1->text().toDouble());
+		double y1 = ConvertRealSizeToPixel(-ui.inpLineY1->text().toDouble());
+		double x2 = ConvertRealSizeToPixel(ui.inpLineX2->text().toDouble());
+		double y2 = ConvertRealSizeToPixel(-ui.inpLineY2->text().toDouble());
+		std::string name = ui.inpLineName->text().toUtf8().constData();
+		
+		UpdateLine(s, NoGoLine(x1, y1, x2, y2, name));
+		UpdateLineTable();
+		ResendAllLines();
+	}
+	
+	void MainWindow::on_btnClearLine_clicked() {
+		lines.clear();
+		qnode.ClearLines();
+		UpdateLineTable();
+	}
+	
+	void MainWindow::on_btnRemoveLine_clicked() {
+		int index = GetSelectedLine();
+		if(index == -1) {
+			ROS_WARN("No line selected");
+			return;
+		} 
+		lines.erase(lines.begin()+index);
+		ResendAllLines();
+		UpdateLineTable();
+	}
+	
+	void MainWindow::on_btnMoveLineUp_clicked() {
+		int selectedLine = GetSelectedLine();
+		MoveLineUp(selectedLine);
+		UpdateLineTable();
+	}
+	
+	void MainWindow::on_btnMoveLineDown_clicked() {
+		int selectedLine = GetSelectedLine();
+		MoveLineDown(selectedLine);
+		UpdateLineTable();
+	}
+	
+	void MainWindow::on_btnLoadLinesYaml_clicked() {
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::ExistingFile);
+		dialog.setNameFilter(tr("Line yaml file (*.yaml)"));
+
+		QStringList fileNames;
+		if (dialog.exec()) 
+		{
+			fileNames = dialog.selectedFiles();
+			yaml.loadYaml(fileNames[0].toUtf8().constData());
+			FillLineList(yaml.GetParsedYaml());
+		}
+		else 
+		{
+			ROS_ERROR("No file selected, nothing loaded");
+		}
+	}
+	
+	void MainWindow::on_btnWriteLinesYaml_clicked() 
+	{
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setNameFilter(tr("Line marker file (*.yaml)"));
+		dialog.setDefaultSuffix(tr("yaml"));
+
+		QStringList fileNames;
+		if (dialog.exec()) {
+			fileNames = dialog.selectedFiles();
+			yamlWriter.writeAllLines(lines, fileNames[0].toUtf8().constData());
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
+	}
 
 	void MainWindow::on_radioShelf_clicked() {
 		ui.inpCustomName->setText("SH");
@@ -510,6 +585,16 @@ namespace map_marker {
 	
 	void MainWindow::on_radioNoGoTwo_clicked() {
 		NoGoOneSelected = false;
+	}
+	
+	void MainWindow::on_cbxDynamicImage_clicked()
+	{
+		timerForMap.setInterval(2000);
+		timerForMap.start();
+		YamlLoaded = false;
+		ImageLoaded = false;
+		DynamicImage = true;
+		EnableInterface();
 	}
 
 	void MainWindow::on_cbxEnvVars_clicked() {
@@ -615,6 +700,56 @@ namespace map_marker {
 			}
 		}
 		UpdateMarkerTable();
+	}
+	
+	void MainWindow::FillLineList(std::vector<KeyDataPair> data)
+	{
+		lines.clear();
+		double x1;
+		double x2;
+		double y1;
+		double y2;
+		std::string name; 
+		for (int i = 0; i < data.size(); i++)
+		{
+			
+			if (data[i].key.compare("x1") == 0)
+			{
+				x1 = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("x2") == 0)
+			{
+				x2 = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("y1") == 0)
+			{
+				y1 = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("y2") == 0)
+			{
+				y2 = std::atof(data[i].data[0].c_str());
+			}
+			else if (data[i].key.compare("Name") == 0)
+			{
+				name = data[i].data[0];
+			}
+			else
+			{
+				ROS_ERROR("Unkown data!");
+			}
+
+			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,8,"NoGoLine") == 0)
+			{
+				NoGoLine l(x1, y1, x2, y2, name);
+				lines.push_back(l);
+				x1 = 0;
+				x2 = 0;
+				y1 = 0;
+				y2 = 0;
+				name = "";
+			}
+		}
+		UpdateLineTable();
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
@@ -722,6 +857,41 @@ namespace map_marker {
 
 		UpdateWindow();
 	}
+
+	int MainWindow::GetSelectedLine() {
+		int j = -1;
+		QModelIndexList indexes = ui.tableLines->selectionModel()->selectedRows();
+
+		for (int i = 0; i < indexes.count(); ++i) {    
+			j = indexes.at(i).row();
+		}
+
+		return j;
+	}
+
+	void MainWindow::AddLine(NoGoLine line) {
+		lines.push_back(line);
+	}
+
+	void MainWindow::UpdateLine(int index, NoGoLine line) {
+		lines.at(index) = line;
+	}
+
+	void MainWindow::MoveLineUp(int selectedline) {
+		if(selectedline > 0) {
+			std::swap(lines.at(selectedline), lines.at(selectedline - 1));
+		} else {
+			ROS_WARN("No line selected");
+		}
+	}
+
+	void MainWindow::MoveLineDown(int selectedline) {
+		if(selectedline + 1 < lines.size() && selectedline >= 0) {
+			std::swap(lines.at(selectedline), lines.at(selectedline + 1));
+		} else {
+			ROS_WARN("No line selected");
+		}
+	}
 	
 	void MainWindow::UpdateLineTable() {
 		ui.tableLines->setRowCount(0);
@@ -735,6 +905,16 @@ namespace map_marker {
 		}
 
 		UpdateWindow();
+	}
+	
+	void MainWindow::ResendAllLines() {
+		qnode.ClearLines();
+		for (int i = 0; i < lines.size(); i++)
+		{
+			qnode.DrawLine(lines[i]);
+		}
+		
+		
 	}
 
 	void MainWindow::SelectionIsChanged() {
@@ -815,6 +995,17 @@ namespace map_marker {
 	{
 		if(YamlLoaded && ImageLoaded && NodeStarted)
 		{
+			ui.cbxDynamicImage->setChecked(false);
+			DynamicImage = false;
+			
+			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
+			ToggleInterface(true);
+		}
+		else if(NodeStarted && DynamicImage)
+		{
+			ui.cbxImgMapYaml->setChecked(false);
+			ui.cbxImgMapPgm->setChecked(false);
+
 			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 			ToggleInterface(true);
 		}
@@ -838,7 +1029,7 @@ namespace map_marker {
 
 	void MainWindow::UpdateMap()
 	{
-		if(NodeStarted && ui.cbxDynamicImage->isChecked())
+		if(NodeStarted && DynamicImage)
 		{
 			nav_msgs::OccupancyGrid normalGrid;
 			normalGrid = qnode.GetNormalMap();

@@ -35,7 +35,14 @@ namespace map_marker {
 		void on_btnConnect_clicked();
 		void on_btnLoadMarkersYaml_clicked();
 		void on_btnUpdateMarker_clicked();
+		void on_btnRemoveLine_clicked();
+		void on_btnUpdateLine_clicked();
+		void on_btnMoveLineUp_clicked();
+		void on_btnMoveLineDown_clicked();
+		void on_btnLoadLinesYaml_clicked();
+		void on_btnWriteLinesYaml_clicked();
 		void on_btnNogoLine_clicked();
+		void on_btnClearLine_clicked();
 		void on_radioShelf_clicked();
 		void on_radioWorkstation_clicked();
 		void on_radioConveyor_clicked();
@@ -43,6 +50,7 @@ namespace map_marker {
 		void on_radioPrecision_clicked();
 		void on_radioNoGoOne_clicked();
 		void on_radioNoGoTwo_clicked();
+		void on_cbxDynamicImage_clicked();
 		void on_cbxEnvVars_clicked();
 		void UpdateRobotPose();
 		void SelectionIsChanged();
@@ -60,8 +68,13 @@ namespace map_marker {
 		void MoveMarkerUp(int selectedMarker);
 		void MoveMarkerDown(int selectedMarker);
 		void UpdateMarkerTable();
+		void AddLine(NoGoLine line);
+		void UpdateLine(int index, NoGoLine line);
+		void MoveLineUp(int selectedLine);
+		void MoveLineDown(int selectedLine);
 		void UpdateLineTable();
 		void FillMarkerList(std::vector<KeyDataPair> data);
+		void FillLineList(std::vector<KeyDataPair> data);
 		void ToggleInterface(bool b);
 		void UpdateWindow();
 		void EnableInterface();
@@ -69,6 +82,8 @@ namespace map_marker {
 
 		QPointF RotateDrawPoint(QPoint center, double x, double y, double angle);
 		int GetSelectedMarker();
+		int GetSelectedLine();
+		void ResendAllLines();
 		int ConvertRealSizeToPixel(double a);
 		double ConvertPixelToRealSize(int a);
 		geometry_msgs::Pose MakePose(double pX, double pY, double pZ, double qX, double qY, double qZ, double qW);
@@ -95,6 +110,7 @@ namespace map_marker {
 		bool YamlLoaded;
 		bool ImageLoaded;
 		bool NodeStarted;
+		bool DynamicImage;
 		bool NoGoOneSelected;
 
 	protected:
