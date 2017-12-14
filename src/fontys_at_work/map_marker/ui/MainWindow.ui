@@ -946,9 +946,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>60</y>
-       <width>61</width>
+       <x>240</x>
+       <y>30</y>
+       <width>131</width>
        <height>23</height>
       </rect>
      </property>
@@ -982,9 +982,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>310</x>
-       <y>60</y>
-       <width>61</width>
+       <x>410</x>
+       <y>30</y>
+       <width>131</width>
        <height>23</height>
       </rect>
      </property>
@@ -997,7 +997,7 @@
       <rect>
        <x>580</x>
        <y>60</y>
-       <width>111</width>
+       <width>141</width>
        <height>21</height>
       </rect>
      </property>
@@ -1043,9 +1043,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>410</x>
        <y>60</y>
-       <width>61</width>
+       <width>131</width>
        <height>23</height>
       </rect>
      </property>
@@ -1104,9 +1104,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>410</x>
+       <x>240</x>
        <y>60</y>
-       <width>61</width>
+       <width>131</width>
        <height>23</height>
       </rect>
      </property>
@@ -1120,7 +1120,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>480</x>
+       <x>380</x>
        <y>60</y>
        <width>25</width>
        <height>18</height>
@@ -1152,7 +1152,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>380</x>
+       <x>210</x>
        <y>60</y>
        <width>25</width>
        <height>18</height>
@@ -1170,12 +1170,15 @@
       <rect>
        <x>580</x>
        <y>30</y>
-       <width>121</width>
+       <width>151</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>Coordinate one</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QLineEdit" name="inpLineName">
@@ -1273,8 +1276,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>60</y>
+       <x>210</x>
+       <y>30</y>
        <width>25</width>
        <height>18</height>
       </rect>
@@ -1289,8 +1292,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>60</y>
+       <x>380</x>
+       <y>30</y>
        <width>25</width>
        <height>18</height>
       </rect>
