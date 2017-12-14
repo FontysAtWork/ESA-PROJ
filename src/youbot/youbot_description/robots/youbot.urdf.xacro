@@ -65,6 +65,5 @@
     <origin xyz="-0.3 0 -0.03" rpy="3.14 3.14 0"/>
   </xacro:hokuyo_urg04_laser>
 
-
   
 </robot>
