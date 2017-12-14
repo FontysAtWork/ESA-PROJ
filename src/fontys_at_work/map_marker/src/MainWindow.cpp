@@ -88,6 +88,8 @@ namespace map_marker {
 		ui.btnPanic->setStyleSheet("color: rgb(192,0,0);");
 
 		UpdateTable();
+
+		ROS_INFO("User interface loaded");
 	}
 
 	MainWindow::~MainWindow() {
@@ -439,6 +441,7 @@ namespace map_marker {
 			}
 		}
 		EnableInterface();
+		ROS_INFO("ROS node started");
 	}
 
 	void MainWindow::on_btnNogoLine_clicked() {
