@@ -37,6 +37,7 @@ bool QNode::Init() {
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
+	pubNoGoClear = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
 	start();
 	return true;
 }
@@ -56,6 +57,7 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
+	pubNoGoLine = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
 	start();
 	return true;
 }
@@ -112,19 +114,26 @@ void QNode::MoveRobotToPose(geometry_msgs::Pose pos) {
 	pubPose.publish(p);
 }
 
-void QNode::DrawLine(const int x1, const int y1, const int x2, const int y2)
+void QNode::DrawLine(NoGoLine line)
 {
 	ROS_INFO("Sending line");
 
-	keepout_map_server_msg::Line line;
-	line.x1 = x1;
-	line.x2 = x2;
-	line.y1 = y1;
-	line.y2 = y2;
-	line.gradient = 100;
+	keepout_map_server_msg::Line sendLine;
+	sendLine.x1 = line.GetX1();
+	sendLine.x2 = line.GetX2();
+	sendLine.y1 = line.GetY1();
+	sendLine.y2 = line.GetY2();
+	sendLine.gradient = 100;
+	
+	pubNoGoLine.publish(sendLine);
 
-	pubNoGoLine.publish(line);
+}
 
+void QNode::ClearLines()
+{
+	std_msgs::Empty empty;
+	pubNoGoClear.publish(empty);
+	
 }
 
 

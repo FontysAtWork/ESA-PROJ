@@ -9,6 +9,7 @@
 #include "geometry_msgs/Pose.h"
 #include "geometry_msgs/Quaternion.h"
 #include "nav_msgs/OccupancyGrid.h"
+#include "NoGoLine.hpp"
 
 namespace map_marker {
 
@@ -23,7 +24,8 @@ public:
 	geometry_msgs::Pose GetRobotPosition();
 	void MoveRobotToPose(geometry_msgs::Pose pos);
 	void Panic();
-	void DrawLine(const int x1, const int y1, const int x2, const int y2);
+	void DrawLine(const NoGoLine line);
+	void ClearLines();
 	nav_msgs::OccupancyGrid GetKeepOutMap();
 	void keepoutMapCallback(const nav_msgs::OccupancyGrid::ConstPtr& grid);
 	nav_msgs::OccupancyGrid GetNormalMap();
@@ -39,6 +41,7 @@ private:
 	ros::Publisher pubPose;
 	ros::Publisher pubEmergency;
 	ros::Publisher pubNoGoLine;
+	ros::Publisher pubNoGoClear;
 	ros::Subscriber subKeepoutMap;
 	ros::Subscriber subNormalMap;
     QStringListModel logging_model;
