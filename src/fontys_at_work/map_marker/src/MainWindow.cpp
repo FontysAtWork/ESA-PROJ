@@ -10,6 +10,7 @@
 #include <QDebug>
 
 #define DEBUG false
+#define MAPSIZE 1000
 
 using namespace Qt;
 
@@ -34,6 +35,7 @@ namespace map_marker {
 		QObject::connect(ui.spinRobotHeight, SIGNAL(valueChanged(int)), this, SLOT(UpdateRobotSize()));
 		QObject::connect(&qnode, SIGNAL(RobotPosUpdated()), this, SLOT(UpdateRobotPose()));
 		QObject::connect(&qnode, SIGNAL(RosShutdown()), QApplication::instance(), SLOT(quit()));
+		QObject::connect(&timerForMap, SIGNAL(timeout()), this, SLOT(UpdateMap()));
 
 		// Set robot size
 		UpdateRobotSize();
@@ -51,7 +53,8 @@ namespace map_marker {
 			map_pix = 992;
 			// Load map image
 			QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
-			map = new QPixmap(url);
+			//map = new QPixmap(url);
+			map = new QImage(url);
 			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
 			ToggleInterface(true);
@@ -59,8 +62,13 @@ namespace map_marker {
 		}
 		else
 		{
-			map = new QPixmap();
+			//map = new QPixmap();
+			map = new QImage(992,992,QImage::Format_RGB888);
+			map->fill(lightGray);
 		}
+
+		timerForMap.setInterval(2000);
+		timerForMap.start();
 
 		ui.cbxImgMapPgm->setAttribute(Qt::WA_TransparentForMouseEvents);
 		ui.cbxImgMapPgm->setFocusPolicy(Qt::NoFocus);
@@ -102,7 +110,8 @@ namespace map_marker {
 	  
 	  QPainter qp(this);
 
-	  qp.drawPixmap(0, 0, map_pix, map_pix, *map);
+	  //qp.drawPixmap(0, 0, map_pix, map_pix, *map);
+	  qp.drawImage(0,0, map->scaled(MAPSIZE, MAPSIZE, KeepAspectRatio, SmoothTransformation));
 	  drawMarkers(&qp);
 	}
 
@@ -236,7 +245,7 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			yaml.printLoadedYaml();
+			//yaml.printLoadedYaml();
 			mapConfig.setFullConfigData(yaml.GetParsedYaml());
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
@@ -256,7 +265,9 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			map = new QPixmap(fileNames[0]);
+			//map = new QPixmap(fileNames[0]);
+			map = new QImage(fileNames[0]);
+			//std::cout << "Format: " << map->format() << std::endl;
 			QSize a = map->size();
 			map_pix = a.height();
 			UpdateWindow();
@@ -777,4 +788,24 @@ namespace map_marker {
 	double MainWindow::ConvertPixelToRealSize(int a) {
 		return (a) * (map_max - map_min) / (map_pix) + map_min;
 	}
+
+	void MainWindow::UpdateMap()
+	{
+		if(NodeStarted && ui.cbxDynamicImage->isChecked())
+		{
+			nav_msgs::OccupancyGrid keepoutGrid;
+			keepoutGrid = qnode.GetKeepOutMap();
+			mapRenderer.reset(keepoutGrid.info.width, keepoutGrid.info.height);
+
+			mapRenderer.drawOccupancyGrid(keepoutGrid);
+
+			*map = mapRenderer.getImage();
+
+			UpdateWindow();
+
+		}
+
+
+	}
+
 }
