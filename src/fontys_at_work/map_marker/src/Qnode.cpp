@@ -32,7 +32,8 @@ bool QNode::Init() {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	subMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subKeepoutMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
@@ -50,7 +51,8 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	subMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subKeepoutMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
@@ -131,14 +133,25 @@ void QNode::keepoutMapCallback(const nav_msgs::OccupancyGrid::ConstPtr& grid)
 	keepoutMap.data = grid->data;
 	keepoutMap.info = grid->info;
 	keepoutMap.header = grid->header;
-
 }
 
 nav_msgs::OccupancyGrid QNode::GetKeepOutMap()
 {
 	return keepoutMap;
-
 } 
+
+void QNode::normalMapCallback(const nav_msgs::OccupancyGrid::ConstPtr& grid)
+{
+	normalMap.data = grid->data;
+	normalMap.info = grid->info;
+	normalMap.header = grid->header;
+}
+
+nav_msgs::OccupancyGrid QNode::GetNormalMap()
+{
+	return normalMap;
+} 
+
 
 
 }  // namespace map_marker

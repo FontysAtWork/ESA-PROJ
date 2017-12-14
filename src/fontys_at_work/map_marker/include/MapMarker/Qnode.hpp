@@ -26,6 +26,8 @@ public:
 	void DrawLine(const int x1, const int y1, const int x2, const int y2);
 	nav_msgs::OccupancyGrid GetKeepOutMap();
 	void keepoutMapCallback(const nav_msgs::OccupancyGrid::ConstPtr& grid);
+	nav_msgs::OccupancyGrid GetNormalMap();
+	void normalMapCallback(const nav_msgs::OccupancyGrid::ConstPtr& grid);
 
 Q_SIGNALS:
     void RosShutdown();
@@ -37,10 +39,12 @@ private:
 	ros::Publisher pubPose;
 	ros::Publisher pubEmergency;
 	ros::Publisher pubNoGoLine;
-	ros::Subscriber subMap;
+	ros::Subscriber subKeepoutMap;
+	ros::Subscriber subNormalMap;
     QStringListModel logging_model;
     geometry_msgs::Pose pose;
     nav_msgs::OccupancyGrid keepoutMap;
+    nav_msgs::OccupancyGrid normalMap;
     
 };
 
