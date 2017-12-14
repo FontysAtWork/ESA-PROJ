@@ -793,10 +793,15 @@ namespace map_marker {
 	{
 		if(NodeStarted && ui.cbxDynamicImage->isChecked())
 		{
+			nav_msgs::OccupancyGrid normalGrid;
+			normalGrid = qnode.GetNormalMap();
+			
 			nav_msgs::OccupancyGrid keepoutGrid;
 			keepoutGrid = qnode.GetKeepOutMap();
+			
 			mapRenderer.reset(keepoutGrid.info.width, keepoutGrid.info.height);
-
+			
+			mapRenderer.drawOccupancyGrid(normalGrid);
 			mapRenderer.drawOccupancyGrid(keepoutGrid);
 
 			*map = mapRenderer.getImage();
@@ -804,8 +809,5 @@ namespace map_marker {
 			UpdateWindow();
 
 		}
-
-
 	}
-
 }

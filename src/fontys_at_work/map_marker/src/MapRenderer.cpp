@@ -1,5 +1,6 @@
 #include "MapRenderer.hpp"
 #include "ros/ros.h"
+#include <QColor>
 
 MapRenderer::MapRenderer()
 {
@@ -29,15 +30,18 @@ void MapRenderer::drawOccupancyGrid(nav_msgs::OccupancyGrid grid)
 		for (int j = 0; j < height; ++j)
 		{
 			int currentindex = i * width + j;
-
-			if(grid.data[currentindex] >= 0 && grid.data[currentindex] < FREE_THRESH)
+			if(grid.data[currentindex] >= 0 && grid.data[currentindex] <  (100 * FREE_THRESH))
 			{
-				image.setPixel(i, j, Qt::white);
+				QColor white(255,255,255);
+				image.setPixel(i, j, white.rgb());
+				
 			}
-			else if(grid.data[currentindex] > OCCUPIED_THRESH)
+			else if(grid.data[currentindex] > (100 * OCCUPIED_THRESH))
 			{
-				image.setPixel(i, j, Qt::black);
+				QColor black(0,0,0);
+				image.setPixel(i, j, black.rgb());
 			}
+			
 		}
 	}
 }
@@ -46,6 +50,5 @@ void MapRenderer::drawOccupancyGrid(nav_msgs::OccupancyGrid grid)
 QImage& MapRenderer::getImage()
 {
 	return image;
-
-
 }
+

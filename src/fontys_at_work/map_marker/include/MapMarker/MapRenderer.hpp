@@ -16,14 +16,10 @@ public:
 	void drawOccupancyGrid(nav_msgs::OccupancyGrid grid);
 	QImage& getImage();
 
-
 private:
 	int width;
 	int height;
 	QImage image;
-
-
-
 };
 
 
