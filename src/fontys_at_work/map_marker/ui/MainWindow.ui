@@ -211,7 +211,7 @@
      <rect>
       <x>1220</x>
       <y>43</y>
-      <width>16</width>
+      <width>20</width>
       <height>21</height>
      </rect>
     </property>
@@ -227,7 +227,7 @@
      <rect>
       <x>1220</x>
       <y>73</y>
-      <width>16</width>
+      <width>20</width>
       <height>21</height>
      </rect>
     </property>
@@ -395,12 +395,15 @@
      <rect>
       <x>1020</x>
       <y>100</y>
-      <width>171</width>
+      <width>191</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Dynamically load image</string>
+    </property>
+    <property name="enabled">
+	  <bool>false</bool>
     </property>
    </widget>
    <widget class="QGroupBox" name="gbxMarker">
