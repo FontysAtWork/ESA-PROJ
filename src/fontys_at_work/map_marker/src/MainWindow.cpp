@@ -1043,6 +1043,12 @@ namespace map_marker {
 			mapRenderer.drawOccupancyGrid(keepoutGrid);
 
 			*map = mapRenderer.getImage();
+			
+			QSize a = map->size();
+			map_pix = a.height();
+			map_min = -5;
+			map_max = fabs(map_min);
+			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
 			UpdateWindow();
 
