@@ -29,3 +29,7 @@ TrajectoryPlannerROS:
 
     # Oscillation Prevention Parameters
     oscillation_reset_dist: 0.01
+    
+    # Otherwise the robot hits things in the nogomap.
+    # This makes it stick more to the global plan
+    pdist_scale: 3.0

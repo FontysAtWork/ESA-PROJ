@@ -57,6 +57,7 @@ srv_gen
 *Result.py
 *.pyc
 
+# ros build files
 build/
 devel/
 .catkin_workspace
@@ -66,3 +67,7 @@ src/CMakeLists.txt
 src/youbot/faw/launch/*.launch
 *.include
 
+# editors
+.vscode/
+*.sublime-project
+*.sublime-workspace

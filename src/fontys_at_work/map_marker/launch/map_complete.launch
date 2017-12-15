@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+	
+	
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/map/map_normal.yaml"/>
+	
+	<node name="keepout_map_server" pkg="keepout_map_server" type="keepout_map_server" ns="keepout" output="screen">
+		<param name="map_width" value="992" />
+		<param name="map_height" value="992" />
+		<param name="map_resolution" value="0.01" />
+		<param name="publish_interval" value="1" />
+	</node>
+	
+	<node name="map_marker" pkg="map_marker" type="map_marker"/>
+	
+</launch>
