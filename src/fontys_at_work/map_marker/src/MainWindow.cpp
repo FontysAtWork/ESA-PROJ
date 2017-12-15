@@ -10,7 +10,7 @@
 #include <QDebug>
 
 #define DEBUG false
-#define MAPSIZE 1000
+#define MAPSIZE 992
 
 using namespace Qt;
 
@@ -258,6 +258,8 @@ namespace map_marker {
 			map_max = fabs(map_min);
 			YamlLoaded = true;
 			ui.cbxImgMapYaml->setChecked(true);
+			ui.cbxDynamicImage->setChecked(false);
+			DynamicImage = false;
 			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -278,6 +280,8 @@ namespace map_marker {
 			UpdateWindow();
 			ImageLoaded = true;
 			ui.cbxImgMapPgm->setChecked(true);
+			ui.cbxDynamicImage->setChecked(false);
+			DynamicImage = false;
 			EnableInterface();
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -589,12 +593,20 @@ namespace map_marker {
 	
 	void MainWindow::on_cbxDynamicImage_clicked()
 	{
-		timerForMap.setInterval(2000);
-		timerForMap.start();
-		YamlLoaded = false;
-		ImageLoaded = false;
-		DynamicImage = true;
-		EnableInterface();
+		if(ui.cbxDynamicImage->isChecked())
+		{
+			timerForMap.setInterval(2000);
+			timerForMap.start();
+			YamlLoaded = false;
+			ImageLoaded = false;
+			DynamicImage = true;
+			EnableInterface();
+		}
+		else
+		{
+			timerForMap.stop();
+			DynamicImage = false;
+		}
 	}
 
 	void MainWindow::on_cbxEnvVars_clicked() {
@@ -1006,7 +1018,7 @@ namespace map_marker {
 			ui.cbxImgMapYaml->setChecked(false);
 			ui.cbxImgMapPgm->setChecked(false);
 
-			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
+			lblMapImage->setGeometry(QRect(0, 0, MAPSIZE, MAPSIZE));
 			ToggleInterface(true);
 		}
 	}
@@ -1041,13 +1053,13 @@ namespace map_marker {
 			
 			mapRenderer.drawOccupancyGrid(normalGrid);
 			mapRenderer.drawOccupancyGrid(keepoutGrid);
+			
+			map_pix = normalGrid.info.width;
+			map_min = normalGrid.info.origin.position.x;
+			map_max = fabs(map_min);
 
 			*map = mapRenderer.getImage();
 			
-			QSize a = map->size();
-			map_pix = a.height();
-			map_min = -5;
-			map_max = fabs(map_min);
 			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
 			UpdateWindow();
