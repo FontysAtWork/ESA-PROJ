@@ -7,10 +7,14 @@
 -->
 
 <launch>
+  <!-- 
+    Demo purposes 
+  -->
+  <!--<include file="$(find faw)/launch/nav_only.launch"/>-->
   <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch"/>
   <!--<node pkg="realsense_camera" type="sr300_nodelet_rgbd" name="sr300_nodelet_rgbd"/>-->
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
-    <param name="resolution" value="0.01" />
+    <param name="resolution" value="0.005" />
 
     <!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
     <param name="frame_id" type="string" value="map" />
@@ -25,5 +29,6 @@
     <remap from="cloud_in" to="/camera/depth/points" />
   </node>
   <node name="rviz" pkg="rviz" type="rviz" required="true" />
-  <node pkg="faw_vision" type="broadcast_tf_node" name="broadcast_tf_node" />
+  <node pkg="faw_vision" type="broadcast_tf_node" name="broadcast_tf_node">
+  </node>
 </launch>
