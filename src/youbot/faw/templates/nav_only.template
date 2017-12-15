@@ -1,29 +1,40 @@
 <?xml version="1.0"?>
 <launch>
+	<!-- Should we start a simulation or run on hardware? -->
+	<arg name="sim" default="false" />
 	
 	<!-- laser scanners (lidar) -->
-	<include file="$(find faw)/launch/youbot_hardware/lasers.include" />
-	
-	<!-- include original youbot driver launch file -->
-	<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
-	
-	<!-- loads the map to the server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="${MAP_FILE}" />
-	
-	<param name="robot_description" command="${ROBOT_DESC}" />
-	
-	<arg name="visual" default="false"/>
-	
-	<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-	<include file="$(find faw)/launch/youbot_hardware/planning_context.include">
-		<arg name="load_robot_description" value="true"/>
+	<include file="$(find faw)/launch/youbot_hardware/lasers.include">
+		<arg name="sim" value="true" if="$(arg sim)"/>
 	</include>
 	
-	<!-- loads the nav_stack of the youbot -->
-	<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>
+	<!-- Only start ethercat driver and API when running on hardware -->
+	<group unless="$(arg sim)">
+		<!-- include original youbot driver launch file -->
+		<include file="$(find faw)/launch/youbot_hardware/youbot_driver.include"/>
+	</group>
 	
-	<!-- the kill node -->
-	<include file="$(find faw)/launch/youbot_hardware/cancel_goal.include" />
+	<!-- loads the map to the server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/map/${MAP_NORMAL}.yaml" />
+	
+	<!-- When running in sim mode the simulator is responsible for loading the
+		 description and URDF files -->
+	<group unless="$(arg sim)">
+		<param name="robot_description" command="${ROBOT_DESC}" />
+		
+		<arg name="visual" default="false"/>
+	
+		<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+		<include file="$(find faw)/launch/youbot_hardware/planning_context.include">
+			<arg name="load_robot_description" value="true"/>
+		</include>
+	</group>
+	
+	<!-- loads the nav_stack of the youbot -->
+	<!--<include file="$(find youbot_navigation_global)/launch/move_base_global.launch"/>-->
+	<include file="$(find faw)/launch/youbot_navigation/move_base.include"/>
+	
+	<node name="emergency_stop" pkg="emergency_stop" type="emergency_stop" />
 
 	<!-- Control of youbot via PS4 controller -->
 	<include file="$(find faw)/launch/youbot_control/gamepad.include"/>
