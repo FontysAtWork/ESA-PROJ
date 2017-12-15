@@ -24,4 +24,4 @@ global_costmap:
     raytrace_range: 3.0
     
   inflations:
-    inflation_radius: 0.25
+    inflation_radius: 0.38
