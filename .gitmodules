@@ -4,15 +4,15 @@
 [submodule "src/fontys_at_work/dependencies/ira_laser_tools"]
 	path = src/fontys_at_work/dependencies/ira_laser_tools
 	url = https://github.com/iralabdisco/ira_laser_tools
-[submodule "src/fontys_at_work/dependencies/ivcon"]
-	path = src/fontys_at_work/dependencies/ivcon
-	url = https://github.com/ros/ivcon.git
-[submodule "src/fontys_at_work/dependencies/pr2_common"]
-	path = src/fontys_at_work/dependencies/pr2_common
-	url = https://github.com/PR2/pr2_common.git
 [submodule "src/youbot/youbot_simulation"]
 	path = src/youbot/youbot_simulation
 	url = http://github.com/youbot/youbot_simulation.git
 [submodule "src/fontys_at_work/dependencies/convex_decomposition"]
 	path = src/fontys_at_work/dependencies/convex_decomposition
 	url = https://github.com/ros/convex_decomposition.git
+[submodule "src/fontys_at_work/dependencies/ivcon"]
+	path = src/fontys_at_work/dependencies/ivcon
+	url = https://github.com/ros/ivcon.git
+[submodule "src/fontys_at_work/dependencies/pr2_common"]
+	path = src/fontys_at_work/dependencies/pr2_common
+	url = https://github.com/PR2/pr2_common.git
