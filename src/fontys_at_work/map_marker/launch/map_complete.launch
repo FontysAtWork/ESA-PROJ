@@ -3,7 +3,7 @@
 <launch>
 	
 	
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/map/map_normal.yaml"/>
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/map/test2.yaml"/>
 	
 	<node name="keepout_map_server" pkg="keepout_map_server" type="keepout_map_server" ns="keepout" output="screen">
 		<param name="map_width" value="992" />
