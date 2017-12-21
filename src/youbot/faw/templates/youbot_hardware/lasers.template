@@ -14,7 +14,6 @@
 			<param name="frame_id" type="string" value="hokuyo_front_link"/>
 			<param name="min_ang" type="double" value="-1.50"/>
 			<param name="max_ang" type="double" value="1.50"/>
-			<param name="intensity" type="bool" value="true"/>
 		</node>
 
 		<node name="hokuyo_back" pkg="hokuyo_node" type="hokuyo_node" respawn="true" output="screen">
@@ -26,7 +25,6 @@
 			<param name="frame_id" type="string" value="hokuyo_back_link"/>
 			<param name="min_ang" type="double" value="-1.50"/>
 			<param name="max_ang" type="double" value="1.50"/>
-			<param name="intensity" type="bool" value="true"/>
 		</node>
 	</group>
 
