@@ -41,9 +41,34 @@ void MapRenderer::drawOccupancyGrid(nav_msgs::OccupancyGrid grid)
 				QColor black(0,0,0);
 				image.setPixel(i, j, black.rgb());
 			}
-			
 		}
 	}
+}
+
+void MapRenderer::rotate()
+{
+    for (int i=0; i<image.height(); i++)
+    {
+        for (int j=0,  k=image.height()-1; j<k; j++,k--)
+        {
+			QRgb pixone = image.pixel(j, i);
+			QRgb pixtwo = image.pixel(k, i);
+			image.setPixel(k, i, pixone);
+			image.setPixel(j, i, pixtwo);
+		}
+	}
+
+    for (int i=0; i<image.width(); i++)
+    {
+        for (int j=i; j<image.height(); j++)
+        {
+			QRgb pixone = image.pixel(i, j);
+			QRgb pixtwo = image.pixel(j, i);
+			image.setPixel(j, i, pixone);
+			image.setPixel(i, j, pixtwo);
+		}
+	}
+	
 }
 
 

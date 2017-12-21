@@ -15,6 +15,7 @@ public:
 	void reset(int width, int height);
 	void drawOccupancyGrid(nav_msgs::OccupancyGrid grid);
 	QImage& getImage();
+	void rotate();
 
 private:
 	int width;
