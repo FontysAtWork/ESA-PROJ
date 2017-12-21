@@ -477,7 +477,7 @@ namespace map_marker {
 		NoGoLine line(x1, y1, x2, y2, name);
 		
 		lines.push_back(line);
-		qnode.DrawLine(line);
+		DrawLine(line);
 		UpdateLineTable();
 	}
 	
@@ -923,10 +923,8 @@ namespace map_marker {
 		qnode.ClearLines();
 		for (int i = 0; i < lines.size(); i++)
 		{
-			qnode.DrawLine(lines[i]);
+			DrawLine(lines[i]);
 		}
-		
-		
 	}
 
 	void MainWindow::SelectionIsChanged() {
@@ -1052,8 +1050,9 @@ namespace map_marker {
 			mapRenderer.reset(keepoutGrid.info.width, keepoutGrid.info.height);
 			
 			mapRenderer.drawOccupancyGrid(normalGrid);
-			mapRenderer.drawOccupancyGrid(keepoutGrid);
 			
+			mapRenderer.drawOccupancyGrid(keepoutGrid);
+			mapRenderer.rotate();
 			map_pix = normalGrid.info.width;
 			map_min = normalGrid.info.origin.position.x;
 			map_max = fabs(map_min);
@@ -1066,4 +1065,36 @@ namespace map_marker {
 
 		}
 	}
+	
+	void MainWindow::DrawLine(NoGoLine line)
+	{
+		QPoint p1 = rotatePixel(line.GetX1(), line.GetY1());
+		QPoint p2 = rotatePixel(line.GetX2(), line.GetY2());
+		NoGoLine tmpLine(p1.x(), p1.y(), p2.x(), p2.y(), line.GetName());
+		
+		qnode.DrawLine(tmpLine);
+	}
+
+	QPoint MainWindow::rotatePixel(int x, int y)
+	{
+		int tmpx = map_pix - y;
+		int tmpy = x;
+		
+		//int tmpx = y;
+		//int tmpy = x;
+		
+		//tmpy = map_pix - tmpy;
+		
+		
+		return QPoint(tmpx, tmpy);
+		
+	}
 }
+
+
+
+
+
+
+
+

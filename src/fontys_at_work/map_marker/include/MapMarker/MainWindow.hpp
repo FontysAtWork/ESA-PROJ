@@ -87,6 +87,8 @@ namespace map_marker {
 		int ConvertRealSizeToPixel(double a);
 		double ConvertPixelToRealSize(int a);
 		geometry_msgs::Pose MakePose(double pX, double pY, double pZ, double qX, double qY, double qZ, double qW);
+		void DrawLine(NoGoLine line);
+		QPoint rotatePixel(int x, int y);
 
 		Ui::MapMarker ui;
 		QNode qnode;
