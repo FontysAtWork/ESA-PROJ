@@ -7,11 +7,12 @@
 #include "nav_lib/Marker.hpp"
 #include "ClickableLabel.hpp"
 #include "nav_lib/YamlParser.hpp"
-#include "MapConfig.hpp"
+#include "nav_lib/MapConfig.hpp"
 #include "nav_lib/YamlWriter.hpp"
 #include "nav_lib/NoGoLine.hpp"
 #include "MapRenderer.hpp"
 #include <QTimer>
+#include "nav_lib/Nav.hpp"
 
 #include "geometry_msgs/Pose.h"
 

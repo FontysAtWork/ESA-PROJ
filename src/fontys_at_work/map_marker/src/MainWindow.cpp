@@ -252,7 +252,6 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			//yaml.printLoadedYaml();
 			mapConfig.setFullConfigData(yaml.GetParsedYaml());
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
@@ -297,7 +296,8 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
+			//yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
+			NAV::WriteMarkers(markers, fileNames[0].toUtf8().constData());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -305,20 +305,21 @@ namespace map_marker {
 	}
 
 	void MainWindow::on_btnLoadMarkersYaml_clicked() {
-	QFileDialog dialog(this);
-	dialog.setFileMode(QFileDialog::ExistingFile);
-	dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
+		QFileDialog dialog(this);
+		dialog.setFileMode(QFileDialog::ExistingFile);
+		dialog.setNameFilter(tr("Navigation yaml file (*.yaml)"));
 
-	QStringList fileNames;
-	if (dialog.exec()) {
-		fileNames = dialog.selectedFiles();
-		yaml.loadYaml(fileNames[0].toUtf8().constData());
-		FillMarkerList(yaml.GetParsedYaml());
+		QStringList fileNames;
+		if (dialog.exec()) {
+			fileNames = dialog.selectedFiles();
+			//yaml.loadYaml(fileNames[0].toUtf8().constData());
+			//FillMarkerList(yaml.GetParsedYaml());
+			markers = NAV::LoadMarkers(fileNames[0].toUtf8().constData());
+			UpdateMarkerTable();
 
-
-	} else {
-		ROS_ERROR("No file selected, nothing loaded");
-	}
+		} else {
+			ROS_ERROR("No file selected, nothing loaded");
+		}
 	}
 
 	void MainWindow::on_btnClearAllMarkers_clicked() {
@@ -538,8 +539,10 @@ namespace map_marker {
 		if (dialog.exec()) 
 		{
 			fileNames = dialog.selectedFiles();
-			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			FillLineList(yaml.GetParsedYaml());
+			//yaml.loadYaml(fileNames[0].toUtf8().constData());
+			//FillLineList(yaml.GetParsedYaml());
+			lines = NAV::LoadNoGoLines(fileNames[0].toUtf8().constData());
+			UpdateLineTable();
 		}
 		else 
 		{
@@ -557,7 +560,8 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			yamlWriter.writeAllLines(lines, fileNames[0].toUtf8().constData());
+			NAV::WriteNoGoLines(lines, fileNames[0].toUtf8().constData());
+			//yamlWriter.writeAllLines(lines, fileNames[0].toUtf8().constData());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
