@@ -2,7 +2,7 @@
 
 #User variables:
 export ROBOT=youbot
-export SIM=true
+export SIM=false
 
 
 ##### DO NOT EDIT BELOW THIS LINE #####
