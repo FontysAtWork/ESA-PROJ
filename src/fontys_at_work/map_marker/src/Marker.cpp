@@ -34,7 +34,7 @@ double Marker::GetAngle() {
 	tf::quaternionMsgToTF(pos.orientation, q);
 	q.normalize();
 	double angle = Rad2Deg(tf::getYaw(q));
-	if(isnan(angle))
+	if(std::isnan(angle))
 	{
 		angle = 0;
 	}
