@@ -9,6 +9,8 @@
 		<remap from="map" to="keepout/map" />
 	</node>
 	
+	<!-- TODO: Add our middleware and the refbox here -->
+	
 	<!-- Control the robot via PS4 controller -->
 	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/control/gamepad.include"/>
 	
