@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!--Start the robot navigation stack-->
+	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation.launch" />
+	
+	<!-- Load the nogo zone map -->
+	<node name="nogo_server" pkg="map_server" type="map_server" args="$(env WORKSPACE)/maps/map_nogo.yaml">
+		<remap from="map" to="keepout/map" />
+	</node>
+	
+	<!-- Control the robot via PS4 controller -->
+	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/control/gamepad.include"/>
+	
+</launch>
