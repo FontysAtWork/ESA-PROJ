@@ -15,7 +15,7 @@
 
 std::vector< atwork_ros_msgs::Task > tasks;
 
-void taskParser(atwork_ros_msgs::Task t) {
+void TaskParser(atwork_ros_msgs::Task t) {
     int task_id = t.id.data;
     int task_status = t.status.data;
     int task_type = t.type.data;
@@ -36,7 +36,6 @@ void taskParser(atwork_ros_msgs::Task t) {
 
         std::string trans_team = transportation_task.processing_team.data;
 
-        
         std::cout << "Obj: " << trans_object.Print() << std::endl;
         std::cout << "Ctn: " << trans_container.Print() << std::endl;
         std::cout << "Qtd: " << trans_quantity_delivered << std::endl;
@@ -45,9 +44,7 @@ void taskParser(atwork_ros_msgs::Task t) {
         std::cout << "Src: " << trans_src.Print() << std::endl;
         std::cout << "Tea: " << trans_team << std::endl;
         std::cout << "Sts: " << task_status << std::endl << std::endl;
-        
-        ROS_WARN("TODO: IMPLEMENT ACTIONLIB CLIENT");
-        // DO STUFF
+
     } else if(task_type == atwork_ros_msgs::Task::NAVIGATION) {
         atwork_ros_msgs::NavigationTask navigation_task = t.navigation_task;
 
@@ -55,21 +52,18 @@ void taskParser(atwork_ros_msgs::Task t) {
 
         int nav_orientation = navigation_task.orientation.data; //NORTH=1,EAST=2,SOUTH=3,WEST=4
         ros::Time nav_wait_time = navigation_task.wait_time.data;
-
         
         std::cout << "Dst: " << nav_location.Print() << std::endl;
         std::cout << "Ori: " << nav_orientation << std::endl;
         std::cout << "Tim: " << nav_wait_time << std::endl;
         std::cout << "Sts: " << task_status << std::endl << std::endl;
         
-        ROS_WARN("TODO: IMPLEMENT ACTIONLIB CLIENT");
-        // DO STUFF
     } else {
         ROS_WARN("Unknown task :o");
     }
 }
 
-void taskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
+void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
     for(auto t : msg->tasks) {
         bool exists = false;
         for(auto task : tasks) {
@@ -83,9 +77,18 @@ void taskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
     }
 }
 
+/*
+void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
+    ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
+}
+
+void TaskExecutorGoalCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
+    ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
+}*/
+
 void doStuff() {
     for(auto t : tasks) {
-        taskParser(t);
+        //TaskParser(t);
     }
     std::cout << tasks.size() << std::endl;
 }
@@ -93,9 +96,9 @@ void doStuff() {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "master");
     ros::NodeHandle n;
-    ros::Rate loop_rate(10); // one Hz
+    ros::Rate loop_rate(10);
 
-    ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, taskCallback);
+    ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
 
     while (ros::ok()) {
         doStuff();
