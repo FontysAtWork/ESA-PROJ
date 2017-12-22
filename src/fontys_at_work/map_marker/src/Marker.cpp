@@ -30,9 +30,15 @@ double Marker::GetY() {
 
 double Marker::GetAngle() {
 	tf::Quaternion q;
+	
 	tf::quaternionMsgToTF(pos.orientation, q);
 	q.normalize();
-	return Rad2Deg(tf::getYaw(q));
+	double angle = Rad2Deg(tf::getYaw(q));
+	if(isnan(angle))
+	{
+		angle = 0;
+	}
+	return angle;
 }
 
 MarkerType Marker::GetType() {
