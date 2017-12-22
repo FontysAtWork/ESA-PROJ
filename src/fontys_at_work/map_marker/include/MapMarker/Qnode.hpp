@@ -9,7 +9,7 @@
 #include "geometry_msgs/Pose.h"
 #include "geometry_msgs/Quaternion.h"
 #include "nav_msgs/OccupancyGrid.h"
-#include "NoGoLine.hpp"
+#include "nav_lib/NoGoLine.hpp"
 
 namespace map_marker {
 

@@ -3,7 +3,7 @@
 
 #include <string>
 #include "geometry_msgs/Pose.h"
-#include "YamlParser.hpp"
+#include "nav_lib/YamlParser.hpp"
 
 class MapConfig
 {
