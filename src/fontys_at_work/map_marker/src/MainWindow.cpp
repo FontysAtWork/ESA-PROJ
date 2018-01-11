@@ -55,7 +55,6 @@ namespace map_marker {
 			map_pix = 992;
 			// Load map image
 			QString url = "/home/lars/git/ESA-PROJ/maps/legomap3-cropped.pgm";
-			//map = new QPixmap(url);
 			map = new QImage(url);
 			lblMapImage->setGeometry(QRect(0, 0, map_pix, map_pix));
 
@@ -64,7 +63,6 @@ namespace map_marker {
 		}
 		else
 		{
-			//map = new QPixmap();
 			map = new QImage(992,992,QImage::Format_RGB888);
 			map->fill(lightGray);
 		}
@@ -109,7 +107,6 @@ namespace map_marker {
 	  
 	  QPainter qp(this);
 
-	  //qp.drawPixmap(0, 0, map_pix, map_pix, *map);
 	  qp.drawImage(0,0, map->scaled(MAPSIZE, MAPSIZE, KeepAspectRatio, SmoothTransformation));
 	  drawMarkers(&qp);
 	}
@@ -126,7 +123,6 @@ namespace map_marker {
 
 	void MainWindow::drawMarkers(QPainter *qp) {
 		QPen pen(Qt::black, 2, Qt::SolidLine);  
-		//geometry_msgs::Pose pos = qnode.GetRobotPosition();
 		QPoint p1;
 		int selected = GetSelectedMarker();
 
@@ -197,8 +193,7 @@ namespace map_marker {
 
 		pen.setWidth(3);
 		qp->setPen(pen);
-		//qp->fillRect(p1.x() - robotSize.width() / 2, p1.y() - robotSize.height() / 2, robotSize.width(), robotSize.height(), blue);
-
+		
 		tf::Quaternion q;	
 		tf::quaternionMsgToTF(robotPose.orientation, q);
 		q.normalize();
@@ -251,8 +246,7 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			yaml.loadYaml(fileNames[0].toUtf8().constData());
-			mapConfig.setFullConfigData(yaml.GetParsedYaml());
+			mapConfig = NAV::LoadMap(fileNames[0].toUtf8().constData());
 			map_min = mapConfig.getOrigin().position.x;
 			map_max = fabs(map_min);
 			YamlLoaded = true;
@@ -296,7 +290,6 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			//yamlWriter.writeAllMarkers(markers, fileNames[0].toUtf8().constData());
 			NAV::WriteMarkers(markers, fileNames[0].toUtf8().constData());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
@@ -312,8 +305,6 @@ namespace map_marker {
 		QStringList fileNames;
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
-			//yaml.loadYaml(fileNames[0].toUtf8().constData());
-			//FillMarkerList(yaml.GetParsedYaml());
 			markers = NAV::LoadMarkers(fileNames[0].toUtf8().constData());
 			UpdateMarkerTable();
 
@@ -539,9 +530,8 @@ namespace map_marker {
 		if (dialog.exec()) 
 		{
 			fileNames = dialog.selectedFiles();
-			//yaml.loadYaml(fileNames[0].toUtf8().constData());
-			//FillLineList(yaml.GetParsedYaml());
 			lines = NAV::LoadNoGoLines(fileNames[0].toUtf8().constData());
+			ResendAllLines();
 			UpdateLineTable();
 		}
 		else 
@@ -561,7 +551,6 @@ namespace map_marker {
 		if (dialog.exec()) {
 			fileNames = dialog.selectedFiles();
 			NAV::WriteNoGoLines(lines, fileNames[0].toUtf8().constData());
-			//yamlWriter.writeAllLines(lines, fileNames[0].toUtf8().constData());
 		} else {
 			ROS_ERROR("No file selected, nothing loaded");
 		}
@@ -624,148 +613,6 @@ namespace map_marker {
 		robotSize.setHeight(ui.spinRobotHeight->value());
 		robotSize.setWidth(ui.spinRobotWidth->value());
 		UpdateWindow();
-	}
-
-	void MainWindow::FillMarkerList(std::vector<KeyDataPair> data)
-	{
-		markers.clear();
-		geometry_msgs::Pose p;
-		MarkerType t;
-		std::string name; 
-		for (int i = 0; i < data.size(); i++)
-		{
-			
-			if(data[i].key.compare(0,6,"Marker") == 0)
-			{
-				if(data[i].data[0].compare(0,3,"She") == 0)
-				{
-					t = Shelf;
-				}
-				else if(data[i].data[0].compare(0,3,"Wor") == 0)
-				{
-					t = Workstation;
-				}
-				else if(data[i].data[0].compare(0,3,"Con") == 0)
-				{
-					t = Conveyor;
-				}
-				else if(data[i].data[0].compare(0,3,"Way") == 0)
-				{
-					t = Waypoint;
-				}
-				else if(data[i].data[0].compare(0,3,"Pre") == 0)
-				{
-					t = Precision;
-				}
-				else
-				{
-					std::cout << data[i].data[0] << std::endl;
-					t = Robot;
-				}
-			}
-			else if (data[i].key.compare("position_x") == 0)
-			{
-				p.position.x = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("position_y") == 0)
-			{
-				p.position.y = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("position_z") == 0)
-			{
-				p.position.z = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("orientation_x") == 0)
-			{
-				p.orientation.x = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("orientation_y") == 0)
-			{
-				p.orientation.y = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("orientation_z") == 0)
-			{
-				p.orientation.z = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("orientation_w") == 0)
-			{
-				p.orientation.w = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("Name") == 0)
-			{
-				name = data[i].data[0];
-			}
-			else
-			{
-				ROS_ERROR("Unkown data!");
-			}
-
-			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,6,"Marker") == 0)
-			{
-				Marker m(p, t, name);
-				markers.push_back(m);
-				t = Robot;
-				p.position.x = 0;
-				p.position.y = 0;
-				p.position.z = 0;
-				p.orientation.x = 0;
-				p.orientation.y = 0;
-				p.orientation.z = 0;
-				p.orientation.w = 0;
-				name = "";
-			}
-		}
-		UpdateMarkerTable();
-	}
-	
-	void MainWindow::FillLineList(std::vector<KeyDataPair> data)
-	{
-		lines.clear();
-		double x1;
-		double x2;
-		double y1;
-		double y2;
-		std::string name; 
-		for (int i = 0; i < data.size(); i++)
-		{
-			
-			if (data[i].key.compare("x1") == 0)
-			{
-				x1 = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("x2") == 0)
-			{
-				x2 = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("y1") == 0)
-			{
-				y1 = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("y2") == 0)
-			{
-				y2 = std::atof(data[i].data[0].c_str());
-			}
-			else if (data[i].key.compare("Name") == 0)
-			{
-				name = data[i].data[0];
-			}
-			else
-			{
-				ROS_ERROR("Unkown data!");
-			}
-
-			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,8,"NoGoLine") == 0)
-			{
-				NoGoLine l(x1, y1, x2, y2, name);
-				lines.push_back(l);
-				x1 = 0;
-				x2 = 0;
-				y1 = 0;
-				y2 = 0;
-				name = "";
-			}
-		}
-		UpdateLineTable();
 	}
 
 	void MainWindow::ToggleInterface(bool b) {
@@ -1083,13 +930,7 @@ namespace map_marker {
 	{
 		int tmpx = map_pix - y;
 		int tmpy = x;
-		
-		//int tmpx = y;
-		//int tmpy = x;
-		
-		//tmpy = map_pix - tmpy;
-		
-		
+
 		return QPoint(tmpx, tmpy);
 		
 	}

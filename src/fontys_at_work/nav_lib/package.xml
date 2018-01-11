@@ -4,8 +4,12 @@
   <version>0.0.0</version>
   <description>The nav_lib package</description>
 
-  <maintainer email="viki@todo.todo">viki</maintainer>
-
+  <maintainer email="viki@gmail.com">viki</maintainer>
+  <author>Jasper</author>
+  
+  <url type="bugtracker">https://github.com/minhtrietdiep/ESA-PROJ/issues</url>
+  <url type="repository">https://github.com/minhtrietdiep/ESA-PROJ</url>
+  <url type="wiki">https://github.com/minhtrietdiep/ESA-PROJ/wiki</url>
 
   <license>TODO</license>
 

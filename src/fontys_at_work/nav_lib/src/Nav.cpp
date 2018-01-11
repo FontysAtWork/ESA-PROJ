@@ -1,4 +1,4 @@
-#include "nav_lib/Nav.hpp"
+#include "Nav.hpp"
 
 namespace NAV
 {
@@ -94,7 +94,7 @@ namespace NAV
 		return markers;
 	}
 	
-	std::vector<NoGoLine> FillLineList(std::vector<KeyDataPair> data)//, std::vector<NoGoLine> lines)
+	std::vector<NoGoLine> FillLineList(std::vector<KeyDataPair> data)
 	{
 		std::vector<NoGoLine> lines;
 		double x1;
@@ -169,13 +169,13 @@ namespace NAV
 		return mapconfig;
 	}
 	
-	void WriteMarkers(std::vector<Marker> markers, std::string filename){
+	void WriteMarkers(std::vector<Marker>& markers, std::string filename){
 		YamlWriter yamlWriter;
 		yamlWriter.writeAllMarkers(markers, filename);
 		
 	}
 	
-	void WriteNoGoLines(std::vector<NoGoLine> lines, std::string filename){
+	void WriteNoGoLines(std::vector<NoGoLine>& lines, std::string filename){
 		YamlWriter yamlWriter;
 		yamlWriter.writeAllLines(lines, filename);
 	}

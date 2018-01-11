@@ -15,8 +15,8 @@ namespace NAV
 	std::vector<NoGoLine> LoadNoGoLines(std::string);
 	MapConfig LoadMap(std::string);
 	
-	void WriteMarkers(std::vector<Marker>, std::string);
-	void WriteNoGoLines(std::vector<NoGoLine>, std::string);
+	void WriteMarkers(std::vector<Marker>&	, std::string);
+	void WriteNoGoLines(std::vector<NoGoLine>&, std::string);
 }
 
 

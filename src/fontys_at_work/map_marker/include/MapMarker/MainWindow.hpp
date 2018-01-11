@@ -99,7 +99,6 @@ namespace map_marker {
 		YamlParser yaml;
 		YamlWriter yamlWriter;
 		MapConfig mapConfig;
-		//QPixmap *map;
 		QImage *map;
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;
