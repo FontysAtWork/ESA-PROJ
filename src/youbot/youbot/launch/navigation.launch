@@ -11,7 +11,7 @@
 	<!-- Only start ethercat driver and API when running on hardware -->
 	<group unless="$(env SIM)">
 		<!-- include original youbot driver launch file -->
-		<include file="$(find youbot)/launch/hardware/youbot_driver.include"/>
+		<include file="$(find youbot)/launch/hardware/robot_driver.include"/>
 	</group>
 	
 	<!-- loads the map to the server -->

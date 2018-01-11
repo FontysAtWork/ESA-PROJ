@@ -1,4 +1,4 @@
-image: /home/viki/school/PTT7/launch-rewrite/ESA-PROJ/maps/map_nogo.pgm
+image: /home/youbot/git/launch/ESA-PROJ/maps/map_nogo.pgm
 resolution: 0.010000
 origin: [-5.000000, -5.000000, 0.000000]
 negate: 0

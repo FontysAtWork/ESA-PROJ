@@ -54,6 +54,8 @@ namespace faw {
 		msg.info.height = _height;
 		msg.info.origin.position.x = -5.0;
 		msg.info.origin.position.y = -5.0;
+		msg.info.origin.position.z = 0.0;
+		msg.info.origin.orientation.w = 1;
 
 		msg.data = _mapData;
 		
