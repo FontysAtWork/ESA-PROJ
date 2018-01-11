@@ -16,6 +16,6 @@
 	<node name="map_marker" pkg="map_marker" type="map_marker" output="screen" />
 	
 	<!-- Control the robot via PS4 controller -->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/control/gamepad.include"/>
+	<include file="$(find faw)/launch/gamepad.launch"/>
 	
 </launch>

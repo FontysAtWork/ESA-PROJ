@@ -5,6 +5,6 @@
 	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/map_create.launch" />
 	
 	<!-- Control of youbot via PS4 controller -->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/control/gamepad.include"/>
+	<include file="$(find faw)/launch/gamepad.launch"/>
 	
 </launch>
