@@ -14,20 +14,24 @@ if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
 	message(STATUS "Compiling on ROS indigo")
 
 	find_package(nogo_zone_map_server_msg REQUIRED)
+	find_package(nav_lib REQUIRED)
 
 	if(NOT nogo_zone_map_server_msg_FOUND)
 		message(FATAL_ERROR "find_package(nogo_zone_map_server_msg) failed.")
 	endif()
+	
+	if(NOT nav_lib_FOUND)
+		message(FATAL_ERROR "find_package(nav_lib) failed.")
+	endif()
 
-
-	find_package(catkin REQUIRED COMPONENTS qt_build tf roscpp nogo_zone_map_server_msg)
+	find_package(catkin REQUIRED COMPONENTS qt_build tf roscpp nogo_zone_map_server_msg nav_lib)
 	include_directories(${catkin_INCLUDE_DIRS}) 
 
 	if(NOT catkin_FOUND)
 		message(FATAL_ERROR "find_package(catkin) failed. catkin was neither found in the workspace nor in the CMAKE_PREFIX_PATH. One reason may be that no ROS setup.sh was sourced before.")
 	endif()
 
-	catkin_package(CATKIN_DEPENDS nogo_zone_map_server_msg)
+	catkin_package(CATKIN_DEPENDS nogo_zone_map_server_msg nav_lib)
 
 	rosbuild_prepare_qt4(QtCore QtGui)
 
@@ -37,7 +41,7 @@ if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
 
 	add_executable(map_marker ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
 	add_dependencies(map_marker ${catkin_EXPORTED_TARGETS})
-	target_link_libraries(map_marker ${QT_LIBRARIES} ${catkin_LIBRARIES} yaml)
+	target_link_libraries(map_marker ${QT_LIBRARIES} ${catkin_LIBRARIES} yaml nav_lib)
 	install(TARGETS map_marker RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 endif()
@@ -49,12 +53,18 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 	find_package(nogo_zone_map_server_msg REQUIRED)
+	find_package(nav_lib REQUIRED)
 
 	if(NOT nogo_zone_map_server_msg_FOUND)
 		message(FATAL_ERROR "find_package(nogo_zone_map_server_msg) failed.")
 	endif()
+	
+	if(NOT nav_lib_FOUND)
+		message(FATAL_ERROR "find_package(nav_lib) failed.")
+	endif()
 
-	find_package(catkin REQUIRED COMPONENTS tf roscpp nogo_zone_map_server_msg)
+	find_package(catkin REQUIRED COMPONENTS tf roscpp nogo_zone_map_server_msg nav_lib)
+
 	include_directories(${catkin_INCLUDE_DIRS})
 
 	if(NOT catkin_FOUND)
@@ -82,7 +92,7 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	 	message(FATAL_ERROR "find_package(Boost) failed. Boost was not installed. Try running 'sudo apt-get install libboost-all-dev' This package is tested with Boost 1.58.0")
 	endif()
 
-	catkin_package(CATKIN_DEPENDS nogo_zone_map_server_msg)
+	catkin_package(CATKIN_DEPENDS nogo_zone_map_server_msg nav_lib)
 
 	add_definitions(${Qt5Widgets_DEFINITIONS})
 	set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
@@ -100,6 +110,7 @@ if($ENV{ROS_DISTRO} STREQUAL "kinetic")
 	target_link_libraries(map_marker ${PYTHON_LIBRARIES})
 	target_link_libraries(map_marker ${Boost_LIBRARIES})
 	target_link_libraries(map_marker yaml)
+	target_link_libraries(map_marker nav_lib)
 
 	install(TARGETS map_marker RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

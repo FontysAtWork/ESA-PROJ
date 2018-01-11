@@ -4,14 +4,15 @@
 #include "ui_MainWindow.h"
 #include "Qnode.hpp"
 #include <vector>
-#include "Marker.hpp"
+#include "nav_lib/Marker.hpp"
 #include "ClickableLabel.hpp"
-#include "YamlParser.hpp"
-#include "MapConfig.hpp"
-#include "YamlWriter.hpp"
-#include "NoGoLine.hpp"
+#include "nav_lib/YamlParser.hpp"
+#include "nav_lib/MapConfig.hpp"
+#include "nav_lib/YamlWriter.hpp"
+#include "nav_lib/NoGoLine.hpp"
 #include "MapRenderer.hpp"
 #include <QTimer>
+#include "nav_lib/Nav.hpp"
 
 #include "geometry_msgs/Pose.h"
 
@@ -98,7 +99,6 @@ namespace map_marker {
 		YamlParser yaml;
 		YamlWriter yamlWriter;
 		MapConfig mapConfig;
-		//QPixmap *map;
 		QImage *map;
 		geometry_msgs::Pose robotPose;
 		QSize robotSize;

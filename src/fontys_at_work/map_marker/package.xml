@@ -15,9 +15,11 @@
   <build_depend>libqt4-dev</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>nogo_zone_map_server_msg</build_depend>
+  <build_depend>nav_lib</build_depend>
   <run_depend>tf</run_depend>
   <run_depend>qt_build</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>libqt4-dev</run_depend>
   <run_depend>nogo_zone_map_server_msg</run_depend>
+  <run_depend>nav_lib</run_depend>
 </package>
