@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!--Generate from source ./map_save.template-->
+
+<launch>
+<node name="normal_map" pkg="map_server" type="map_saver" args="-f $(find faw)/map/map_normal" />
+</launch>

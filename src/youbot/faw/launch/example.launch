@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!--Generate from source ./example.template-->
+
+<launch>
+<include file="Example variable" />
+</launch>

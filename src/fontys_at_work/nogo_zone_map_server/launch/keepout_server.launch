@@ -2,7 +2,7 @@
 
 <launch>
 	
-	<node name="keepout_map_server" pkg="keepout_map_server" type="keepout_map_server" ns="keepout" output="screen">
+	<node name="nogo_zone_map_server" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="nogo" output="screen">
 		<param name="map_width" value="992" />
 		<param name="map_height" value="992" />
 		<param name="map_resolution" value="0.01" />
