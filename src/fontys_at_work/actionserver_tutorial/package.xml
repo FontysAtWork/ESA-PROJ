@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>actionserver</name>
+  <name>actionserver_tutorial</name>
   <version>0.0.0</version>
   <description>The actionserver package</description>
 

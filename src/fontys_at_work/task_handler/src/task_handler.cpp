@@ -12,11 +12,11 @@
 
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
-#include <actionserver/FibonacciAction.h>
+#include <actionserver_tutorial/FibonacciAction.h>
 
 #include <string>
 #include <vector>
-
+/*
 std::vector< atwork_ros_msgs::Task > tasks;
 
 void TaskParser(atwork_ros_msgs::Task t) {
@@ -79,7 +79,7 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 			tasks.push_back(t);
 		}
 	}
-}
+}*/
 
 /*
 void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
@@ -89,27 +89,25 @@ void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::Co
 void TaskExecutorGoalCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
 	ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
 }*/
-
+/*
 void doStuff() {
 	for(auto t : tasks) {
 		//TaskParser(t);
 	}
 	std::cout << tasks.size() << std::endl;
-}
+}*/
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "master");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(1);
 
-	ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
-
-
+	//ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
 
 
 	// create the action client
   // true causes the client to spin its own thread
-	actionlib::SimpleActionClient<actionserver::FibonacciAction> ac("fibonacci", true);
+	actionlib::SimpleActionClient<actionserver_tutorial::FibonacciAction> ac("fibonacci", true);
 
 	ROS_INFO("Waiting for action server to start.");
   // wait for the action server to start
@@ -138,7 +136,7 @@ int main(int argc, char **argv) {
 
 
 	while (ros::ok()) {
-		doStuff();
+		//doStuff();
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
