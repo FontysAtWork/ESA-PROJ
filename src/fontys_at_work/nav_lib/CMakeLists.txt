@@ -15,7 +15,7 @@ endif()
 #file(GLOB include/YamlLib/*.hpp)
 #file(GLOB src/*.cpp)
 
-add_library(nav_lib src/Marker.cpp src/NoGoLine.cpp src/YamlParser.cpp src/YamlWriter.cpp src/MapConfig.cpp)
+add_library(nav_lib src/Marker.cpp src/NoGoLine.cpp src/YamlParser.cpp src/YamlWriter.cpp src/MapConfig.cpp src/Nav.cpp)
 
 target_link_libraries(nav_lib ${catkin_LIBRARIES})
 
