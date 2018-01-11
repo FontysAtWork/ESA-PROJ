@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--Generate from source ./youbot_hardware/lasers.template-->
+
+<launch>
+<!-- Should we start a simulation or run on hardware? -->
+<arg name="sim" default="false" />
+
+<!-- Only init hoyuko's if running on hardware -->
+<group unless="$(arg sim)">
+<node name="hokuyo_front" pkg="hokuyo_node" type="hokuyo_node" respawn="true" output="screen">
+<remap from="/scan" to="/scan_front"/>
+<!-- Starts up faster, but timestamps will be inaccurate. -->
+<param name="calibrate_time" type="bool" value="true"/>
+<!-- Set the port to connect to here. -->
+<param name="port" type="string" value="/dev/sensors/hokuyo_H1100477"/>
+<param name="frame_id" type="string" value="hokuyo_front_link"/>
+<param name="min_ang" type="double" value="-1.50"/>
+<param name="max_ang" type="double" value="1.50"/>
+</node>
+
+<node name="hokuyo_back" pkg="hokuyo_node" type="hokuyo_node" respawn="true" output="screen">
+<remap from="/scan" to="/scan_back"/>
+<!-- Starts up faster, but timestamps will be inaccurate. -->
+<param name="calibrate_time" type="bool" value="true"/>
+<!-- Set the port to connect to here. -->
+<param name="port" type="string" value="/dev/sensors/hokuyo_H0904583"/>
+<param name="frame_id" type="string" value="hokuyo_back_link"/>
+<param name="min_ang" type="double" value="-1.50"/>
+<param name="max_ang" type="double" value="1.50"/>
+</node>
+</group>
+
+<!-- front laser -->
+<node pkg="tf" type="static_transform_publisher"
+name="hokuyo_front_broadcaster"
+args="0.338 0 -0.025 0 0 0 base_link hokuyo_front_link 100" />
+
+<!-- back laser -->
+<node pkg="tf" type="static_transform_publisher"
+name="hokuyo_back_broadcaster"
+args="-0.335 0 -0.025 0 3.14 3.14 base_link hokuyo_back_link 100" />
+
+<!--<node pkg="tf" type="static_transform_publisher" name="localizer" args="0 0 0 0 0 0 map odom 10" output="screen" />-->
+
+<node pkg="topic_tools" type="relay" name="relay_hokuyo_front"
+args="/scan_front /scan_combined" />
+<node pkg="topic_tools" type="relay" name="relay_hokuyo_rear"
+args="/scan_back /scan_combined" />
+
+<!-- combine laserscan topics -->
+<!--
+<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" >
+<param name="destination_frame" value="/base_link"/>
+<param name="cloud_destination_topic" value="/merged_cloud"/>
+<param name="scan_destination_topic" value="/scan_multi"/>
+<param name="laserscan_topics" value ="/scan_front /scan_back" />
+</node>
+-->
+
+</launch>

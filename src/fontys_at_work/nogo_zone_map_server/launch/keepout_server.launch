@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+	
+	<node name="nogo_zone_map_server" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="nogo" output="screen">
+		<param name="map_width" value="992" />
+		<param name="map_height" value="992" />
+		<param name="map_resolution" value="0.01" />
+		<param name="publish_interval" value="1" />
+	</node>
+	
+</launch>
