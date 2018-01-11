@@ -8,19 +8,24 @@ file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS s
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 
-find_package(catkin REQUIRED COMPONENTS roscpp protobuf_comm atwork_pb_msgs atwork_ros_msgs std_msgs geometry_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS actionserver roscpp actionlib_msgs protobuf_comm atwork_pb_msgs atwork_ros_msgs std_msgs geometry_msgs message_generation)
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp protobuf_comm atwork_pb_msgs atwork_ros_msgs
+  CATKIN_DEPENDS roscpp protobuf_comm atwork_pb_msgs atwork_ros_msgs actionserver actionlib_msgs
 )
 
 add_executable(task_handler ${SOURCES})
 
-add_dependencies(task_handler atwork_ros_msgs_generate_messages_cpp)
-
 target_link_libraries(task_handler ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(task_handler yaml)
+
+add_dependencies(task_handler ${actionserver_EXPORTED_TARGETS})
+add_dependencies(task_handler atwork_ros_msgs_generate_messages_cpp)
+add_dependencies(task_handler ${catkin_EXPORTED_TARGETS})
+add_dependencies(task_handler actionserver_generate_messages_cpp)
+
+
 
 install(TARGETS task_handler RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
