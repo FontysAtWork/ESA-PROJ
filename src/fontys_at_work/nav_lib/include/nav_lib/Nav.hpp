@@ -1,20 +1,22 @@
 #ifndef NAV_LIB
 #define NAV_LIB
-
-namespace NAV
-{
+	#include <string>
 	#include <vector>
 	#include "Marker.hpp"
 	#include "NoGoLine.hpp"
 	#include "YamlParser.hpp"
 	#include "YamlWriter.hpp"
 	#include "MapConfig.hpp"
-	//std::vector<Marker> LoadMarkers(std::string);
-	//std::vector<NoGoLine> LoadNoGoLines(std::string);
-	//std::vector<MapConfig> LoadMap(std::string);
 	
-	//void WriteMarkers(vector<Marker>, std::string);
-	//void WriteNoGoLines(vector<NoGoLine>, std::string);
+namespace NAV
+{
+	using namespace std;
+	std::vector<Marker> LoadMarkers(std::string);
+	std::vector<NoGoLine> LoadNoGoLines(std::string);
+	MapConfig LoadMap(std::string);
+	
+	void WriteMarkers(std::vector<Marker>, std::string);
+	void WriteNoGoLines(std::vector<NoGoLine>, std::string);
 }
 
 
