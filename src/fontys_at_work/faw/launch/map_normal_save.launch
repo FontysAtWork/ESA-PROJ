@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="normal_map" pkg="map_server" type="map_saver" args="-f $(env WORKSPACE)/maps/map_normal" />	
+</launch>
