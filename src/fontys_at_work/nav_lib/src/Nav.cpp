@@ -1,10 +1,10 @@
-#include "Nav.hpp"
+#include "nav_lib/Nav.hpp"
 
 namespace NAV
 {
-	vector<Marker> FillMarkerList(std::vector<KeyDataPair> data)
+	std::vector<Marker> FillMarkerList(std::vector<KeyDataPair> data)
 	{
-		vector<Marker> markers;
+		std::vector<Marker> markers;
 		geometry_msgs::Pose p;
 		MarkerType t;
 		std::string name; 
@@ -94,9 +94,9 @@ namespace NAV
 		return markers;
 	}
 	
-	vector<NoGoLine> FillLineList(std::vector<KeyDataPair> data, vector<NoGoLines> lines)
+	std::vector<NoGoLine> FillLineList(std::vector<KeyDataPair> data)//, std::vector<NoGoLine> lines)
 	{
-		vector<NoGoLines lines;
+		std::vector<NoGoLine> lines;
 		double x1;
 		double x2;
 		double y1;
@@ -163,24 +163,25 @@ namespace NAV
 	
 	MapConfig LoadMap(std::string filename){
 		YamlParser yamlp;
-		yaml.loadYaml(filename);
+		yamlp.loadYaml(filename);
 		MapConfig mapconfig;
-		mapConfig.setFullConfigData(yaml.GetParsedYaml());
+		mapconfig.setFullConfigData(yamlp.GetParsedYaml());
 		return mapconfig;
 	}
 	
-	void WriteMarkers(vector<Marker> markers, std::string filename){
+	void WriteMarkers(std::vector<Marker> markers, std::string filename){
+		YamlWriter yamlWriter;
 		yamlWriter.writeAllMarkers(markers, filename);
 		
 	}
 	
-	void WriteNoGoLines(vector<NoGoLine lines, std::string filename){
-		
+	void WriteNoGoLines(std::vector<NoGoLine> lines, std::string filename){
+		YamlWriter yamlWriter;
 		yamlWriter.writeAllLines(lines, filename);
 	}
 	
 	
-}
+};
 
 
 
