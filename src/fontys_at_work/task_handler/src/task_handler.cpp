@@ -7,8 +7,8 @@
 #include <atwork_ros_msgs/TransportationTask.h>
 #include <atwork_ros_msgs/LocationIdentifier.h>
 
-#include <task_handler/LocationIdentifier.hpp>
-#include <task_handler/ObjectIdentifier.hpp>
+#include <actionserver_tutorial/LocationIdentifier.hpp>
+#include <actionserver_tutorial/ObjectIdentifier.hpp>
 
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -16,7 +16,7 @@
 
 #include <string>
 #include <vector>
-/*
+
 std::vector< atwork_ros_msgs::Task > tasks;
 
 void TaskParser(atwork_ros_msgs::Task t) {
@@ -79,7 +79,7 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 			tasks.push_back(t);
 		}
 	}
-}*/
+}
 
 /*
 void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
@@ -88,34 +88,35 @@ void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::Co
 
 void TaskExecutorGoalCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
 	ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
-}*/
-/*
+}
+*/
 void doStuff() {
 	for(auto t : tasks) {
 		//TaskParser(t);
 	}
 	std::cout << tasks.size() << std::endl;
-}*/
+}
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "master");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(1);
 
-	//ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
+	ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
 
 
 	// create the action client
   // true causes the client to spin its own thread
-	actionlib::SimpleActionClient<actionserver_tutorial::FibonacciAction> ac("fibonacci", true);
+	actionlib::SimpleActionClient<actionserver_tutorial::FibonacciAction> ac("asdf", true);;//ac("fibonacci", true);
+	
 
 	ROS_INFO("Waiting for action server to start.");
   // wait for the action server to start
- /* ac.waitForServer(); //will wait for infinite time
+  ac.waitForServer(); //will wait for infinite time
 
   ROS_INFO("Action server started, sending goal.");
   // send a goal to the action
-  actionserver::FibonacciGoal goal;
+  actionserver_tutorial::FibonacciGoal goal;
   goal.order = 20;
   ac.sendGoal(goal);
 
@@ -130,7 +131,7 @@ int main(int argc, char **argv) {
   else
 	ROS_INFO("Action did not finish before the time out.");
 
-*/
+
 
 
 

@@ -1,5 +1,5 @@
 #include <sstream>
-#include <task_handler/LocationIdentifier.hpp>
+#include <actionserver_tutorial/LocationIdentifier.hpp>
 
 LocationIdentifier::LocationIdentifier(atwork_ros_msgs::LocationIdentifier loc) {
 	type = (LocationType) loc.type.data;

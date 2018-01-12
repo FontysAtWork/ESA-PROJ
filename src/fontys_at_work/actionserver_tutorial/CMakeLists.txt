@@ -8,7 +8,7 @@ file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS s
 
 file(GLOB_RECURSE ACTIONS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS action/*.action)
 
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation atwork_ros_msgs atwork_pb_msgs)
 find_package(Boost REQUIRED COMPONENTS system)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
@@ -19,25 +19,29 @@ generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp actionlib_msgs
+  CATKIN_DEPENDS roscpp actionlib_msgs atwork_ros_msgs
 )
 
+add_library(task_exec_lib src/LocationIdentifier.cpp src/ObjectIdentifier.cpp)
 
-add_executable(actionserver_tutorial src/fibonacci_server.cpp)
-add_executable(fibonacci_client src/fibonacci_client.cpp)
+
+
+add_executable(actionserver_tutorial ${SOURCES})
+#add_executable(fibonacci_client src/fibonacci_client.cpp)
 
 add_dependencies(actionserver_tutorial actionserver_generate_messages_cpp)
-add_dependencies(fibonacci_client actionserver_generate_messages_cpp)
+#add_dependencies(fibonacci_client actionserver_generate_messages_cpp)
 
 
-add_dependencies(actionserver_tutorial task_handler fibonacci_client)
+#add_dependencies(actionserver_tutorial task_handler fibonacci_client)
 add_dependencies(actionserver_tutorial ${catkin_EXPORTED_TARGETS})
 
 add_dependencies(actionserver_tutorial ${actionserver_tutorial_EXPORTED_TARGETS})
+add_dependencies(actionserver_tutorial atwork_ros_msgs_generate_messages_cpp)
 
 
 target_link_libraries(actionserver_tutorial  ${catkin_LIBRARIES})
-target_link_libraries(fibonacci_client  ${catkin_LIBRARIES})
+#target_link_libraries(fibonacci_client  ${catkin_LIBRARIES})
 
 install(
 	TARGETS actionserver_tutorial

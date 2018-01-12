@@ -15,7 +15,7 @@
   
   <build_depend>actionserver_tutorial</build_depend>
   
-  
+  <build_export_depend>task_exec_lib</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   
   <exec_depend>actionserver_tutorial</exec_depend>
