@@ -54,7 +54,7 @@ void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
 	for(auto t : tasks) {
 		if(t.status.data == 0) {
 			// send a goal to the action
-			task_executor::TaskGoal task;
+			task_executor::TaskGoal goal;
 			goal.task = t;
 			ac->sendGoal(goal, &doneCb, &activeCb, &feedbackCb);
 			ROS_INFO("Sent task %d to as", (int) t.id.data);
@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
 	ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
 
 	// create the action client for tasks
-	actionlib::SimpleActionClient<task_executor::TaskAction> ac("task_ac", true);;
+	actionlib::SimpleActionClient<task_executor::TaskAction> ac("Task", true);
 	
 	// wait for the action server to start
 	ROS_INFO("Waiting for action server to start.");

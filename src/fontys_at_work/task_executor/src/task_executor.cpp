@@ -39,6 +39,7 @@ class TaskAction
                                         actionName(name)
     {
         actionServer.start();
+        ROS_INFO("started");
     }
 
     ~TaskAction(void)
@@ -60,7 +61,7 @@ class TaskAction
         //ROS_INFO("%s: Executing, creating Task sequence of order %i with seeds %i, %i", actionName.c_str(), goal->order, feedback.sequence[0], feedback.sequence[1]);
 
         // start executing the action
-        TaskParser(goal->task);
+        //TaskParser(goal->task);
         
         ROS_INFO("Got a callback!!!");
         
