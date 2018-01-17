@@ -50,20 +50,23 @@ class TaskAction
     {
         // helper variables
         ros::Rate r(1);
-        bool success = true;
+        //bool success = true;
 
         // push_back the seeds for the Task sequence
         //feedback_.sequence.clear();
         //feedback_.sequence.push_back(0);
         //feedback_.sequence.push_back(1);
-		feedback.status = 0;
+		feedback.status = 3;
+		feedback.id = taskID;
         // publish info to the console for the user
         //ROS_INFO("%s: Executing, creating Task sequence of order %i with seeds %i, %i", actionName.c_str(), goal->order, feedback.sequence[0], feedback.sequence[1]);
 
         // start executing the action
-        //TaskParser(goal->task);
+        TaskParser(goal->task);
         
         ROS_INFO("Got a callback!!!");
+        
+        actionServer.publishFeedback(feedback);
         
         /*for (int i = 1; i <= goal->order; i++)
         {
@@ -83,14 +86,17 @@ class TaskAction
             // this sleep is not necessary, the sequence is computed at 1 Hz for demonstration purposes
             r.sleep();
         }*/
-
-        if (success)
+        r.sleep();
+		result.status = 6;
+		result.id = taskID;
+		actionServer.setSucceeded(result);
+        /*if (success)
         {
             result.status = feedback.status;
             //ROS_INFO("%s: Succeeded", action_name_.c_str());
             // set the action state to succeeded
             //as_.setSucceeded(result_);
-        }
+        }*/
     }
     
     void TaskParser(atwork_ros_msgs::Task t) {
