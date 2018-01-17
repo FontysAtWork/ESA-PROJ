@@ -15,8 +15,11 @@ class LocationIdentifier
 	public:
 		LocationIdentifier(atwork_ros_msgs::LocationIdentifier obj);
 		LocationIdentifier(LocationType type, int instance_id, std::string description);
+		LocationIdentifier();
 		~LocationIdentifier();
 
+		void SetLocation(atwork_ros_msgs::LocationIdentifier);
+		void SetLocation(LocationType type, int instance_id, std::string description);
 		LocationType GetType();
 		int GetInstanceId();
 		std::string GetDescription();
