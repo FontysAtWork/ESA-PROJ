@@ -22,6 +22,12 @@ void doneCb(const actionlib::SimpleClientGoalState& state,
 	ROS_INFO("Finished in state [%s]", state.toString().c_str());
 	ROS_INFO("Answer: %d", result->status);
 
+	for(auto t : tasks) {
+		if (t.id.data == result->id) {
+			t.status.data = result->status;
+		}
+	}
+
 	ros::shutdown();
 }
 
@@ -33,11 +39,17 @@ void activeCb() {
 // Called every time feedback is received for the goal
 void feedbackCb(const task_executor::TaskFeedbackConstPtr& feedback) {
 	ROS_INFO("Got Feedback of length %d", feedback->status);
+
+	for(auto t : msg->tasks) {
+		if (t.id.data == result->id) {
+			t.status.data = result->status;
+		}
+	}
 }
 
 // Add tasks to vector
 void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
-	for(auto t : msg->tasks) {
+	for(auto t : tasks) {
 		bool exists = false;
 		for(auto task : tasks) {
 			if(t.id.data == task.id.data) {
