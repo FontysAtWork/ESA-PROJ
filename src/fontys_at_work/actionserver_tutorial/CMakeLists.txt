@@ -30,14 +30,19 @@ add_executable(actionserver_tutorial ${SOURCES})
 #add_executable(fibonacci_client src/fibonacci_client.cpp)
 
 add_dependencies(actionserver_tutorial actionserver_generate_messages_cpp)
+add_dependencies(task_exec_lib actionserver_generate_messages_cpp)
 #add_dependencies(fibonacci_client actionserver_generate_messages_cpp)
 
 
 #add_dependencies(actionserver_tutorial task_handler fibonacci_client)
 add_dependencies(actionserver_tutorial ${catkin_EXPORTED_TARGETS})
+add_dependencies(task_exec_lib ${catkin_EXPORTED_TARGETS})
 
 add_dependencies(actionserver_tutorial ${actionserver_tutorial_EXPORTED_TARGETS})
+add_dependencies(task_exec_lib ${actionserver_tutorial_EXPORTED_TARGETS})
+
 add_dependencies(actionserver_tutorial atwork_ros_msgs_generate_messages_cpp)
+add_dependencies(task_exec_lib atwork_ros_msgs_generate_messages_cpp)
 
 
 target_link_libraries(actionserver_tutorial  ${catkin_LIBRARIES})
