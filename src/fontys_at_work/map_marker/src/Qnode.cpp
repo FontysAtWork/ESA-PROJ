@@ -6,7 +6,7 @@
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
 #include "Qnode.hpp"
-#include "keepout_map_server_msg/Line.h"
+#include "nogo_zone_map_server_msg/Line.h"
 
 namespace map_marker {
 
@@ -36,7 +36,7 @@ bool QNode::Init() {
 	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
+	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/keepout/drawline", 100);
 	pubNoGoClear = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
 	start();
 	return true;
@@ -56,7 +56,7 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<keepout_map_server_msg::Line>("/keepout/drawline", 100);
+	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/keepout/drawline", 100);
 	pubNoGoLine = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
 	start();
 	return true;
@@ -118,7 +118,7 @@ void QNode::DrawLine(NoGoLine line)
 {
 	ROS_INFO("Sending line");
 
-	keepout_map_server_msg::Line sendLine;
+	nogo_zone_map_server_msg::Line sendLine;
 	sendLine.x1 = line.GetX1();
 	sendLine.x2 = line.GetX2();
 	sendLine.y1 = line.GetY1();

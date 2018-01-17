@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!--Start the robot navigation stack-->
+	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation.launch" />
+	
+	<!-- Load the keepout map server -->
+	<node name="keepout_map" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="keepout" output="screen">
+		<param name="map_width" value="992" />
+		<param name="map_height" value="992" />
+		<param name="map_resolution" value="0.01" />
+		<param name="publish_interval" value="1" />
+	</node>
+	
+	<!-- Load the custom ui to create markers and nogo zones -->
+	<node name="map_marker" pkg="map_marker" type="map_marker" output="screen" />
+	
+	<!-- Control the robot via PS4 controller -->
+	<include file="$(find faw)/launch/gamepad.launch"/>
+	
+</launch>
