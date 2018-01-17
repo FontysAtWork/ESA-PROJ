@@ -7,9 +7,6 @@
 #include <atwork_ros_msgs/TransportationTask.h>
 #include <atwork_ros_msgs/LocationIdentifier.h>
 
-#include <task_executor/LocationIdentifier.hpp>
-#include <task_executor/ObjectIdentifier.hpp>
-
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <task_executor/TaskAction.h>
@@ -19,54 +16,26 @@
 
 std::vector< atwork_ros_msgs::Task > tasks;
 
-void TaskParser(atwork_ros_msgs::Task t) {
-	int task_id = t.id.data;
-	int task_status = t.status.data;
-	int task_type = t.type.data;
+// Called once when the goal completes
+void doneCb(const actionlib::SimpleClientGoalState& state,
+            const task_executor::TaskResultConstPtr& result) {
+	ROS_INFO("Finished in state [%s]", state.toString().c_str());
+	ROS_INFO("Answer: %d", result->status);
 
-	ROS_INFO("Added task(%d)", task_id);
-
-	if(task_type == atwork_ros_msgs::Task::TRANSPORTATION) {
-		atwork_ros_msgs::TransportationTask transportation_task = t.transportation_task;
-
-		ObjectIdentifier trans_object(transportation_task.object);
-		ObjectIdentifier trans_container(transportation_task.container);
-
-		int trans_quantity_delivered = transportation_task.quantity_delivered.data;
-		int trans_quantity_requested = transportation_task.quantity_requested.data;
-
-		LocationIdentifier trans_dst(transportation_task.destination);
-		LocationIdentifier trans_src(transportation_task.source);
-
-		std::string trans_team = transportation_task.processing_team.data;
-
-		std::cout << "Obj: " << trans_object.Print() << std::endl;
-		std::cout << "Ctn: " << trans_container.Print() << std::endl;
-		std::cout << "Qtd: " << trans_quantity_delivered << std::endl;
-		std::cout << "Qtr: " << trans_quantity_requested << std::endl;
-		std::cout << "Dst: " << trans_dst.Print() << std::endl;
-		std::cout << "Src: " << trans_src.Print() << std::endl;
-		std::cout << "Tea: " << trans_team << std::endl;
-		std::cout << "Sts: " << task_status << std::endl << std::endl;
-
-	} else if(task_type == atwork_ros_msgs::Task::NAVIGATION) {
-		atwork_ros_msgs::NavigationTask navigation_task = t.navigation_task;
-
-		LocationIdentifier nav_location(navigation_task.location);
-
-		int nav_orientation = navigation_task.orientation.data; //NORTH=1,EAST=2,SOUTH=3,WEST=4
-		ros::Time nav_wait_time = navigation_task.wait_time.data;
-		
-		std::cout << "Dst: " << nav_location.Print() << std::endl;
-		std::cout << "Ori: " << nav_orientation << std::endl;
-		std::cout << "Tim: " << nav_wait_time << std::endl;
-		std::cout << "Sts: " << task_status << std::endl << std::endl;
-		
-	} else {
-		ROS_WARN("Unknown task :o");
-	}
+	ros::shutdown();
 }
 
+// Called once when the goal becomes active
+void activeCb() {
+	ROS_INFO("Goal just went active");
+}
+
+// Called every time feedback is received for the goal
+void feedbackCb(const task_executor::TaskFeedbackConstPtr& feedback) {
+	ROS_INFO("Got Feedback of length %d", feedback->status);
+}
+
+// Add tasks to vector
 void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 	for(auto t : msg->tasks) {
 		bool exists = false;
@@ -81,20 +50,32 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 	}
 }
 
-/*
-void TaskExecutorFeedbackCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
-	ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
-}
-
-void TaskExecutorGoalCallback(const task_executor::TurtlebotMoveFeedback::ConstPtr& feedback) {
-	ROS_INFO("Dist: %f, Turn: %f ", feedback->forward_distance, feedback->turn_distance);
-}
-*/
-void doStuff() {
+void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
 	for(auto t : tasks) {
-		//TaskParser(t);
+		if(t.status.data == 0) {
+			// send a goal to the action
+			task_executor::TaskGoal task;
+			goal.task = t;
+			ac->sendGoal(goal, &doneCb, &activeCb, &feedbackCb);
+			ROS_INFO("Sent task %d to as", (int) t.id.data);
+		} else {
+			ROS_INFO("Task %d already sent", (int) t.id.data);
+		}
 	}
 	std::cout << tasks.size() << std::endl;
+
+/*
+
+	//wait for the action to return
+	bool finished_before_timeout = ac.waitForResult(ros::Duration(180.0));
+
+	if (finished_before_timeout) {
+		actionlib::SimpleClientGoalState state = ac.getState();
+		ROS_INFO("Action finished: %s",state.toString().c_str());
+	}
+	else {
+		ROS_INFO("Action did not finish before the time out.");
+	}*/
 }
 
 int main(int argc, char **argv) {
@@ -102,42 +83,19 @@ int main(int argc, char **argv) {
 	ros::NodeHandle n;
 	ros::Rate loop_rate(1);
 
+	// subsribe to refbox_receiver to receive tasks
 	ros::Subscriber sub = n.subscribe("/refbox_receiver/task_info", 1000, TaskCallback);
 
-
-	// create the action client
-  // true causes the client to spin its own thread
-	actionlib::SimpleActionClient<task_executor::TaskAction> ac("asdf", true);;//ac("fibonacci", true);
+	// create the action client for tasks
+	actionlib::SimpleActionClient<task_executor::TaskAction> ac("task_ac", true);;
 	
-
+	// wait for the action server to start
 	ROS_INFO("Waiting for action server to start.");
-  // wait for the action server to start
-  ac.waitForServer(); //will wait for infinite time
-
-  ROS_INFO("Action server started, sending goal.");
-  // send a goal to the action
-  task_executor::TaskGoal goal;
-  goal.order = 20;
-  ac.sendGoal(goal);
-
-  //wait for the action to return
-  bool finished_before_timeout = ac.waitForResult(ros::Duration(30.0));
-
-  if (finished_before_timeout)
-  {
-	actionlib::SimpleClientGoalState state = ac.getState();
-	ROS_INFO("Action finished: %s",state.toString().c_str());
-  }
-  else
-	ROS_INFO("Action did not finish before the time out.");
-
-
-
-
-
+	ac.waitForServer();
+	ROS_INFO("Action server started.");
 
 	while (ros::ok()) {
-		//doStuff();
+		SendGoals(&ac);
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
