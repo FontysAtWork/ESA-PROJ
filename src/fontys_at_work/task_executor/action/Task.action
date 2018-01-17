@@ -1,8 +1,9 @@
 #goal definition
-int32 order
+atwork_ros_msgs/Task task
 ---
 #result definition
-int32[] sequence
+int32 status
+int32 id
 ---
 #feedback
-int32[] sequence
+int32 status

@@ -16,7 +16,24 @@ LocationIdentifier::LocationIdentifier(LocationType type, int instance_id, std::
 
 }
 
+LocationIdentifier::LocationIdentifier(){
+}
+
 LocationIdentifier::~LocationIdentifier() {
+
+}
+
+
+void LocationIdentifier::SetLocation(atwork_ros_msgs::LocationIdentifier loc) {
+		type = (LocationType) loc.type.data;
+	instance_id = loc.instance_id.data;
+	description = loc.description.data;
+}
+
+void LocationIdentifier::SetLocation(LocationType type, int instance_id, std::string description) {
+    this->type = type;
+    this->instance_id = instance_id;
+    this->description = description;
 
 }
 

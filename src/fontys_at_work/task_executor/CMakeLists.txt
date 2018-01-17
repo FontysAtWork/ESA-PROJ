@@ -8,14 +8,14 @@ file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS s
 
 file(GLOB_RECURSE ACTIONS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS action/*.action)
 
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation atwork_ros_msgs atwork_pb_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation atwork_ros_msgs atwork_pb_msgs geometry_msgs)
 find_package(Boost REQUIRED COMPONENTS system)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_action_files(DIRECTORY . FILES ${ACTIONS})
 
-generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs atwork_ros_msgs geometry_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
