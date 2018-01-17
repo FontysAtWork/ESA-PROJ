@@ -12,12 +12,13 @@
   <buildtool_depend>catkin</buildtool_depend>
   
   <build_depend>roscpp</build_depend>
-  
+  <build_depend>atwork_ros_msgs</build_depend>
   <build_depend>actionserver_tutorial</build_depend>
+  <build_depend>actionlib</build_depend>
   
-  <build_export_depend>task_exec_lib</build_export_depend>
   <exec_depend>roscpp</exec_depend>
-  
+  <exec_depend>atwork_ros_msgs</exec_depend>
   <exec_depend>actionserver_tutorial</exec_depend>
+  <exec_depend>actionlib</exec_depend>
   
 </package>
