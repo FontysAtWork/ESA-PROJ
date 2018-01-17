@@ -7,12 +7,12 @@
 #include <atwork_ros_msgs/TransportationTask.h>
 #include <atwork_ros_msgs/LocationIdentifier.h>
 
-#include <actionserver_tutorial/LocationIdentifier.hpp>
-#include <actionserver_tutorial/ObjectIdentifier.hpp>
+#include <task_executor/LocationIdentifier.hpp>
+#include <task_executor/ObjectIdentifier.hpp>
 
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
-#include <actionserver_tutorial/FibonacciAction.h>
+#include <task_executor/TaskAction.h>
 
 #include <string>
 #include <vector>
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 
 	// create the action client
   // true causes the client to spin its own thread
-	actionlib::SimpleActionClient<actionserver_tutorial::FibonacciAction> ac("asdf", true);;//ac("fibonacci", true);
+	actionlib::SimpleActionClient<task_executor::TaskAction> ac("asdf", true);;//ac("fibonacci", true);
 	
 
 	ROS_INFO("Waiting for action server to start.");
@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
 
   ROS_INFO("Action server started, sending goal.");
   // send a goal to the action
-  actionserver_tutorial::FibonacciGoal goal;
+  task_executor::TaskGoal goal;
   goal.order = 20;
   ac.sendGoal(goal);
 

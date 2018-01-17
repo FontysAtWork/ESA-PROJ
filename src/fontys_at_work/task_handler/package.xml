@@ -13,12 +13,12 @@
   
   <build_depend>roscpp</build_depend>
   <build_depend>atwork_ros_msgs</build_depend>
-  <build_depend>actionserver_tutorial</build_depend>
+  <build_depend>task_executor</build_depend>
   <build_depend>actionlib</build_depend>
   
   <exec_depend>roscpp</exec_depend>
   <exec_depend>atwork_ros_msgs</exec_depend>
-  <exec_depend>actionserver_tutorial</exec_depend>
+  <exec_depend>task_executor</exec_depend>
   <exec_depend>actionlib</exec_depend>
   
 </package>
