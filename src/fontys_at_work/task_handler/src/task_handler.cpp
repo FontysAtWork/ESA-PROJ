@@ -49,7 +49,7 @@ void feedbackCb(const task_executor::TaskFeedbackConstPtr& feedback) {
 
 // Add tasks to vector
 void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
-	for(auto t : tasks) {
+	for(auto t : msg->tasks) {
 		bool exists = false;
 		for(auto task : tasks) {
 			if(t.id.data == task.id.data) {
@@ -64,30 +64,14 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 
 void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
 	for(auto t : tasks) {
-		if(t.status.data == 0) {
+		if(t.status.data == 1) {
 			// send a goal to the action
 			task_executor::TaskGoal goal;
 			goal.task = t;
 			ac->sendGoal(goal, &doneCb, &activeCb, &feedbackCb);
 			ROS_INFO("Sent task %d to as", (int) t.id.data);
-		} else {
-			ROS_INFO("Task %d already sent", (int) t.id.data);
 		}
 	}
-	std::cout << tasks.size() << std::endl;
-
-/*
-
-	//wait for the action to return
-	bool finished_before_timeout = ac.waitForResult(ros::Duration(180.0));
-
-	if (finished_before_timeout) {
-		actionlib::SimpleClientGoalState state = ac.getState();
-		ROS_INFO("Action finished: %s",state.toString().c_str());
-	}
-	else {
-		ROS_INFO("Action did not finish before the time out.");
-	}*/
 }
 
 int main(int argc, char **argv) {
