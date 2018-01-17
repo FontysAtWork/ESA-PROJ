@@ -22,6 +22,12 @@ void doneCb(const actionlib::SimpleClientGoalState& state,
 	ROS_INFO("Finished in state [%s]", state.toString().c_str());
 	ROS_INFO("Answer: %d", result->status);
 
+	for(auto t : tasks) {
+		if (t.id.data == result->id) {
+			t.status.data = result->status;
+		}
+	}
+
 	ros::shutdown();
 }
 
@@ -33,49 +39,40 @@ void activeCb() {
 // Called every time feedback is received for the goal
 void feedbackCb(const task_executor::TaskFeedbackConstPtr& feedback) {
 	ROS_INFO("Got Feedback of length %d", feedback->status);
+
+	for(auto t : tasks) {
+		if (t.id.data == feedback->id) {
+			t.status.data = feedback->status;
+		}
+	}
 }
 
 // Add tasks to vector
 void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
-	for(auto t : msg->tasks) {
+	for(int i = msg->tasks.size(); i >= 0 ; i--) {
+	//for(auto t : msg->tasks) {
 		bool exists = false;
 		for(auto task : tasks) {
-			if(t.id.data == task.id.data) {
+			if(msg->tasks[i].id.data == task.id.data) {
 				exists = true;
 			}
 		}
 		if (!exists) {
-			tasks.push_back(t);
+			tasks.push_back(msg->tasks[i]);
 		}
 	}
 }
 
 void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
 	for(auto t : tasks) {
-		if(t.status.data == 0) {
+		if(t.status.data == 1) {
 			// send a goal to the action
 			task_executor::TaskGoal goal;
 			goal.task = t;
 			ac->sendGoal(goal, &doneCb, &activeCb, &feedbackCb);
-			ROS_INFO("Sent task %d to as", (int) t.id.data);
-		} else {
-			ROS_INFO("Task %d already sent", (int) t.id.data);
+			ROS_INFO("Sent task %d to action server", (int) t.id.data);
 		}
 	}
-	std::cout << tasks.size() << std::endl;
-
-/*
-
-	//wait for the action to return
-	bool finished_before_timeout = ac.waitForResult(ros::Duration(180.0));
-
-	if (finished_before_timeout) {
-		actionlib::SimpleClientGoalState state = ac.getState();
-		ROS_INFO("Action finished: %s",state.toString().c_str());
-	}
-	else {
-		ROS_INFO("Action did not finish before the time out.");
-	}*/
 }
 
 int main(int argc, char **argv) {
