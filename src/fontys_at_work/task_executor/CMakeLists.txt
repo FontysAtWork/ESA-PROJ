@@ -8,7 +8,7 @@ file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS s
 
 file(GLOB_RECURSE ACTIONS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS action/*.action)
 
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation atwork_ros_msgs atwork_pb_msgs geometry_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib_msgs actionlib std_msgs message_generation atwork_ros_msgs atwork_pb_msgs geometry_msgs nav_lib)
 find_package(Boost REQUIRED COMPONENTS system)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
@@ -19,7 +19,7 @@ generate_messages(DEPENDENCIES std_msgs actionlib_msgs atwork_ros_msgs geometry_
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp actionlib_msgs atwork_ros_msgs
+  CATKIN_DEPENDS roscpp actionlib_msgs atwork_ros_msgs nav_lib
 )
 
 add_library(task_exec_lib src/LocationIdentifier.cpp src/ObjectIdentifier.cpp)
@@ -41,7 +41,7 @@ add_dependencies(task_exec_lib ${catkin_EXPORTED_TARGETS})
 add_dependencies(task_executor ${task_executor_EXPORTED_TARGETS})
 add_dependencies(task_exec_lib ${task_executor_EXPORTED_TARGETS})
 
-add_dependencies(task_executor atwork_ros_msgs_generate_messages_cpp)
+add_dependencies(task_executor atwork_ros_msgs_generate_messages_cpp nav_lib)
 add_dependencies(task_exec_lib atwork_ros_msgs_generate_messages_cpp)
 
 

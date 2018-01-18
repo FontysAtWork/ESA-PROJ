@@ -1,9 +1,10 @@
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
-#include <task_executor/TaskAction.h>
-#include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
+#include <move_base_msgs/MoveBaseAction.h>
 #include <atwork_ros_msgs/Task.h>
+
+#include <task_executor/TaskAction.h>
 #include <task_executor/LocationIdentifier.hpp>
 #include <task_executor/ObjectIdentifier.hpp>
 
@@ -14,6 +15,11 @@
 #include <atwork_ros_msgs/TransportationTask.h>
 #include <atwork_ros_msgs/LocationIdentifier.h>
 
+#include <nav_lib/Marker.hpp>
+
+#include <vector>
+#include <string>
+
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 class TaskAction
 {
@@ -22,6 +28,7 @@ class TaskAction
 	int orientation;
 	ros::Time waitTime;
 	int taskID;
+	std::vector<Marker> markers;
 	
   protected:
 	ros::NodeHandle node;
@@ -59,15 +66,17 @@ class TaskAction
 
 		ROS_WARN("TURN");
 
-		ROS_WARN("WAITING");
-
+		ROS_INFO("Waiting for %f secs", waitTime.toSec());
 		ros::Duration(waitTime.toSec()).sleep();
 
-		ROS_WARN("Done WAITING");
 
 		result.status = 6; // 6 = finished (see atwork_ros_msgs/Task.msg)
 		result.id = taskID;
 		actionServer.setSucceeded(result);
+	}
+
+	void ReadMarkerFile(std::string filename) {
+		ROS_WARN("READ MARKER FILE - ON FAIL EXIT WITH ROS ERROR");
 	}
 	
 	void TaskParser(atwork_ros_msgs::Task t) {
@@ -122,13 +131,10 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "Task");
 
-
-	ROS_INFO("READ MARKER FILE - ON FAIL EXIT WITH ROS ERROR");
-
-
 	MoveBaseClient move_base_ac("move_base", true);
 	TaskAction task("Task");
 
+	task.ReadMarkerFile("s000000000000td::string filename");
 	
 	ros::spin();
 
