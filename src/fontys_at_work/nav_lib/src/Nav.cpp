@@ -73,7 +73,10 @@ namespace NAV
 			}
 			else
 			{
-				ROS_ERROR("Unkown data!");
+				ROS_ERROR("Unkown data! Marker file not correct.");
+				markers.clear();
+				return markers;
+				
 			}
 
 			if(i == data.size() -1 || i < data.size() - 1 && data[i+1].key.compare(0,6,"Marker") == 0)
@@ -149,16 +152,25 @@ namespace NAV
 	std::vector<Marker> LoadMarkers(std::string filename){
 		YamlParser yamlp;
 		yamlp.loadYaml(filename);
+		if(yamlp.GetParsedYaml().size() == 0)
+		{
+			std::vector<Marker> markers;
+			markers.clear();
+			return markers;
+		}
 		return FillMarkerList(yamlp.GetParsedYaml());
-		
 	}
 	
 	std::vector<NoGoLine> LoadNoGoLines(std::string filename){
 		YamlParser yamlp;
 		yamlp.loadYaml(filename);
-		
+		if(yamlp.GetParsedYaml().size() == 0)
+		{
+			std::vector<NoGoLine> nogolines;
+			nogolines.clear();
+			return nogolines;
+		}
 		return FillLineList(yamlp.GetParsedYaml());
-		
 	}
 	
 	MapConfig LoadMap(std::string filename){
