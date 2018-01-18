@@ -19,8 +19,7 @@ class Marker
 {
 private:
     MarkerType type;
-    geometry_msgs::Pose pos;
-    geometry_msgs::Quaternion SetQuaternation(double roll, double pitch, double yaw);
+    geometry_msgs::Pose pos;    
     std::string markerName;
 public:
     Marker(double x, double y, double angle, MarkerType t, std::string name);
@@ -31,6 +30,7 @@ public:
     MarkerType GetType();
     std::string GetTypeStr();
     std::string GetName();
+    geometry_msgs::Quaternion SetQuaternation(double roll, double pitch, double yaw);
     geometry_msgs::Quaternion GetQuaternation();
     geometry_msgs::Point GetPoint();
     geometry_msgs::Pose GetPose();
