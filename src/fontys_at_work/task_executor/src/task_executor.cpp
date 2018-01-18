@@ -2,7 +2,6 @@
 #include <actionlib/server/simple_action_server.h>
 #include <actionlib/client/simple_action_client.h>
 #include <move_base_msgs/MoveBaseAction.h>
-#include <atwork_ros_msgs/Task.h>
 
 #include <task_executor/TaskAction.h>
 #include <task_executor/LocationIdentifier.hpp>
@@ -17,6 +16,9 @@
 
 #include <nav_lib/Marker.hpp>
 #include <nav_lib/Nav.hpp>
+
+#include <tf/transform_datatypes.h>
+#include <geometry_msgs/Quaternion.h>
 
 #include <vector>
 #include <string>
@@ -106,28 +108,36 @@ class TaskAction
 	}
 
 	void MoveRobotToMarker(Marker m) {
+		geometry_msgs::Quaternion qM;
+		geometry_msgs::Quaternion qM1;
+		tf::Quaternion qT;
+
 		if(orientation == 1) {
 			// NORTH
-			m.SetQuaternation(0, 0, 0);
+			qM = m.SetQuaternation(0, 0, 0);
 
 		} else if (orientation == 2) {
 			// EAST
-			m.SetQuaternation(0, 0, m.Deg2Rad(90));
+			qM = m.SetQuaternation(0, 0, m.Deg2Rad(90));
 
 		} else if (orientation == 3) {
 			// SOUTH
-			m.SetQuaternation(0, 0, m.Deg2Rad(180));
+			qM = m.SetQuaternation(0, 0, m.Deg2Rad(180));
 			
 		} else {
 			// WEST
-			m.SetQuaternation(0, 0, m.Deg2Rad(270));
-
+			qM = m.SetQuaternation(0, 0, m.Deg2Rad(270));
 		}
+		
+		tf::quaternionMsgToTF(qM, qT);
+		qT.normalize();
+		tf::quaternionTFToMsg(qT, qM1);
 
 		move_base_msgs::MoveBaseGoal g;
 		g.target_pose.header.stamp = ros::Time::now();
 		g.target_pose.header.frame_id = "map";
 		g.target_pose.pose = m.GetPose();
+		g.target_pose.pose.orientation = qM1;
 		
 		move_base_ac.sendGoal(g);
 
