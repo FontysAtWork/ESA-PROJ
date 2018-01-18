@@ -16,6 +16,7 @@
 #include <atwork_ros_msgs/LocationIdentifier.h>
 
 #include <nav_lib/Marker.hpp>
+#include <nav_lib/Nav.hpp>
 
 #include <vector>
 #include <string>
@@ -76,7 +77,12 @@ class TaskAction
 	}
 
 	void ReadMarkerFile(std::string filename) {
-		ROS_WARN("READ MARKER FILE - ON FAIL EXIT WITH ROS ERROR");
+		markers = NAV::LoadMarkers(filename);
+		if(markers.size() == 0)
+		{
+			ROS_WARN("No markers found!");
+			ros::shutdown();
+		}
 	}
 	
 	void TaskParser(atwork_ros_msgs::Task t) {
@@ -130,11 +136,13 @@ class TaskAction
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "Task");
-
+	ros::NodeHandle n;
+	
 	MoveBaseClient move_base_ac("move_base", true);
 	TaskAction task("Task");
-
-	task.ReadMarkerFile("s000000000000td::string filename");
+	std::string fileName;
+	n.getParam("/Task/MarkerFile", fileName);
+	task.ReadMarkerFile(fileName);
 	
 	ros::spin();
 
