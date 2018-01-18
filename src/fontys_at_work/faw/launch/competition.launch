@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 	
+	<param name="/Task/MarkerFile" value="$(env WORKSPACE)/maps/markers.yaml" />
+	
 	<!--Start the robot navigation stack-->
 	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation.launch" />
 	
@@ -9,6 +11,17 @@
 	</node>
 	
 	<!-- TODO: Add our middleware and the refbox here -->
+	
+	<node name="refbox_receiver" pkg="refbox_receiver" type="refbox_receiver" output="screen">
+		<param name="remote_refbox" value="true" />
+		<param name="host_name" value="lars-linux" />
+	</node>
+	
+	<node name="task_handler" pkg="task_handler" type="task_handler" output="screen" />
+	
+	<node name="task_executor" pkg="task_executor" type="task_executor" output="screen" >
+		<!--<param name="/Task/_MarkerFile" value="$(env WORKSPACE)/maps/markers.yaml" />-->
+	</node>
 	
 	<!-- Control the robot via PS4 controller -->
 	<include file="$(find faw)/launch/gamepad.launch"/>
