@@ -109,6 +109,13 @@ class TaskAction
 
 		move_base_ac.waitForResult();
 
+		bool finished_before_timeout = move_base_ac.waitForResult(ros::Duration(900.0));
+
+		if (!finished_before_timeout) {
+			result.status = 2; // 2 = timeout (see atwork_ros_msgs/Task.msg)
+			ROS_WARN("Action did not finish before the time out.");
+		}
+
 		if (move_base_ac.getState() != actionlib::SimpleClientGoalState::SUCCEEDED)
 		{
 			ROS_ERROR("The base failed to move");
