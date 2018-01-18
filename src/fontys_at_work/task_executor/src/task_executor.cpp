@@ -126,6 +126,7 @@ class TaskAction
 
 		move_base_msgs::MoveBaseGoal g;
 		g.target_pose.header.stamp = ros::Time::now();
+		g.target_pose.header.frame_id = "map";
 		g.target_pose.pose = m.GetPose();
 		
 		move_base_ac.sendGoal(g);

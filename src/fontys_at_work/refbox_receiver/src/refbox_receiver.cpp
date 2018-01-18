@@ -126,8 +126,8 @@ void RefboxReceiver::RobotStatusReportCB(atwork_ros_msgs::RobotStatusReport msg)
 }
 void RefboxReceiver::readParameters()
 {
-    ros::param::param<bool>("~remote_refbox", remote_refbox_, false);
-    ros::param::param<std::string>("~host_name", host_name_, "localhost");
+    ros::param::param<bool>("~remote_refbox", remote_refbox_, true);
+    ros::param::param<std::string>("~host_name", host_name_, "lars-linux");
 
     //Paramters to use when ref box is running on remote machine.
     ros::param::param<int>("~public_port", public_port_, 4444);
