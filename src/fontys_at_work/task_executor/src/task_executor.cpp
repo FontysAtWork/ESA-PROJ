@@ -20,6 +20,7 @@
 
 #include <vector>
 #include <string>
+#include <stdio.h>
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 class TaskAction
@@ -62,21 +63,44 @@ class TaskAction
 		
 		actionServer.publishFeedback(feedback);
 
-		ROS_WARN("SELECT POSE");
+		char locationname[8];
 
-		Marker marker(1,1,1, Workstation, "Hey");
-
-		for(auto m : markers) {
-
+		if(location.GetType() == LocationType::SH) {
+			sprintf(locationname, "SH%02d", location.GetInstanceId());
+		} else if(location.GetType() == LocationType::WS) {
+			sprintf(locationname, "WS%02d", location.GetInstanceId());
+		} else if(location.GetType() == LocationType::CB) {
+			sprintf(locationname, "CB%02d", location.GetInstanceId());
+		} else if(location.GetType() == LocationType::WP) {
+			sprintf(locationname, "WP%02d", location.GetInstanceId());
+		} else if(location.GetType() == LocationType::PP) {
+			sprintf(locationname, "PP%02d", location.GetInstanceId());
+		} else {
+			sprintf(locationname, "ROBOT");
 		}
-		
-		MoveRobotToMarker(marker);
 
-		ROS_INFO("Waiting for %f secs", waitTime.toSec());
-		ros::Duration(waitTime.toSec()).sleep();
+		std::string locname = locationname;
+		ROS_INFO("Trying to find %s", locationname);
 
+		bool found = false;
+		for(auto m : markers) {
+			if(locname == m.GetName()) {
+				ROS_INFO("Found marker in list");
+				MoveRobotToMarker(m);
+				found = true;
+				continue;
+			}
+		}
 
-		result.status = 6; // 6 = finished (see atwork_ros_msgs/Task.msg)
+		if(!found) {
+			result.status = 5; // 5 = aborted (see atwork_ros_msgs/Task.msg)
+			ROS_WARN("Marker not found in list");
+		} else {
+			result.status = 6;  // 6 = finished (see atwork_ros_msgs/Task.msg)
+			ROS_INFO("Waiting for %f secs", waitTime.toSec());
+			ros::Duration(waitTime.toSec()).sleep();
+		}
+
 		result.id = taskID;
 		actionServer.setSucceeded(result);
 	}
