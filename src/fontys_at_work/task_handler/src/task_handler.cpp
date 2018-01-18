@@ -19,12 +19,11 @@ std::vector< atwork_ros_msgs::Task > tasks;
 // Called once when the goal completes
 void doneCb(const actionlib::SimpleClientGoalState& state,
             const task_executor::TaskResultConstPtr& result) {
-	for(int i = 0; i < tasks.size(); i++) {
+	for(unsigned int i = 0; i < tasks.size(); i++) {
 		if ((int) tasks[i].id.data == result->id) {
 			tasks[i].status.data = result->status;
 		}
 	}
-	ROS_INFO("Done enzo");
 }
 
 // Called once when the goal becomes active
@@ -34,12 +33,11 @@ void activeCb() {
 
 // Called every time feedback is received for the goal
 void feedbackCb(const task_executor::TaskFeedbackConstPtr& feedback) {
-	for(int i = 0; i < tasks.size(); i++) {
+	for(unsigned int i = 0; i < tasks.size(); i++) {
 		if ((int) tasks[i].id.data == feedback->id) {
 			tasks[i].status.data = feedback->status;
 		}
 	}
-	ROS_INFO("Feedback enzo");
 }
 
 // Add tasks to vector
@@ -49,7 +47,7 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 		bool exists = false;
 		
 
-		for(int j = 0; j < tasks.size(); j++) {
+		for(unsigned int j = 0; j < tasks.size(); j++) {
 			if(msg->tasks[i].id.data == tasks[j].id.data) {
 				exists = true;
 			}
@@ -62,7 +60,7 @@ void TaskCallback(const atwork_ros_msgs::TaskInfoConstPtr& msg) {
 }
 
 void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
-	for(int i = 0; i < tasks.size(); i++) {
+	for(unsigned int i = 0; i < tasks.size(); i++) {
 		if(tasks[i].status.data == 1) {
 			
 			// send a goal to the action
@@ -73,7 +71,7 @@ void SendGoals(actionlib::SimpleActionClient<task_executor::TaskAction> * ac) {
 			ROS_INFO("Sent task %d to action server", (int) tasks[i].id.data);
 
 			//wait for the action to return
-			bool finished_before_timeout = ac->waitForResult(ros::Duration(30.0));
+			bool finished_before_timeout = ac->waitForResult(ros::Duration(900.0));
 
 			if (!finished_before_timeout) {
 				tasks[i].status.data = 2;

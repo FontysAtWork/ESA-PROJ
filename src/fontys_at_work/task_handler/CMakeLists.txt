@@ -5,10 +5,9 @@ project(task_handler)
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS src/*.cpp)
 
 find_package(catkin REQUIRED COMPONENTS roscpp atwork_ros_msgs task_executor actionlib)
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
  
 catkin_package(
-  INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp atwork_ros_msgs task_executor actionlib
 )
 
