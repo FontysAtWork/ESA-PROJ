@@ -30,6 +30,7 @@ class TaskAction
 	ros::Time waitTime;
 	int taskID;
 	std::vector<Marker> markers;
+	MoveBaseClient move_base_ac;//("move_base", true);
 	
   protected:
 	ros::NodeHandle node;
@@ -40,7 +41,7 @@ class TaskAction
 	task_executor::TaskResult result;
 
   public:
-	TaskAction(std::string name) : actionServer(node, name, boost::bind(&TaskAction::executeCB, this, _1), false),
+	TaskAction(std::string name) : move_base_ac("move_base", true), actionServer(node, name, boost::bind(&TaskAction::executeCB, this, _1), false),
 										actionName(name) {
 		actionServer.start();
 		ROS_INFO("Task actionserver started");
@@ -60,12 +61,16 @@ class TaskAction
 		TaskParser(goal->task);
 		
 		actionServer.publishFeedback(feedback);
+
+		ROS_WARN("SELECT POSE");
+
+		Marker marker(1,1,1, Workstation, "Hey");
+
+		for(auto m : markers) {
+
+		}
 		
-		ROS_WARN("READ MARKER FILE");
-
-		ROS_WARN("MOVEBASE");
-
-		ROS_WARN("TURN");
+		MoveRobotToMarker(marker);
 
 		ROS_INFO("Waiting for %f secs", waitTime.toSec());
 		ros::Duration(waitTime.toSec()).sleep();
@@ -74,6 +79,49 @@ class TaskAction
 		result.status = 6; // 6 = finished (see atwork_ros_msgs/Task.msg)
 		result.id = taskID;
 		actionServer.setSucceeded(result);
+	}
+
+	void MoveRobotToMarker(Marker m) {
+		if(orientation == 1) {
+			// NORTH
+			m.SetQuaternation(0, 0, 0);
+
+		} else if (orientation == 2) {
+			// EAST
+			m.SetQuaternation(0, 0, m.Deg2Rad(90));
+
+		} else if (orientation == 3) {
+			// SOUTH
+			m.SetQuaternation(0, 0, m.Deg2Rad(180));
+			
+		} else {
+			// WEST
+			m.SetQuaternation(0, 0, m.Deg2Rad(270));
+
+		}
+
+		move_base_msgs::MoveBaseGoal g;
+		g.target_pose.header.stamp = ros::Time::now();
+		g.target_pose.pose = m.GetPose();
+		
+		move_base_ac.sendGoal(g);
+
+		ROS_INFO("Movebase goal sent");
+
+		move_base_ac.waitForResult();
+
+		bool finished_before_timeout = move_base_ac.waitForResult(ros::Duration(900.0));
+
+		if (!finished_before_timeout) {
+			result.status = 2; // 2 = timeout (see atwork_ros_msgs/Task.msg)
+			ROS_WARN("Action did not finish before the time out.");
+		}
+
+		if (move_base_ac.getState() != actionlib::SimpleClientGoalState::SUCCEEDED)
+		{
+			ROS_ERROR("The base failed to move");
+			result.status = 5; // 5 = aborted (see atwork_ros_msgs/Task.msg)
+		}
 	}
 
 	void ReadMarkerFile(std::string filename) {
@@ -122,10 +170,12 @@ class TaskAction
 			waitTime = t.navigation_task.wait_time.data;
 			taskID = t.id.data;
 			
+			/*
 			std::cout << "Dst: " << location.Print() << std::endl;
 			std::cout << "Ori: " << orientation << std::endl;
 			std::cout << "Tim: " << waitTime << std::endl;
 			std::cout << "ID: " << taskID << std::endl << std::endl;
+			*/
 			
 		} else {
 			ROS_WARN("Unknown task :o");
@@ -137,8 +187,6 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "Task");
 	ros::NodeHandle n;
-	
-	MoveBaseClient move_base_ac("move_base", true);
 	TaskAction task("Task");
 	std::string fileName;
 	n.getParam("/Task/MarkerFile", fileName);
