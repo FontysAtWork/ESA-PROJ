@@ -57,7 +57,7 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
 	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/nogo_zone/drawline", 100);
-	pubNoGoLine = n.advertise<std_msgs::Empty>("/nogo_zone/clear", 100);
+	pubNoGoClear = n.advertise<std_msgs::Empty>("/nogo_zone/clear", 100);
 	start();
 	return true;
 }
