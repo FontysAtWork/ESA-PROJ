@@ -224,7 +224,11 @@ int main(int argc, char **argv)
 	ros::NodeHandle n;
 	TaskAction task("Task");
 	std::string fileName;
+	
 	n.getParam("/Task/MarkerFile", fileName);
+	
+	ROS_INFO("marker filepath: %s \n", fileName.c_str());
+	
 	task.ReadMarkerFile(fileName);
 	
 	ros::spin();
