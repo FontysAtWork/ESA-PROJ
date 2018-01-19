@@ -14,12 +14,14 @@ void YamlParser::loadYaml(std::string fileName)
 	if(!yaml_parser_initialize(&parser))
 	{
 		ROS_ERROR("Failed to initialize parser!");
+		parsedYaml.clear();
 		return;
 	}
 
 	if(fh == NULL)
 	{
 		fputs("Failed to open file!\n", stderr);
+		parsedYaml.clear();
 		return;
 	}
 

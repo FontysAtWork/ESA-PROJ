@@ -1,0 +1,10 @@
+#goal definition
+atwork_ros_msgs/Task task
+---
+#result definition
+int32 status
+int32 id
+---
+#feedback
+int32 status
+int32 id

@@ -32,12 +32,12 @@ bool QNode::Init() {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	subKeepoutMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subKeepoutMap = n.subscribe("nogo_zone/map", 100, &QNode::keepoutMapCallback, this);
 	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/keepout/drawline", 100);
-	pubNoGoClear = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
+	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/nogo_zone/drawline", 100);
+	pubNoGoClear = n.advertise<std_msgs::Empty>("/nogo_zone/clear", 100);
 	start();
 	return true;
 }
@@ -52,12 +52,12 @@ bool QNode::Init(const std::string &master_url, const std::string &host_url) {
 	}
 	ros::start();
 	ros::NodeHandle n;
-	subKeepoutMap = n.subscribe("keepout/map", 100, &QNode::keepoutMapCallback, this);
+	subKeepoutMap = n.subscribe("nogo_zone/map", 100, &QNode::keepoutMapCallback, this);
 	subNormalMap = n.subscribe("map", 100, &QNode::normalMapCallback, this);
 	pubEmergency = n.advertise<std_msgs::Bool>("emergency_stop", 100);
 	pubPose = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 100);
-	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/keepout/drawline", 100);
-	pubNoGoLine = n.advertise<std_msgs::Empty>("/keepout/clear", 100);
+	pubNoGoLine = n.advertise<nogo_zone_map_server_msg::Line>("/nogo_zone/drawline", 100);
+	pubNoGoClear = n.advertise<std_msgs::Empty>("/nogo_zone/clear", 100);
 	start();
 	return true;
 }

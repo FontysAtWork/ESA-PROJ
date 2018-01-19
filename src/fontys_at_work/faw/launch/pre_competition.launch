@@ -5,7 +5,7 @@
 	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation.launch" />
 	
 	<!-- Load the keepout map server -->
-	<node name="keepout_map" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="keepout" output="screen">
+	<node name="nogo_zone_server" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="nogo_zone" output="screen">
 		<param name="map_width" value="992" />
 		<param name="map_height" value="992" />
 		<param name="map_resolution" value="0.01" />

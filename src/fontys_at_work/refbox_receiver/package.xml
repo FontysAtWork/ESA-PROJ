@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>refbox_receiver</name>
+  <version>0.0.0</version>
+  <description>The refbox_receiver package</description>
+  <maintainer email="viki@todo.todo">viki</maintainer>
+  <author>viki</author>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/minhtrietdiep/ESA-PROJ/issues</url>
+  <url type="repository">https://github.com/minhtrietdiep/ESA-PROJ</url>
+  <url type="wiki">https://github.com/minhtrietdiep/ESA-PROJ/wiki</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>atwork_ros_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>atwork_pb_msgs</build_depend>
+  <build_depend>protobuf_comm</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>atwork_ros_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>atwork_pb_msgs</exec_depend>
+  <exec_depend>protobuf_comm</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+</package>

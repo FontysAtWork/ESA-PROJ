@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<launch>
+	<node name="refbox_receiver" pkg="refbox_receiver" type="refbox_receiver" />
+</launch>

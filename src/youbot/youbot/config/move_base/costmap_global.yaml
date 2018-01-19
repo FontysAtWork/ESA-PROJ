@@ -15,7 +15,7 @@ global_costmap:
     use_maximum: true
     
   nogomap:
-    map_topic: /keepout/map
+    map_topic: /nogo_zone/map
     use_maximum: true
     
   obstacles:

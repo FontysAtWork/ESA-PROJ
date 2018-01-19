@@ -17,7 +17,7 @@ endif()
 
 add_library(nav_lib src/Marker.cpp src/NoGoLine.cpp src/YamlParser.cpp src/YamlWriter.cpp src/MapConfig.cpp src/Nav.cpp)
 
-target_link_libraries(nav_lib ${catkin_LIBRARIES})
+target_link_libraries(nav_lib ${catkin_LIBRARIES} yaml)
 
 catkin_package(
    INCLUDE_DIRS include
