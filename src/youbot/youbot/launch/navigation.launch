@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
 <launch>
+	
 	<!-- Should we start a simulation or run on hardware? -->
-	<arg name="sim" default="true" />
+	<arg name="sim" default="false" />
 	
 	<!-- laser scanners (lidar) -->
 	<include file="$(find youbot)/launch/hardware/lasers.include">
-		<arg name="sim" value="true" if="$(env SIM)"/>
+		<arg name="sim" value="true" if="$(arg sim)"/>
 	</include>
 	
 	<!-- Only start ethercat driver and API when running on hardware -->
-	<group unless="$(env SIM)">
+	<group unless="$(arg sim)">
 		<!-- include original youbot driver launch file -->
 		<include file="$(find youbot)/launch/hardware/robot_driver.include"/>
 	</group>
 	
 	<!-- loads the map to the server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(env WORKSPACE)/maps/map_normal.yaml" />
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/maps/map_normal.yaml" />
 	
 	<!-- When running in sim mode the simulator is responsible for loading the description and URDF files -->
-	<group unless="$(env SIM)">
+	<group unless="$(arg sim)">
 		<!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
 		<include file="$(find youbot)/launch/hardware/planning_context.include">
 			<arg name="load_robot_description" value="true"/>

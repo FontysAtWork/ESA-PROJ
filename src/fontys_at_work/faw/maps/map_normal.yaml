@@ -1,4 +1,4 @@
-image: /home/youbot/git/refbox-tasks/ESA-PROJ/maps/map_nogo.pgm
+image: map_normal.pgm
 resolution: 0.010000
 origin: [-5.000000, -5.000000, 0.000000]
 negate: 0

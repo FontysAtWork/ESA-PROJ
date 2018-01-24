@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-
+	
+	<arg name="robot_path"   value="(find $(env ROBOT))" />
+	<arg name="dollar" 		 value="$" />
+	
 	<!--Start the robot navigation stack-->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/map_create.launch" />
+	<include file="$(arg dollar)$(arg robot_path)/launch/map_create.launch" />
 	
 	<!-- Control of youbot via PS4 controller -->
 	<include file="$(find faw)/launch/gamepad.launch"/>

@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <launch>
 	
+	<arg name="sim" default="false" />
+	
 	<!-- laser scanners (lidar) -->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/hardware/lasers.include">
-		<arg name="sim" value="true" if="$(env SIM)"/>
+	<include file="$(find youbot)/launch/hardware/lasers.include">
+		<arg name="sim" value="true" if="$(arg sim)"/>
 	</include>
 	
 	<!-- Only start ethercat driver and API when running on hardware -->
-	<group unless="$(env SIM)">
+	<group unless="$(arg sim)">
 		<!-- include original youbot driver launch file -->
-		<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/hardware/robot_driver.include"/>
+		<include file="$(find youbot)/launch/hardware/robot_driver.include"/>
 	</group>
 	
 	<!--Mapping-->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation/gmapping_slam.include"/>
+	<include file="$(find youbot)/launch/navigation/gmapping_slam.include"/>
 	
 </launch>
