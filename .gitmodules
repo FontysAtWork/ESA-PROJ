@@ -1,18 +1,15 @@
-[submodule "src/fontys_at_work/dependencies/atwork_refbox_comm"]
-	path = src/fontys_at_work/dependencies/atwork_refbox_comm
+[submodule "fontys_at_work/dependencies/atwork_refbox_comm"]
+	path = fontys_at_work/dependencies/atwork_refbox_comm
 	url = https://github.com/industrial-robotics/atwork_refbox_comm
-[submodule "src/fontys_at_work/dependencies/ira_laser_tools"]
-	path = src/fontys_at_work/dependencies/ira_laser_tools
-	url = https://github.com/iralabdisco/ira_laser_tools
-[submodule "src/youbot/youbot_simulation"]
-	path = src/youbot/youbot_simulation
+[submodule "youbot/youbot_simulation"]
+	path = youbot/youbot_simulation
 	url = http://github.com/youbot/youbot_simulation.git
-[submodule "src/fontys_at_work/dependencies/convex_decomposition"]
-	path = src/fontys_at_work/dependencies/convex_decomposition
+[submodule "fontys_at_work/dependencies/convex_decomposition"]
+	path = fontys_at_work/dependencies/convex_decomposition
 	url = https://github.com/ros/convex_decomposition.git
-[submodule "src/fontys_at_work/dependencies/ivcon"]
-	path = src/fontys_at_work/dependencies/ivcon
+[submodule "fontys_at_work/dependencies/ivcon"]
+	path = fontys_at_work/dependencies/ivcon
 	url = https://github.com/ros/ivcon.git
-[submodule "src/fontys_at_work/dependencies/pr2_common"]
-	path = src/fontys_at_work/dependencies/pr2_common
+[submodule "fontys_at_work/dependencies/pr2_common"]
+	path = fontys_at_work/dependencies/pr2_common
 	url = https://github.com/PR2/pr2_common.git
