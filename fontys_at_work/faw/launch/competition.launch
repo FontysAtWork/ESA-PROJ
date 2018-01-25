@@ -10,7 +10,7 @@
 	<include file="$(arg dollar)$(arg robot_path)/launch/navigation.launch" />
 	
 	<!-- Load the nogo zone map -->
-	<node name="nogo_server" pkg="map_server" ns="keepout" type="map_server" args="$(find faw)/maps/map_nogo.yaml">
+	<node name="nogo_server" pkg="map_server" ns="nogo_zone" type="map_server" args="$(find faw)/maps/map_nogo.yaml">
 	</node>
 	
 	<!-- TODO: Add our middleware and the refbox here -->
