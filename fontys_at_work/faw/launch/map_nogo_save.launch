@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="keepout_map" pkg="map_server" type="map_saver" args="map:=keepout/map -f $(find faw)/maps/map_nogo" />	
+</launch>

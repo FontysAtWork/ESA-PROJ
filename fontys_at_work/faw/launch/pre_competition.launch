@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <launch>
 	
+	<arg name="robot_path"   value="(find $(env ROBOT))" />
+	<arg name="dollar" 		 value="$" />
+	
 	<!--Start the robot navigation stack-->
-	<include file="$(env SRC)/$(env ROBOT)/$(env ROBOT)/launch/navigation.launch" />
+	<include file="$(arg dollar)$(arg robot_path)/launch/navigation.launch" />
 	
 	<!-- Load the keepout map server -->
 	<node name="nogo_zone_server" pkg="nogo_zone_map_server" type="nogo_zone_map_server" ns="nogo_zone" output="screen">

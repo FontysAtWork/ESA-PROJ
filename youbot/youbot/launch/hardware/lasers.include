@@ -19,7 +19,7 @@
 	-->
 	
 	<!-- Only init hoyuko's if running on hardware -->
-	<group unless="$(env SIM)">
+	<group unless="$(arg sim)">
 		 <node name="hokuyo_front" pkg="urg_node" type="urg_node" respawn="true" output="screen">
 			<remap from="/scan" to="/scan_front"/>
 			<!-- Starts up faster, but timestamps will be inaccurate. -->
