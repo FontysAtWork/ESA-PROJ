@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!-- Should we start a simulation or run on hardware? -->
+	<arg name="sim" default="false" />
+	
+	<!-- laser scanners (lidar) -->
+	<include file="$(find phelix)/launch/hardware/lasers.include">
+		<arg name="sim" value="true" if="$(arg sim)"/>
+	</include>
+	
+	<!-- HACK TO BYPASS ODOM REQUIREMENT -->
+	<node pkg="tf" type="static_transform_publisher" 
+		name="odom_pub" 
+		args="0 0 0 0 0 0 odom base_link 100" /> 
+
+	<!-- loads the map to the server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find faw)/maps/map_normal.yaml" />
+	
+	<!-- loads the nav_stack of the youbot -->
+
+	<include file="$(find phelix)/launch/navigation/move_base.include"/>
+	
+	<node name="emergency_stop" pkg="emergency_stop" type="emergency_stop" />
+</launch>

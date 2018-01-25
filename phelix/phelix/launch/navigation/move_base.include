@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Throttle the voxel grid that is being published for rviz -->
+   <node ns="move_base_node/local_costmap" name="voxel_grid_throttle" pkg="topic_tools" type="throttle" args="messages voxel_grid 3.0 voxel_grid_throttled" />
+    
+    <param name="T" type="double" value="0.2"/>
+    <param name="dt" type="double" value="0.1"/>
+    
+    <include file="$(find phelix)/launch/navigation/amcl.include" />
+    
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" args="cmd_vel:=move_base/cmd_vel">
+		<rosparam file="$(find phelix)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find phelix)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find phelix)/config/move_base/costmap_local.yaml" command="load" />
+		<rosparam file="$(find phelix)/config/move_base/costmap_global.yaml" command="load" />
+		<rosparam file="$(find phelix)/config/move_base/dwa_local_planner.yaml" command="load" />
+	</node>
+</launch>
