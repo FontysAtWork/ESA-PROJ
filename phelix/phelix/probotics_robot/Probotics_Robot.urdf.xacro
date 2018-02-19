@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Probotics_Robot">
+
+  <xacro:property name="AB" value="0.8" />
+  <xacro:property name="block2_size" value="0.4" />
+  <xacro:property name="block3_size" value="0.2" />
+
+  <xacro:macro name="block" params="name size color">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${size} ${size} ${size}"/>
+        </geometry>
+        <origin xyz="0 0 0"/>
+        <material name="${color}" />
+      </visual>
+    </link>
+  </xacro:macro>
+ 
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+  
+  <material name="blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+  
+  <link name="world"/>
+
+  <joint name="world_block1_joint" type="fixed">
+    <parent link="world"/>
+    <child link="block1"/>
+  </joint> 
+   
+  <xacro:block name="block1" size="${block1_size}" color="red" />
+ 
+  <joint name="block1_block2_joint" type="continuous">
+    <parent link="block1"/>
+    <child link="block2"/>
+    <origin xyz="0 0 0.6"/>
+  </joint>
+  
+  <xacro:block name="block2" size="${block2_size}" color="green" />
+  
+  <joint name="block2_block3_joint" type="continuous">
+    <parent link="block2"/>
+    <child link="block3"/>
+    <origin xyz="0 0 0.3"/>
+  </joint>
+  
+  <xacro:block name="block3" size="${block3_size}" color="blue" />
+  
+ </robot>

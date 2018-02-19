@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<robot name="Probotics_Robot">
+<link name="base_link">
+	<visual>
+		<geometry>
+    	<box size="0.643 0.503 0.263"/>
+		</geometry>
+			<origin rpy="0 0 0" xyz="0.010 0 0.1705"/>
+			<material name="white">
+        <color rgba="1.0 1.0 1.0 1"/>
+      </material>
+  </visual>
+</link>
+
+<link name="laserscanner1_front">
+	<visual>
+		<geometry>
+    	<box size="0.100 0.133 0.150"/>
+		</geometry>
+			<origin rpy="0.79 1.57 0" xyz="0.235 -0.165 0.205"/>
+			<material name="green">
+        <color rgba="0 1.0 0 1"/>
+      </material>
+  </visual>
+</link>
+
+<link name="laserscanner2_back">
+	<visual>
+		<geometry>
+    	<box size="0.100 0.133 0.150"/>
+		</geometry>
+			<origin rpy="0.79 1.57 0" xyz="-0.235 0.165 0.205"/>
+			<material name="green">
+        <color rgba="0 1.0 0 1"/>
+      </material>
+  </visual>
+</link>
+
+<link name= "1_LF_wheel">
+	<visual>
+  	<geometry>
+    	<cylinder length="0.079" radius="0.075"/>
+    </geometry>
+			<origin rpy="1.57 0 0" xyz="0.175 -0.1975 0.075"/>
+			<material name="grey_blue">
+        <color rgba="0.4 0.4 1.0 1"/>
+      </material>
+   </visual>
+</link>
+
+<link name= "2_RF_wheel">
+	<visual>
+  	<geometry>
+    	<cylinder length="0.079" radius="0.075"/>
+    </geometry>
+			<origin rpy="1.57 0 0" xyz="0.175 0.1975 0.075"/>
+			<material name="grey_blue">
+        <color rgba="0.4 0.4 1.0 1"/>
+      </material>
+   </visual>
+</link>
+
+<link name= "3_LR_wheel">
+	<visual>
+  	<geometry>
+    	<cylinder length="0.079" radius="0.075"/>
+    </geometry>
+			<origin rpy="1.57 0 0" xyz="-0.175 -0.1975 0.075"/>
+			<material name="grey_blue">
+        <color rgba="0.4 0.4 1.0 1"/>
+      </material>
+   </visual>
+</link>
+
+<link name= "4_RR_wheel">
+	<visual>
+  	<geometry>
+    	<cylinder length="0.079" radius="0.075"/>
+    </geometry>
+			<origin rpy="1.57 0 0" xyz="-0.175 0.1975 0.075"/>
+			<material name="grey_blue">
+        <color rgba="0.4 0.4 1.0 1"/>
+      </material>
+   </visual>
+</link>
+
+<joint name="base_to_1_LF_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="1_LF_wheel"/>
+</joint>
+
+<joint name="base_to_2_RF_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="2_RF_wheel"/>
+</joint>
+
+<joint name="base_to_3_LR_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="3_LR_wheel"/>
+</joint>
+
+<joint name="base_to_4_RR_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="4_RR_wheel"/>
+</joint>
+
+<joint name="base_to_laserscanner1_front" type="fixed">
+    <parent link="base_link"/>
+    <child link="laserscanner1_front"/>
+</joint>
+
+<joint name="base_to_laserscanner2_back" type="fixed">
+    <parent link="base_link"/>
+    <child link="laserscanner2_back"/>
+</joint>
+
+</robot>

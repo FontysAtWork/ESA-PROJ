@@ -15,11 +15,11 @@ global_costmap:
     use_maximum: true
     
   nogomap:
-    map_topic: /map
+    map_topic: /nogo_zone/map
     use_maximum: true
     
   obstacles:
     observation_sources: base_scan_front #base_scan_rear
     
   inflations:
-    inflation_radius: 0.38
+    inflation_radius: 0.5

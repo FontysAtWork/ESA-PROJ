@@ -1,22 +1,16 @@
 <?xml version="1.0"?>
 <launch>
-	<!--
-	<arg name="sim" default="false" />
-	-->
-	<!-- laser scanners (lidar) -->
-<!--
-	<include file="$(find youbot)/launch/hardware/lasers.include">
-		<arg name="sim" value="true" if="$(arg sim)"/>
-	</include>
-	-->
-	<!-- Only start ethercat driver and API when running on hardware -->
-<!--
-	<group unless="$(arg sim)">
-		<include file="$(find youbot)/launch/hardware/robot_driver.include"/>
-	</group>
--->	
+	<!--Laser node--> 
+	<include file="$(find phelix)/launch/hardware/lasers.include"/>
+	<node pkg="tf" type="static_transform_publisher" name="laser" args="0.245 0.175 0.205 0.7853981634 0 0 laserscanner1_front laser 100"/> 
+	<node pkg="tf" type="static_transform_publisher" name="connect" args="0 0 0 0 0 0 odom base_link 100"/> 
+
+	<!--Upoad URDF model to the parameter server--> 
+	<param name="robot_description" textfile="$(find phelix)/probotics_robot/probotics_robot_2.urdf"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> 
+	<!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_publisher"/>-->
+
 	<!--Mapping-->
-<!--
-	<include file="$(find youbot)/launch/navigation/gmapping_slam.include"/>
-	-->
+	<include file="$(find phelix)/launch/navigation/gmapping_slam.include"/>
+	<node pkg="rviz" type="rviz" name="my_rviz" args="-d $(find phelix)/phelix_rviz.rviz"/>
 </launch>
